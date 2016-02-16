@@ -1,6 +1,8 @@
 package mx.itesm.skullfighter;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -41,14 +43,35 @@ public class PantallaMenu implements Screen {
         cargarTexturas();
         fondo = new Fondo(texturaFondo);
         btnPlay = new BotonMenu(texturaBtnPlay);
-        btnPlay.setPosicion(Principal.ANCHO_MUNDO/2,Principal.ALTO_MUNDO-(Principal.ALTO_MUNDO/4));
+        btnPlay.setPosicion(Principal.ANCHO_MUNDO/15,Principal.ALTO_MUNDO-(Principal.ALTO_MUNDO/4));
 
         batch = new SpriteBatch();
     }
 
+    private void cargarTexturas() {
+        texturaFondo = new Texture(Gdx.files.internal("MainMenuSolo.jpg"));
+        texturaBtnPlay = new Texture(Gdx.files.internal("BotonStory.png"));
+    }
+
     @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
+      //  leerEntrada(); // Revisar eventos
+
+
+        batch.setProjectionMatrix(camara.combined);
+
+
+
+        // DIBUJA
+        batch.begin();
+        fondo.render(batch);
+        btnPlay.render(batch);
+
+        batch.end();
     }
 
     @Override

@@ -14,7 +14,7 @@ public class ManejadorDePantallas {
     private Game game;
 
     // Singleton: private constructor
-    private ScreenManager() {
+    private ManejadorDePantallas() {
         super();
     }
 
@@ -30,7 +30,7 @@ public class ManejadorDePantallas {
     public void initialize(Game game) {
         this.game = game;
     }
-
+/*
     // Show in the game the screen which enum type is received
     public void showScreen(ScreenEnum screenEnum, Object... params) {
 
@@ -46,5 +46,5 @@ public class ManejadorDePantallas {
         if (currentScreen != null) {
             currentScreen.dispose();
         }
-    }
+    }*/
 }
