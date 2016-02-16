@@ -1,6 +1,7 @@
 package mx.itesm.skullfighter;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Screen;
 
 /**
  * Created by abrahamsoto on 16/02/16.
