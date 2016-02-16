@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 /**
  * Created by abrahamsoto on 16/02/16.
  */
-public class ManegadorDePantallas extends Stage implements Screen {
+public class ManejadorDePantallasAbs extends Stage implements Screen {
 
     import com.badlogic.gdx.Gdx;
     import com.badlogic.gdx.Screen;
@@ -21,7 +21,7 @@ public class ManegadorDePantallas extends Stage implements Screen {
 
 
 
-        protected ManegadorDePantallas() {
+        protected ManejadorDePantallasAbs() {
             super( new StretchViewport(320.0f, 240.0f, new OrthographicCamera()) );
         }
 
