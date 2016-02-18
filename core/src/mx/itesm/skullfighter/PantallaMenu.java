@@ -57,7 +57,6 @@ public class PantallaMenu implements Screen {
         camara.update();
         vista = new StretchViewport(EjemploPantalla.ANCHO_MUNDO,EjemploPantalla.ALTO_MUNDO,camara);
 
-
         cargarTexturas();
         fondo = new Fondo(texturaFondo);
         btnStory = new BotonMenu(texturaBtnStory);
