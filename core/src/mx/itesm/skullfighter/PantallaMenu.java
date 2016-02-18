@@ -1,3 +1,5 @@
+
+
 package mx.itesm.skullfighter;
 
 import com.badlogic.gdx.Gdx;
@@ -6,12 +8,17 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+
 
 /**
  * Created by abrahamsoto on 12/02/16.
  */
+
+
 public class PantallaMenu implements Screen {
 
     private final Principal principal;
@@ -24,9 +31,20 @@ public class PantallaMenu implements Screen {
     private Fondo fondo;
     private Texture texturaFondo;
 
-    //boton play
-    private BotonMenu btnPlay;
-    private Texture texturaBtnPlay;
+    //botones
+    private BotonMenu btnStory;
+    private Texture texturaBtnStory;
+
+    private BotonMenu btnVs;
+    private Texture texturaBtnVs;
+
+    private BotonMenu btnCustom;
+    private Texture texturaBtnCustom;
+
+    private BotonMenu btnSettings;
+    private Texture texturaBtnSettings;
+
+
     public PantallaMenu(Principal principal) {
         this.principal = principal;
     }
@@ -34,23 +52,35 @@ public class PantallaMenu implements Screen {
     @Override
     public void show() {
         //Crear camara y vista
-        camara = new OrthographicCamera(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO);
-        camara.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
+        camara = new OrthographicCamera(EjemploPantalla.ANCHO_MUNDO, EjemploPantalla.ALTO_MUNDO);
+        camara.position.set(EjemploPantalla.ANCHO_MUNDO / 2, EjemploPantalla.ALTO_MUNDO / 2, 0);
         camara.update();
-        vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
+        vista = new StretchViewport(EjemploPantalla.ANCHO_MUNDO,EjemploPantalla.ALTO_MUNDO,camara);
 
 
         cargarTexturas();
         fondo = new Fondo(texturaFondo);
-        btnPlay = new BotonMenu(texturaBtnPlay);
-        btnPlay.setPosicion(Principal.ANCHO_MUNDO/15,Principal.ALTO_MUNDO-(Principal.ALTO_MUNDO/4));
+        btnStory = new BotonMenu(texturaBtnStory);
+        btnStory.setPosicion(EjemploPantalla.ANCHO_MUNDO/15,EjemploPantalla.ALTO_MUNDO-(EjemploPantalla.ALTO_MUNDO/4));
+
+        btnVs = new BotonMenu(texturaBtnVs);
+        btnVs.setPosicion(EjemploPantalla.ANCHO_MUNDO/15,EjemploPantalla.ALTO_MUNDO-(EjemploPantalla.ALTO_MUNDO/4)-143);
+
+        btnCustom = new BotonMenu(texturaBtnCustom);
+        btnCustom.setPosicion(EjemploPantalla.ANCHO_MUNDO/15,EjemploPantalla.ALTO_MUNDO-(EjemploPantalla.ALTO_MUNDO/4)-284);
+
+        btnSettings = new BotonMenu(texturaBtnSettings);
+        btnSettings.setPosicion(EjemploPantalla.ANCHO_MUNDO/15,EjemploPantalla.ALTO_MUNDO-(EjemploPantalla.ALTO_MUNDO/4)-431);
 
         batch = new SpriteBatch();
     }
 
     private void cargarTexturas() {
         texturaFondo = new Texture(Gdx.files.internal("MainMenuSolo.jpg"));
-        texturaBtnPlay = new Texture(Gdx.files.internal("BotonStory.png"));
+        texturaBtnStory = new Texture(Gdx.files.internal("BotonStory.png"));
+        texturaBtnVs = new Texture(Gdx.files.internal("BotonVersus.png"));
+        texturaBtnCustom = new Texture(Gdx.files.internal("BotonCustomize.png"));
+        texturaBtnSettings = new Texture(Gdx.files.internal("BotonSettings.png"));
     }
 
     @Override
@@ -59,7 +89,7 @@ public class PantallaMenu implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
-      //  leerEntrada(); // Revisar eventos
+        leerEntrada(); // Revisar eventos
 
 
         batch.setProjectionMatrix(camara.combined);
@@ -69,9 +99,30 @@ public class PantallaMenu implements Screen {
         // DIBUJA
         batch.begin();
         fondo.render(batch);
-        btnPlay.render(batch);
+        btnStory.render(batch);
+        btnVs.render(batch);
+        btnCustom.render(batch);
+        btnSettings.render(batch);
 
         batch.end();
+    }
+
+    private void leerEntrada() {
+        if(Gdx.input.justTouched()){
+            Vector3 coordenadas = new Vector3();
+            coordenadas.set(Gdx.input.getX(),Gdx.input.getY(),0);
+            camara.unproject(coordenadas);  //traduce las coordenadas
+            float x = coordenadas.x;
+            float y = coordenadas.y;
+            if( verificarBotonStory(x,y)){
+                Gdx.app.log("leerEntrada", "Tap sobre el boton");
+                principal.setScreen(new PantallaJuego(principal));
+            }
+        }
+    }
+
+    private boolean verificarBotonStory(float x, float y) {
+        return false;
     }
 
     @Override
@@ -99,3 +150,5 @@ public class PantallaMenu implements Screen {
 
     }
 }
+
+
