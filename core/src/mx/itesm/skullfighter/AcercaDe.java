@@ -43,9 +43,9 @@ public class AcercaDe implements Screen {
         cargarTexturas(); //cargar texturas
         fondo = new Fondo(texturaFondo);
         //botones nombres
-        /*
+
         btnPlay = new BotonMenu(texturaBtnPlay);
-        btnPlay.setPosicion(Principal.ANCHO_MUNDO/2, Principal.ALTO_MUNDO/2);*/
+        btnPlay.setPosicion(20, 20);
         //btnPlay.setPosicion(200, 200);
 
         batch = new SpriteBatch();
@@ -53,8 +53,8 @@ public class AcercaDe implements Screen {
 
     private void cargarTexturas() {
 
-        texturaFondo=new Texture(Gdx.files.internal("fondoMenu.jpg")); //AcercaDe.png
-        texturaBtnPlay = new Texture((Gdx.files.internal("playBtn.png"))); //acerca de
+        texturaFondo=new Texture(Gdx.files.internal("AboutMenu.jpg")); //AcercaDe.png
+        texturaBtnPlay = new Texture((Gdx.files.internal("touchBackground.png"))); //acerca de
     }
 
     @Override

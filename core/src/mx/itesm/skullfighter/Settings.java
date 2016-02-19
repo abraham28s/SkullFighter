@@ -52,6 +52,8 @@ public class Settings implements Screen,PantallaAbstracta {
         fondo = new Fondo(texturaFondo);
         btnAD = new BotonMenu(texturaAD);
         btnAD.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4));
+        batch = new SpriteBatch();
+
     }
 
     public void cargarTexturas() {
@@ -89,7 +91,7 @@ public class Settings implements Screen,PantallaAbstracta {
             float x = coordenadas.x;
             float y = coordenadas.y;
             if (verificarBoton(x, y, btnAD)) {
-                principal.setScreen(new PantallaJuego(principal));
+                principal.setScreen(new AcercaDe(principal));
             }
         }
     }
