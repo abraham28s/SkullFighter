@@ -20,7 +20,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  */
 
 
-public class PantallaMenu implements Screen,PantallaAbstracta {
+public class Settings implements Screen,PantallaAbstracta {
 
     private final Principal principal;
     private OrthographicCamera camara;
@@ -33,20 +33,10 @@ public class PantallaMenu implements Screen,PantallaAbstracta {
     private Texture texturaFondo;
 
     //botones
-    private BotonMenu btnStory;
-    private Texture texturaBtnStory;
+    private BotonMenu btnAD;
+    private Texture texturaAD;
 
-    private BotonMenu btnVs;
-    private Texture texturaBtnVs;
-
-    private BotonMenu btnCustom;
-    private Texture texturaBtnCustom;
-
-    private BotonMenu btnSettings;
-    private Texture texturaBtnSettings;
-
-
-    public PantallaMenu(Principal principal) {
+    public Settings(Principal principal) {
         this.principal = principal;
     }
 
@@ -60,27 +50,14 @@ public class PantallaMenu implements Screen,PantallaAbstracta {
 
         cargarTexturas();
         fondo = new Fondo(texturaFondo);
-        btnStory = new BotonMenu(texturaBtnStory);
-        btnStory.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4));
-
-        btnVs = new BotonMenu(texturaBtnVs);
-        btnVs.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4) - 143);
-
-        btnCustom = new BotonMenu(texturaBtnCustom);
-        btnCustom.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4) - 284);
-
-        btnSettings = new BotonMenu(texturaBtnSettings);
-        btnSettings.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4) - 431);
-
-        batch = new SpriteBatch();
+        btnAD = new BotonMenu(texturaAD);
+        btnAD.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4));
     }
 
     public void cargarTexturas() {
         texturaFondo = new Texture(Gdx.files.internal("MainMenuSolo.jpg"));
-        texturaBtnStory = new Texture(Gdx.files.internal("BotonStory.png"));
-        texturaBtnVs = new Texture(Gdx.files.internal("BotonVersus.png"));
-        texturaBtnCustom = new Texture(Gdx.files.internal("BotonCustomize.png"));
-        texturaBtnSettings = new Texture(Gdx.files.internal("BotonSettings.png"));
+        texturaAD = new Texture(Gdx.files.internal("boton ayuda.png"));
+
     }
 
     @Override
@@ -99,10 +76,7 @@ public class PantallaMenu implements Screen,PantallaAbstracta {
         // DIBUJA
         batch.begin();
         fondo.render(batch);
-        btnStory.render(batch);
-        btnVs.render(batch);
-        btnCustom.render(batch);
-        btnSettings.render(batch);
+        btnAD.render(batch);
 
         batch.end();
     }
@@ -114,15 +88,8 @@ public class PantallaMenu implements Screen,PantallaAbstracta {
             camara.unproject(coordenadas);  //traduce las coordenadas
             float x = coordenadas.x;
             float y = coordenadas.y;
-            if (verificarBoton(x, y, btnStory)) {
+            if (verificarBoton(x, y, btnAD)) {
                 principal.setScreen(new PantallaJuego(principal));
-            } else if (verificarBoton(x, y, btnVs)) {
-                Gdx.app.log("leerEntrada", "Tap sobre el botonvs");
-            } else if (verificarBoton(x, y, btnCustom)) {
-                Gdx.app.log("leerEntrada", "Tap sobre el boton custom");
-            } else if (verificarBoton(x, y, btnSettings)) {
-                principal.setScreen(new Settings(principal));
-                //Gdx.app.log("leerEntrada", "Tap sobre el boton sett");
             }
         }
     }
