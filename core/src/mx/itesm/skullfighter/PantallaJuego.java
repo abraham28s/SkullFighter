@@ -55,6 +55,8 @@ public class PantallaJuego implements Screen,PantallaAbstracta {
 
         cargarTexturas();
 
+        fondo = new Fondo(texturaFondo);
+
         jugador = new Personaje(texturaMovDer[0]);
         jugador.setPosicion(75, 150);
 
@@ -83,8 +85,9 @@ public class PantallaJuego implements Screen,PantallaAbstracta {
 
         // DIBUJA
         batch.begin();
-
+        fondo.render(batch);
         jugador.render(batch);
+        jugador.actualizar();
         btnDer.render(batch);
         btnIzq.render(batch);
         btnBrin.render(batch);
@@ -117,8 +120,35 @@ public class PantallaJuego implements Screen,PantallaAbstracta {
 
 
 
+
         }
+        if(Gdx.input.justTouched()) {
+            Vector3 coordenadas = new Vector3();
+            coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            camara.unproject(coordenadas);  //traduce las coordenadas
+            float x = coordenadas.x;
+            float y = coordenadas.y;
+            if(verificarBoton(x, y, btnBrin)){
+                if(jugador.getEstado() == Personaje.Estado.NORMAL) {
+                    jugador.movimientoBrin();
+                }
+            }
+
+
+
+
+        }
+
+
+
+
+
+
+
+
     }
+
+
 
     private void movimientoIzq() {
 
@@ -142,6 +172,8 @@ public class PantallaJuego implements Screen,PantallaAbstracta {
 
     @Override
     public void cargarTexturas() {
+        texturaFondo = new Texture(Gdx.files.internal("Escenario1Cortado.png"));
+
         texturaMovDer= new Texture[3];
         texturaMovDer[0] = new Texture(Gdx.files.internal("SkullCam1der.png"));
         texturaMovDer[1] = new Texture(Gdx.files.internal("SkullCam2der.png"));
