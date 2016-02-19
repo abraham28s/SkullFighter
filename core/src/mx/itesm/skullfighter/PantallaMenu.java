@@ -20,7 +20,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  */
 
 
-public class PantallaMenu implements Screen {
+public class PantallaMenu implements Screen,PantallaAbstracta {
 
     private final Principal principal;
     private OrthographicCamera camara;
@@ -75,7 +75,7 @@ public class PantallaMenu implements Screen {
         batch = new SpriteBatch();
     }
 
-    private void cargarTexturas() {
+    public void cargarTexturas() {
         texturaFondo = new Texture(Gdx.files.internal("MainMenuSolo.jpg"));
         texturaBtnStory = new Texture(Gdx.files.internal("BotonStory.png"));
         texturaBtnVs = new Texture(Gdx.files.internal("BotonVersus.png"));
@@ -107,26 +107,27 @@ public class PantallaMenu implements Screen {
         batch.end();
     }
 
-    private void leerEntrada() {
+    public void leerEntrada() {
         if(Gdx.input.justTouched()) {
             Vector3 coordenadas = new Vector3();
             coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camara.unproject(coordenadas);  //traduce las coordenadas
             float x = coordenadas.x;
             float y = coordenadas.y;
-            if (verificarBoton(x, y,btnStory)) {
+            if (verificarBoton(x, y, btnStory)) {
                 principal.setScreen(new PantallaJuego(principal));
-            } else if (verificarBoton(x, y,btnVs)) {
+            } else if (verificarBoton(x, y, btnVs)) {
                 Gdx.app.log("leerEntrada", "Tap sobre el botonvs");
-            } else if (verificarBoton(x, y,btnCustom)) {
+            } else if (verificarBoton(x, y, btnCustom)) {
                 Gdx.app.log("leerEntrada", "Tap sobre el boton custom");
-            } else if (verificarBoton(x, y,btnSettings)) {
+            } else if (verificarBoton(x, y, btnSettings)) {
                 Gdx.app.log("leerEntrada", "Tap sobre el boton sett");
             }
         }
     }
 
-    private boolean verificarBoton(float x, float y,BotonMenu btn) {
+    @Override
+    public boolean verificarBoton(float x, float y, BotonMenu btn) {
         Sprite sprite = btn.getSprite();
         return x>=sprite.getX() && x<=sprite.getX()+sprite.getWidth()
                 && y>=sprite.getY() && y<=sprite.getY()+sprite.getHeight();
