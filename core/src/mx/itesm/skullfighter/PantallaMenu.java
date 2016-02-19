@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -52,24 +53,24 @@ public class PantallaMenu implements Screen {
     @Override
     public void show() {
         //Crear camara y vista
-        camara = new OrthographicCamera(EjemploPantalla.ANCHO_MUNDO, EjemploPantalla.ALTO_MUNDO);
-        camara.position.set(EjemploPantalla.ANCHO_MUNDO / 2, EjemploPantalla.ALTO_MUNDO / 2, 0);
+        camara = new OrthographicCamera(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO);
+        camara.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
         camara.update();
-        vista = new StretchViewport(EjemploPantalla.ANCHO_MUNDO,EjemploPantalla.ALTO_MUNDO,camara);
+        vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
 
         cargarTexturas();
         fondo = new Fondo(texturaFondo);
         btnStory = new BotonMenu(texturaBtnStory);
-        btnStory.setPosicion(EjemploPantalla.ANCHO_MUNDO/15,EjemploPantalla.ALTO_MUNDO-(EjemploPantalla.ALTO_MUNDO/4));
+        btnStory.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4));
 
         btnVs = new BotonMenu(texturaBtnVs);
-        btnVs.setPosicion(EjemploPantalla.ANCHO_MUNDO/15,EjemploPantalla.ALTO_MUNDO-(EjemploPantalla.ALTO_MUNDO/4)-143);
+        btnVs.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4) - 143);
 
         btnCustom = new BotonMenu(texturaBtnCustom);
-        btnCustom.setPosicion(EjemploPantalla.ANCHO_MUNDO/15,EjemploPantalla.ALTO_MUNDO-(EjemploPantalla.ALTO_MUNDO/4)-284);
+        btnCustom.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4) - 284);
 
         btnSettings = new BotonMenu(texturaBtnSettings);
-        btnSettings.setPosicion(EjemploPantalla.ANCHO_MUNDO/15,EjemploPantalla.ALTO_MUNDO-(EjemploPantalla.ALTO_MUNDO/4)-431);
+        btnSettings.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4) - 431);
 
         batch = new SpriteBatch();
     }
@@ -107,22 +108,31 @@ public class PantallaMenu implements Screen {
     }
 
     private void leerEntrada() {
-        if(Gdx.input.justTouched()){
+        if(Gdx.input.justTouched()) {
             Vector3 coordenadas = new Vector3();
-            coordenadas.set(Gdx.input.getX(),Gdx.input.getY(),0);
+            coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camara.unproject(coordenadas);  //traduce las coordenadas
             float x = coordenadas.x;
             float y = coordenadas.y;
-            if( verificarBotonStory(x,y)){
-                Gdx.app.log("leerEntrada", "Tap sobre el boton");
+            if (verificarBoton(x, y,btnStory)) {
                 principal.setScreen(new PantallaJuego(principal));
+            } else if (verificarBoton(x, y,btnVs)) {
+                Gdx.app.log("leerEntrada", "Tap sobre el botonvs");
+            } else if (verificarBoton(x, y,btnCustom)) {
+                Gdx.app.log("leerEntrada", "Tap sobre el boton custom");
+            } else if (verificarBoton(x, y,btnSettings)) {
+                Gdx.app.log("leerEntrada", "Tap sobre el boton sett");
             }
         }
     }
 
-    private boolean verificarBotonStory(float x, float y) {
-        return false;
+    private boolean verificarBoton(float x, float y,BotonMenu btn) {
+        Sprite sprite = btn.getSprite();
+        return x>=sprite.getX() && x<=sprite.getX()+sprite.getWidth()
+                && y>=sprite.getY() && y<=sprite.getY()+sprite.getHeight();
     }
+
+
 
     @Override
     public void resize(int width, int height) {
