@@ -117,10 +117,6 @@ public class PantallaJuego implements Screen,PantallaAbstracta {
             if(verificarBoton(x,y,btnIzq)){
                 movimientoIzq();
             }
-
-
-
-
         }
         if(Gdx.input.justTouched()) {
             Vector3 coordenadas = new Vector3();
@@ -133,19 +129,7 @@ public class PantallaJuego implements Screen,PantallaAbstracta {
                     jugador.movimientoBrin();
                 }
             }
-
-
-
-
         }
-
-
-
-
-
-
-
-
     }
 
 
@@ -154,8 +138,10 @@ public class PantallaJuego implements Screen,PantallaAbstracta {
 
         float x = jugador.getSprite().getX();
         float y = jugador.getSprite().getY();
-        jugador.setSprite(texturaMovIzq[con % 3]);
-        con++;
+        if(Gdx.graphics.getDeltaTime()%17<1&&Gdx.graphics.getDeltaTime()%17>0) {
+            jugador.setSprite(texturaMovIzq[con % 3]);
+            con++;
+        }
         jugador.setPosicion(x-5,y);
 
 
@@ -165,8 +151,10 @@ public class PantallaJuego implements Screen,PantallaAbstracta {
     private void movimientoDer() {
         float x = jugador.getSprite().getX();
         float y = jugador.getSprite().getY();
-        jugador.setSprite(texturaMovDer[con%3]);
-        con++;
+        if(Gdx.graphics.getDeltaTime()%17<1&&Gdx.graphics.getDeltaTime()%17>0) {
+            jugador.setSprite(texturaMovDer[con % 3]);
+            con++;
+        }
         jugador.setPosicion(x+5,y);
     }
 

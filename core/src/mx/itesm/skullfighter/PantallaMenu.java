@@ -1,34 +1,32 @@
-
-
 package mx.itesm.skullfighter;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-
-
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 /**
- * Created by abrahamsoto on 12/02/16.
+ * Created by abrahamsoto on 24/02/16.
  */
-
-
-public class PantallaMenu implements Screen,PantallaAbstracta {
+public class PantallaMenu extends Game implements Screen {
 
     private final Principal principal;
-    private OrthographicCamera camara;
-    private Viewport vista;
+    private Stage stage;
 
     private SpriteBatch batch;
 
-    //fondo
+    private Texture blockTexture;
+    private Sprite blockSprite;
+
     private Fondo fondo;
     private Texture texturaFondo;
 
@@ -45,34 +43,10 @@ public class PantallaMenu implements Screen,PantallaAbstracta {
     private BotonMenu btnSettings;
     private Texture texturaBtnSettings;
 
-
     public PantallaMenu(Principal principal) {
+
         this.principal = principal;
-    }
-
-    @Override
-    public void show() {
-        //Crear camara y vista
-        camara = new OrthographicCamera(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO);
-        camara.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
-        camara.update();
-        vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
-
-        cargarTexturas();
-        fondo = new Fondo(texturaFondo);
-        btnStory = new BotonMenu(texturaBtnStory);
-        btnStory.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4));
-
-        btnVs = new BotonMenu(texturaBtnVs);
-        btnVs.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4) - 143);
-
-        btnCustom = new BotonMenu(texturaBtnCustom);
-        btnCustom.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4) - 284);
-
-        btnSettings = new BotonMenu(texturaBtnSettings);
-        btnSettings.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4) - 431);
-
-        batch = new SpriteBatch();
+        stage = new StageMenu();
     }
 
     public void cargarTexturas() {
@@ -84,59 +58,45 @@ public class PantallaMenu implements Screen,PantallaAbstracta {
     }
 
     @Override
+    public void show() {
+        batch = new SpriteBatch();
+
+        blockTexture = new Texture(Gdx.files.internal("block.png"));
+        blockSprite = new Sprite(blockTexture);
+        //Set position to centre of the screen
+        blockSprite.setPosition(Gdx.graphics.getWidth()/2-blockSprite.getWidth()/2, Gdx.graphics.getHeight()/2-blockSprite.getHeight()/2);
+        cargarTexturas();
+
+    }
+
+
+
+    @Override
+    public void create() {
+        stage = new Stage(new FitViewport(1280,720));
+        Gdx.input.setInputProcessor(stage);
+
+        batch = new SpriteBatch();
+
+
+
+    }
+    @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
+        //Clear the screen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-
-        leerEntrada(); // Revisar eventos
-
-
-        batch.setProjectionMatrix(camara.combined);
-
-
-
-        // DIBUJA
+        stage.act(delta);
+        stage.draw();
         batch.begin();
-        fondo.render(batch);
-        btnStory.render(batch);
-        btnVs.render(batch);
-        btnCustom.render(batch);
-        btnSettings.render(batch);
+        blockSprite.draw(batch);
 
         batch.end();
     }
 
-    public void leerEntrada() {
-        if(Gdx.input.justTouched()) {
-            Vector3 coordenadas = new Vector3();
-            coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camara.unproject(coordenadas);  //traduce las coordenadas
-            float x = coordenadas.x;
-            float y = coordenadas.y;
-            if (verificarBoton(x, y, btnStory)) {
-                principal.setScreen(new PantallaJuego(principal));
-            } else if (verificarBoton(x, y, btnVs)) {
-                Gdx.app.log("leerEntrada", "Tap sobre el botonvs");
-            } else if (verificarBoton(x, y, btnCustom)) {
-                Gdx.app.log("leerEntrada", "Tap sobre el boton custom");
-            } else if (verificarBoton(x, y, btnSettings)) {
-                principal.setScreen(new Settings(principal));
-                //Gdx.app.log("leerEntrada", "Tap sobre el boton sett");
-            }
-        }
-    }
-
-    @Override
-    public boolean verificarBoton(float x, float y, BotonMenu btn) {
-        Sprite sprite = btn.getSprite();
-        return x>=sprite.getX() && x<=sprite.getX()+sprite.getWidth()
-                && y>=sprite.getY() && y<=sprite.getY()+sprite.getHeight();
-    }
 
     @Override
     public void resize(int width, int height) {
-
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
@@ -156,8 +116,6 @@ public class PantallaMenu implements Screen,PantallaAbstracta {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
     }
 }
-
-
