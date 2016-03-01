@@ -22,6 +22,14 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  */
 
 public class PantallaJuego implements Screen,PantallaAbstracta {
+
+    public static final float ANCHO_MAPA = 1280;   // Como se creó en Tiled
+
+    // Referencia al objeto de tipo Game (tiene setScreen para cambiar de pantalla)
+
+
+
+
     private final Principal principal;
     private OrthographicCamera camara;
     private Viewport vista;
@@ -43,6 +51,7 @@ public class PantallaJuego implements Screen,PantallaAbstracta {
     private int con = 0;
 
     public PantallaJuego(Principal principal) {
+
         this.principal = principal;
     }
 
@@ -96,12 +105,30 @@ public class PantallaJuego implements Screen,PantallaAbstracta {
         batch.end();
     }
 
+
+
+
+
+    /*private void actualizarCamara() {
+        float posX = mario.getX();
+        // Si está en la parte 'media'
+        if (posX>=Plataforma.ANCHO_CAMARA/2 && posX<=ANCHO_MAPA-Plataforma.ANCHO_CAMARA/2) {
+            // El personaje define el centro de la cámara
+            camara.position.set((int)posX, camara.position.y, 0);
+        } else if (posX>ANCHO_MAPA-Plataforma.ANCHO_CAMARA/2) {    // Si está en la última mitad
+            // La cámara se queda media pantalla antes del fin del mundo  :)
+            camara.position.set(ANCHO_MAPA-Plataforma.ANCHO_CAMARA/2, camara.position.y, 0);
+        }
+        camara.update();
+    }*/
+
     @Override
     public boolean verificarBoton(float x, float y, BotonMenu btn) {
         Sprite sprite = btn.getSprite();
         return x>=sprite.getX() && x<=sprite.getX()+sprite.getWidth()
                 && y>=sprite.getY() && y<=sprite.getY()+sprite.getHeight();
     }
+
 
     @Override
     public void leerEntrada() {

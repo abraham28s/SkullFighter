@@ -13,7 +13,6 @@ public class BotonMenu {
     public BotonMenu(Texture textura){
         sprite = new Sprite(textura);
         sprite.setAlpha(1f);
-
     }
 
     public void render(SpriteBatch batch){
