@@ -1,6 +1,7 @@
 package mx.itesm.skullfighter;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 
 /**
  * Created by abrahamsoto on 17/02/16.
@@ -12,6 +13,7 @@ public class Principal extends Game {
     @Override
     public void create () {
 
-        setScreen(new PantallaMenu(this));
+        setScreen(new PantallaMenuBCUP(this));
     }
+
 }

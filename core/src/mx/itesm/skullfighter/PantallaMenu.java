@@ -10,14 +10,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 /**
  * Created by abrahamsoto on 24/02/16.
  */
-public class PantallaMenu extends Game implements Screen {
+public class PantallaMenu implements Screen {
 
     private final Principal principal;
     private Stage stage;
@@ -31,7 +33,7 @@ public class PantallaMenu extends Game implements Screen {
     private Texture texturaFondo;
 
     //botones
-    private BotonMenu btnStory;
+    private ImageButton btnStory;
     private Texture texturaBtnStory;
 
     private BotonMenu btnVs;
@@ -64,23 +66,23 @@ public class PantallaMenu extends Game implements Screen {
         blockTexture = new Texture(Gdx.files.internal("block.png"));
         blockSprite = new Sprite(blockTexture);
         //Set position to centre of the screen
-        blockSprite.setPosition(Gdx.graphics.getWidth()/2-blockSprite.getWidth()/2, Gdx.graphics.getHeight()/2-blockSprite.getHeight()/2);
+        blockSprite.setPosition(Gdx.graphics.getWidth() / 2 - blockSprite.getWidth() / 2, Gdx.graphics.getHeight() / 2 - blockSprite.getHeight() / 2);
         cargarTexturas();
-
-    }
-
-
-
-    @Override
-    public void create() {
-        stage = new Stage(new FitViewport(1280,720));
+        stage.clear();
         Gdx.input.setInputProcessor(stage);
 
-        batch = new SpriteBatch();
+        //btnStory = new ImageButton();
 
+
+
+
+        stage.addActor(btnStory);
 
 
     }
+
+
+
     @Override
     public void render(float delta) {
         //Clear the screen
@@ -88,7 +90,7 @@ public class PantallaMenu extends Game implements Screen {
         stage.act(delta);
         stage.draw();
         batch.begin();
-        blockSprite.draw(batch);
+
 
         batch.end();
     }

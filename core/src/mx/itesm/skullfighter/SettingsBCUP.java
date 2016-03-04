@@ -20,7 +20,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  */
 
 
-public class Settings implements Screen,PantallaAbstracta {
+public class SettingsBCUP implements Screen,PantallaAbstracta {
 
     private final Principal principal;
     private OrthographicCamera camara;
@@ -36,7 +36,7 @@ public class Settings implements Screen,PantallaAbstracta {
     private BotonMenu btnAD;
     private Texture texturaAD;
 
-    public Settings(Principal principal) {
+    public SettingsBCUP(Principal principal) {
         this.principal = principal;
     }
 

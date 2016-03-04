@@ -121,7 +121,7 @@ public class PantallaMenuBCUP implements Screen,PantallaAbstracta {
             } else if (verificarBoton(x, y, btnCustom)) {
                 Gdx.app.log("leerEntrada", "Tap sobre el boton custom");
             } else if (verificarBoton(x, y, btnSettings)) {
-                principal.setScreen(new Settings(principal));
+                principal.setScreen(new SettingsBCUP(principal));
                 //Gdx.app.log("leerEntrada", "Tap sobre el boton sett");
             }
         }
