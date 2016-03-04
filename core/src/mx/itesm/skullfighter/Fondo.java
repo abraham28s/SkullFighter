@@ -12,7 +12,7 @@ public class Fondo {
     public Fondo(Texture textura){
         sprite = new Sprite(textura);
         sprite.setAlpha(1f);
-        //1qqq
+        //1qqsdsd
 
     }
 
