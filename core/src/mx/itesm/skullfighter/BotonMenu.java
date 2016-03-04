@@ -15,6 +15,8 @@ public class BotonMenu {
         sprite.setAlpha(1f);
     }
 
+    /**/
+
     public void render(SpriteBatch batch){
         sprite.draw(batch);
     }
