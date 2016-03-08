@@ -104,26 +104,26 @@ public class PantallaMenu implements Screen,PantallaAbstracta {
     @Override
     public void render(float delta) {
         contador++;
-        fondo.setTextura(texturaTec);
-        if(contador<100){
+        batch.setProjectionMatrix(camara.combined);
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        if(contador<120){
+            fondo.setTextura(texturaTec);
             batch.begin();
             fondo.render(batch);
             batch.end();
-        }else if (contador>100&&contador<300) {
+        }else if (contador>120&&contador<300) {
             fondo.setTextura(texturaTit);
             batch.begin();
             fondo.render(batch);
             batch.end();
-        }else {
+        } else {
             fondo.setTextura(texturaFondo);
-            Gdx.gl.glClearColor(1, 1, 1, 1);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 
 
             leerEntrada(); // Revisar eventos
-
-
-            batch.setProjectionMatrix(camara.combined);
 
 
             // DIBUJA

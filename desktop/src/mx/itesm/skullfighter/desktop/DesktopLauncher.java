@@ -12,7 +12,7 @@ public class DesktopLauncher {
 	public static void main (String[] arg) throws IOException {
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		TexturePacker.process("Imagenes", "Imagenes", "game");
+		//TexturePacker.process("Imagenes", "Imagenes", "game");
 
 
 
