@@ -13,7 +13,7 @@ public class Principal extends Game {
     @Override
     public void create () {
 
-        setScreen(new PantallaMenuBCUP(this));
+        setScreen(new PantallaMenu(this));
     }
 
 }
