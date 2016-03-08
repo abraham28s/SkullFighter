@@ -45,6 +45,8 @@ public class PantallaMenu implements Screen,PantallaAbstracta {
     private Boton btnSettings;
     private Texture texturaBtnSettings;
 
+    private int contador;
+
 
     public PantallaMenu(Principal principal) {
         this.principal = principal;
@@ -64,6 +66,7 @@ public class PantallaMenu implements Screen,PantallaAbstracta {
     }
 
     public void cargarTexturas() {
+
         texturaFondo = new Texture(Gdx.files.internal("MainMenuSolo.jpg"));
         texturaBtnStory = new Texture(Gdx.files.internal("BotonStory.png"));
         texturaBtnVs = new Texture(Gdx.files.internal("BotonVersus.png"));
@@ -132,7 +135,7 @@ public class PantallaMenu implements Screen,PantallaAbstracta {
             } else if (verificarBoton(x, y, btnCustom)) {
                 Gdx.app.log("leerEntrada", "Tap sobre el boton custom");
             } else if (verificarBoton(x, y, btnSettings)) {
-                //principal.setScreen(new SettingsBCUP(principal));
+                principal.setScreen(new Sett(principal));
                 Gdx.app.log("leerEntrada", "Tap sobre el boton sett");
             }
         }
