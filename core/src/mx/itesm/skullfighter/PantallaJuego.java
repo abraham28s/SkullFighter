@@ -168,8 +168,6 @@ public class PantallaJuego implements Screen,PantallaAbstracta {
         }
         jugador.setPosicion(x-5,y);
 
-
-
     }
 
     private void movimientoDer() {
@@ -184,7 +182,7 @@ public class PantallaJuego implements Screen,PantallaAbstracta {
 
     @Override
     public void cargarTexturas() {
-        texturaFondo = new Texture(Gdx.files.internal("Escenario1Cortado.png"));
+        texturaFondo = new Texture(Gdx.files.internal("Escenario1Cortado.jpg"));
 
         texturaMovDer= new Texture[3];
         texturaMovDer[0] = new Texture(Gdx.files.internal("SkullCam1der.png"));
@@ -198,7 +196,7 @@ public class PantallaJuego implements Screen,PantallaAbstracta {
 
         texturaBtnDer = new Texture(Gdx.files.internal("botonder.png"));
         texturaBtnIzq = new Texture(Gdx.files.internal("botonizq.png"));
-        texturaBtnBrin = new Texture(Gdx.files.internal("touchBackground.png"));
+        texturaBtnBrin = new Texture(Gdx.files.internal("Escenario1Cortado.jpg"));
     }
 
     @Override

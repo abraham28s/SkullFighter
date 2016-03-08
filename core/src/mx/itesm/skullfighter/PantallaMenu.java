@@ -149,8 +149,10 @@ public class PantallaMenu implements Screen,PantallaAbstracta {
                 principal.setScreen(new PantallaJuego(principal));
             } else if (verificarBoton(x, y, btnVs)) {
                 Gdx.app.log("leerEntrada", "Tap sobre el botonvs");
+                principal.setScreen(new Versus(principal));
             } else if (verificarBoton(x, y, btnCustom)) {
                 Gdx.app.log("leerEntrada", "Tap sobre el boton custom");
+                principal.setScreen(new Costumize(principal));
             } else if (verificarBoton(x, y, btnSettings)) {
                 principal.setScreen(new Sett(principal));
                 Gdx.app.log("leerEntrada", "Tap sobre el boton sett");
