@@ -1,18 +1,14 @@
 
 package mx.itesm.skullfighter;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -41,10 +37,10 @@ public class PantallaJuego implements Screen,PantallaAbstracta {
     private Texture texturaFondo;
     private Texture texturaBtnDer;
     private Texture texturaBtnIzq;
-    private BotonMenu btnDer;
-    private BotonMenu btnIzq;
+    private Boton btnDer;
+    private Boton btnIzq;
     private Texture texturaBtnBrin;
-    private BotonMenu btnBrin;
+    private Boton btnBrin;
     private Personaje jugador;
     private Texture[] texturaMovDer;
     private Texture[] texturaMovIzq;
@@ -57,10 +53,8 @@ public class PantallaJuego implements Screen,PantallaAbstracta {
 
     @Override
     public void show() {
-        camara = new OrthographicCamera(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO);
-        camara.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
-        camara.update();
-        vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
+        setYUpgradeCamara();
+
 
         cargarTexturas();
 
@@ -69,14 +63,28 @@ public class PantallaJuego implements Screen,PantallaAbstracta {
         jugador = new Personaje(texturaMovDer[0]);
         jugador.setPosicion(75, 150);
 
-        btnDer = new BotonMenu(texturaBtnDer);
+        crearYPosBotones();
+
+
+    }
+
+
+    public void crearYPosBotones() {
+        btnDer = new Boton(texturaBtnDer);
         btnDer.setPosicion(200, 40);
-        btnIzq = new BotonMenu(texturaBtnIzq);
+        btnIzq = new Boton(texturaBtnIzq);
         btnIzq.setPosicion(50, 40);
-        btnBrin = new BotonMenu(texturaBtnBrin);
+        btnBrin = new Boton(texturaBtnBrin);
         btnBrin.setPosicion(1100, 40);
         batch = new SpriteBatch();
+    }
 
+    @Override
+    public void setYUpgradeCamara() {
+        camara = new OrthographicCamera(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO);
+        camara.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
+        camara.update();
+        vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
     }
 
     @Override
@@ -109,21 +117,9 @@ public class PantallaJuego implements Screen,PantallaAbstracta {
 
 
 
-    /*private void actualizarCamara() {
-        float posX = mario.getX();
-        // Si está en la parte 'media'
-        if (posX>=Plataforma.ANCHO_CAMARA/2 && posX<=ANCHO_MAPA-Plataforma.ANCHO_CAMARA/2) {
-            // El personaje define el centro de la cámara
-            camara.position.set((int)posX, camara.position.y, 0);
-        } else if (posX>ANCHO_MAPA-Plataforma.ANCHO_CAMARA/2) {    // Si está en la última mitad
-            // La cámara se queda media pantalla antes del fin del mundo  :)
-            camara.position.set(ANCHO_MAPA-Plataforma.ANCHO_CAMARA/2, camara.position.y, 0);
-        }
-        camara.update();
-    }*/
 
     @Override
-    public boolean verificarBoton(float x, float y, BotonMenu btn) {
+    public boolean verificarBoton(float x, float y, Boton btn) {
         Sprite sprite = btn.getSprite();
         return x>=sprite.getX() && x<=sprite.getX()+sprite.getWidth()
                 && y>=sprite.getY() && y<=sprite.getY()+sprite.getHeight();
@@ -132,6 +128,7 @@ public class PantallaJuego implements Screen,PantallaAbstracta {
 
     @Override
     public void leerEntrada() {
+        btnIzq.estaTocado();
         if(Gdx.input.isTouched()) {
             Vector3 coordenadas = new Vector3();
             coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);

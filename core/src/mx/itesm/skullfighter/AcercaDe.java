@@ -25,7 +25,7 @@ public class AcercaDe implements Screen {
     private Texture texturaFondo;
 
     //Botoones
-    private BotonMenu btnPlay;
+    private Boton btnPlay;
     private Texture texturaBtnPlay;
 
     public AcercaDe(Principal principal) {
@@ -44,7 +44,7 @@ public class AcercaDe implements Screen {
         fondo = new Fondo(texturaFondo);
         //botones nombres
 
-        btnPlay = new BotonMenu(texturaBtnPlay);
+        btnPlay = new Boton(texturaBtnPlay);
         btnPlay.setPosicion(20, 20);
         //btnPlay.setPosicion(200, 200);
 

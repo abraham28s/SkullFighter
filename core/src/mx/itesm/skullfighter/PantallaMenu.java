@@ -33,16 +33,16 @@ public class PantallaMenu implements Screen,PantallaAbstracta {
     private Texture texturaFondo;
 
     //botones
-    private BotonMenu btnStory;
+    private Boton btnStory;
     private Texture texturaBtnStory;
 
-    private BotonMenu btnVs;
+    private Boton btnVs;
     private Texture texturaBtnVs;
 
-    private BotonMenu btnCustom;
+    private Boton btnCustom;
     private Texture texturaBtnCustom;
 
-    private BotonMenu btnSettings;
+    private Boton btnSettings;
     private Texture texturaBtnSettings;
 
 
@@ -53,24 +53,12 @@ public class PantallaMenu implements Screen,PantallaAbstracta {
     @Override
     public void show() {
         //Crear camara y vista
-        camara = new OrthographicCamera(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO);
-        camara.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
-        camara.update();
-        vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
+        setYUpgradeCamara();
 
         cargarTexturas();
         fondo = new Fondo(texturaFondo);
-        btnStory = new BotonMenu(texturaBtnStory);
-        btnStory.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4));
 
-        btnVs = new BotonMenu(texturaBtnVs);
-        btnVs.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4) - 143);
-
-        btnCustom = new BotonMenu(texturaBtnCustom);
-        btnCustom.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4) - 284);
-
-        btnSettings = new BotonMenu(texturaBtnSettings);
-        btnSettings.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4) - 431);
+        crearYPosBotones();
 
         batch = new SpriteBatch();
     }
@@ -81,6 +69,29 @@ public class PantallaMenu implements Screen,PantallaAbstracta {
         texturaBtnVs = new Texture(Gdx.files.internal("BotonVersus.png"));
         texturaBtnCustom = new Texture(Gdx.files.internal("BotonCustomize.png"));
         texturaBtnSettings = new Texture(Gdx.files.internal("BotonSettings.png"));
+    }
+
+    @Override
+    public void crearYPosBotones() {
+        btnStory = new Boton(texturaBtnStory);
+        btnStory.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4));
+
+        btnVs = new Boton(texturaBtnVs);
+        btnVs.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4) - 143);
+
+        btnCustom = new Boton(texturaBtnCustom);
+        btnCustom.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4) - 284);
+
+        btnSettings = new Boton(texturaBtnSettings);
+        btnSettings.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4) - 431);
+    }
+
+    @Override
+    public void setYUpgradeCamara() {
+        camara = new OrthographicCamera(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO);
+        camara.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
+        camara.update();
+        vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
     }
 
     @Override
@@ -128,7 +139,7 @@ public class PantallaMenu implements Screen,PantallaAbstracta {
     }
 
     @Override
-    public boolean verificarBoton(float x, float y, BotonMenu btn) {
+    public boolean verificarBoton(float x, float y, Boton btn) {
         Sprite sprite = btn.getSprite();
         return x>=sprite.getX() && x<=sprite.getX()+sprite.getWidth()
                 && y>=sprite.getY() && y<=sprite.getY()+sprite.getHeight();
