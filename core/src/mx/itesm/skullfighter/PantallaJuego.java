@@ -182,7 +182,7 @@ public class PantallaJuego implements Screen,PantallaAbstracta {
 
     @Override
     public void cargarTexturas() {
-        texturaFondo = new Texture(Gdx.files.internal("Escenario1Cortado.jpg"));
+        texturaFondo = new Texture(Gdx.files.internal("Escenario1Cortado.png"));
 
         texturaMovDer= new Texture[3];
         texturaMovDer[0] = new Texture(Gdx.files.internal("SkullCam1der.png"));
@@ -196,7 +196,7 @@ public class PantallaJuego implements Screen,PantallaAbstracta {
 
         texturaBtnDer = new Texture(Gdx.files.internal("botonder.png"));
         texturaBtnIzq = new Texture(Gdx.files.internal("botonizq.png"));
-        texturaBtnBrin = new Texture(Gdx.files.internal("Escenario1Cortado.jpg"));
+        texturaBtnBrin = new Texture(Gdx.files.internal("Escenario1Cortado.png"));
     }
 
     @Override
