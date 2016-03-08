@@ -45,7 +45,9 @@ public class PantallaMenu implements Screen,PantallaAbstracta {
     private Boton btnSettings;
     private Texture texturaBtnSettings;
 
-    private int contador;
+    private int contador=1;
+    private Texture texturaTec;
+    private Texture texturaTit;
 
 
     public PantallaMenu(Principal principal) {
@@ -58,7 +60,7 @@ public class PantallaMenu implements Screen,PantallaAbstracta {
         setYUpgradeCamara();
 
         cargarTexturas();
-        fondo = new Fondo(texturaFondo);
+        fondo = new Fondo(texturaTec);
 
         crearYPosBotones();
 
@@ -68,6 +70,8 @@ public class PantallaMenu implements Screen,PantallaAbstracta {
     public void cargarTexturas() {
 
         texturaFondo = new Texture(Gdx.files.internal("MainMenuSolo.jpg"));
+        texturaTec = new Texture(Gdx.files.internal("PantallaConLogo.jpg"));
+        texturaTit = new Texture(Gdx.files.internal("PantallaNomJuego.jpg"));
         texturaBtnStory = new Texture(Gdx.files.internal("BotonStory.png"));
         texturaBtnVs = new Texture(Gdx.files.internal("BotonVersus.png"));
         texturaBtnCustom = new Texture(Gdx.files.internal("BotonCustomize.png"));
@@ -99,26 +103,39 @@ public class PantallaMenu implements Screen,PantallaAbstracta {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        contador++;
+        fondo.setTextura(texturaTec);
+        if(contador<100){
+            batch.begin();
+            fondo.render(batch);
+            batch.end();
+        }else if (contador>100&&contador<300) {
+            fondo.setTextura(texturaTit);
+            batch.begin();
+            fondo.render(batch);
+            batch.end();
+        }else {
+            fondo.setTextura(texturaFondo);
+            Gdx.gl.glClearColor(1, 1, 1, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
-        leerEntrada(); // Revisar eventos
+            leerEntrada(); // Revisar eventos
 
 
-        batch.setProjectionMatrix(camara.combined);
+            batch.setProjectionMatrix(camara.combined);
 
 
+            // DIBUJA
+            batch.begin();
+            fondo.render(batch);
+            btnStory.render(batch);
+            btnVs.render(batch);
+            btnCustom.render(batch);
+            btnSettings.render(batch);
 
-        // DIBUJA
-        batch.begin();
-        fondo.render(batch);
-        btnStory.render(batch);
-        btnVs.render(batch);
-        btnCustom.render(batch);
-        btnSettings.render(batch);
-
-        batch.end();
+            batch.end();
+        }
     }
 
     public void leerEntrada() {
