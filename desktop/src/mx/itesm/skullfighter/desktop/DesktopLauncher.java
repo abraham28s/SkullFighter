@@ -17,5 +17,17 @@ public class DesktopLauncher {
 
 
 		new LwjglApplication(new Principal(), config);
+
+
 	}
+	/*public static void main (String[] args) throws IOException {
+        Settings settings = new Settings();
+        settings.maxWidth = 512;
+        settings.maxHeight = 512;
+        TexturePacker.process(settings, "../images", "../game-android/assets", "game");
+
+        new LwjglApplication(new Game(), "Game", 320, 480, false);
+    }*/
+
+
 }
