@@ -77,6 +77,7 @@ public class P2 implements Screen {
 
     @Override
     public void dispose() {
-
+        texturaFondo.dispose();
+        batch.dispose();
     }
 }
