@@ -26,7 +26,7 @@ public class AcercaDe extends PantallaAbstracta implements Screen {
 
     //Botoones
     private Boton btnPlay;
-    private Texture texturaBtnPlay;
+    private Texture texturaBtnBack;
 
     public AcercaDe(Principal principal) {
         this.Principal = principal;
@@ -44,7 +44,7 @@ public class AcercaDe extends PantallaAbstracta implements Screen {
         fondo = new Fondo(texturaFondo);
         //botones nombres
 
-        btnPlay = new Boton(texturaBtnPlay);
+        btnPlay = new Boton(texturaBtnBack);
         btnPlay.setPosicion(20, 20);
         //btnPlay.setPosicion(200, 200);
 
@@ -54,7 +54,7 @@ public class AcercaDe extends PantallaAbstracta implements Screen {
     public void cargarTexturas() {
 
         texturaFondo=new Texture(Gdx.files.internal("AboutMenu.jpg")); //AcercaDe.png
-        texturaBtnPlay = new Texture((Gdx.files.internal("touchBackground.png"))); //acerca de
+        texturaBtnBack = new Texture((Gdx.files.internal("BackGame.png"))); //acerca de
     }
 
     @Override
@@ -92,7 +92,7 @@ public class AcercaDe extends PantallaAbstracta implements Screen {
             if(verificarBoton(x,y,btnPlay)==true){
                 Gdx.app.log("leerEntrada","TAp sobre el boton");
                 //cambiar a pantalla de jugar
-                Principal.setScreen(new PantallaJuego(Principal));
+                Principal.setScreen(new Sett(Principal));
             }
         }
     }

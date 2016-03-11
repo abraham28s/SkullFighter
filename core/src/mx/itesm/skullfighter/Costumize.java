@@ -45,7 +45,7 @@ public class Costumize implements Screen {
         //botones nombres
 
         btnBack = new Boton(texturaBack);
-        btnBack.setPosicion(20, 20);
+        btnBack.setPosicion(40, 40);
         //btnPlay.setPosicion(200, 200);
 
         batch = new SpriteBatch();
