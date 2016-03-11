@@ -54,7 +54,7 @@ public class Versus extends PantallaAbstracta implements Screen {
     public void cargarTexturas() {
 
         texturaFondo=new Texture(Gdx.files.internal("AboutMenu.jpg"));
-        texturaBack = new Texture((Gdx.files.internal("botonder.png")));
+        texturaBack = new Texture((Gdx.files.internal("BackGame.png")));
     }
 
     @Override
