@@ -54,7 +54,7 @@ public class Costumize implements Screen {
     private void cargarTexturas() {
 
         texturaFondo=new Texture(Gdx.files.internal("MainMenuSolo.jpg"));
-        texturaBack = new Texture((Gdx.files.internal("botonizq.png")));
+        texturaBack = new Texture((Gdx.files.internal("BackMenu.png")));
     }
 
     @Override

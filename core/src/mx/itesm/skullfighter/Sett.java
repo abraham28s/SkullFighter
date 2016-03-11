@@ -94,8 +94,8 @@ public class Sett extends PantallaAbstracta implements Screen{
 
         texturaFondo = new Texture(Gdx.files.internal("MainMenuSolo.jpg"));
         texturaAD = new Texture(Gdx.files.internal("Boton ayuda.png"));
-        TextureMusic = new Texture(Gdx.files.internal("musica.jpg"));
-        TextureReturn = new Texture(Gdx.files.internal("return.png"));
+        TextureMusic = new Texture(Gdx.files.internal("Oz2.png"));
+        TextureReturn = new Texture(Gdx.files.internal("BackMenu.png"));
 
     }
 
