@@ -45,9 +45,7 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
     private Boton btnSettings;
     private Texture texturaBtnSettings;
 
-    private int contador=1;
-    private Texture texturaTec;
-    private Texture texturaTit;
+
 
 
     public PantallaMenu(Principal principal) {
@@ -60,7 +58,7 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
         setYUpgradeCamara();
 
         cargarTexturas();
-        fondo = new Fondo(texturaTec);
+        fondo = new Fondo(texturaFondo);
 
         crearYPosBotones();
 
@@ -70,8 +68,7 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
     public void cargarTexturas() {
 
         texturaFondo = new Texture(Gdx.files.internal("MainMenuSolo.jpg"));
-        texturaTec = new Texture(Gdx.files.internal("PantallaConLogo.jpg"));
-        texturaTit = new Texture(Gdx.files.internal("PantallaNomJuego.jpg"));
+
         texturaBtnStory = new Texture(Gdx.files.internal("BotonStory.png"));
         texturaBtnVs = new Texture(Gdx.files.internal("BotonVersus.png"));
         texturaBtnCustom = new Texture(Gdx.files.internal("BotonCustomize.png"));
@@ -103,23 +100,15 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
 
     @Override
     public void render(float delta) {
-        contador++;
+
         batch.setProjectionMatrix(camara.combined);
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if(contador<120){
-            fondo.setTextura(texturaTec);
-            batch.begin();
-            fondo.render(batch);
-            batch.end();
-        }else if (contador>120&&contador<300) {
-            fondo.setTextura(texturaTit);
-            batch.begin();
-            fondo.render(batch);
-            batch.end();
-        } else {
-            fondo.setTextura(texturaFondo);
+
+
+
+
 
 
 
@@ -135,7 +124,7 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
             btnSettings.render(batch);
 
             batch.end();
-        }
+
     }
 
     public void leerEntrada() {
