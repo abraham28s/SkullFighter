@@ -125,12 +125,13 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     @Override
     public void leerEntrada() {
         btnIzq.estaTocado();
+        Vector3 coordenadas = new Vector3();
+        coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camara.unproject(coordenadas);  //traduce las coordenadas
+        float x = coordenadas.x;
+        float y = coordenadas.y;
+
         if(Gdx.input.isTouched()) {
-            Vector3 coordenadas = new Vector3();
-            coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camara.unproject(coordenadas);  //traduce las coordenadas
-            float x = coordenadas.x;
-            float y = coordenadas.y;
             if(verificarBoton(x,y,btnDer)){
                 movimientoDer();
             }
@@ -139,12 +140,21 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
             }
         }
         if(Gdx.input.justTouched()) {
-            Vector3 coordenadas = new Vector3();
-            coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camara.unproject(coordenadas);  //traduce las coordenadas
-            float x = coordenadas.x;
-            float y = coordenadas.y;
             if(verificarBoton(x, y, btnBrin)){
+                if(jugador.getEstado() == Personaje.Estado.NORMAL) {
+                    jugador.movimientoBrin();
+                }
+            }
+        }
+        if(Gdx.input.justTouched() &&Gdx.input.isTouched()){
+            if(verificarBoton(x,y,btnDer) && verificarBoton(x, y, btnBrin)){
+                movimientoDer();
+                if(jugador.getEstado() == Personaje.Estado.NORMAL) {
+                    jugador.movimientoBrin();
+                }
+            }
+            if(verificarBoton(x,y,btnIzq)&& verificarBoton(x, y, btnBrin)){
+                movimientoIzq();
                 if(jugador.getEstado() == Personaje.Estado.NORMAL) {
                     jugador.movimientoBrin();
                 }
@@ -158,7 +168,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
         float x = jugador.getSprite().getX();
         float y = jugador.getSprite().getY();
-        if(Gdx.graphics.getDeltaTime()%17<1&&Gdx.graphics.getDeltaTime()%17>0) {
+        if(Gdx.graphics.getDeltaTime()%30<1&&Gdx.graphics.getDeltaTime()%30>0) {
             jugador.setSprite(texturaMovIzq[con % 3]);
             con++;
         }
@@ -169,7 +179,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     private void movimientoDer() {
         float x = jugador.getSprite().getX();
         float y = jugador.getSprite().getY();
-        if(Gdx.graphics.getDeltaTime()%17<1&&Gdx.graphics.getDeltaTime()%17>0) {
+        if(Gdx.graphics.getDeltaTime()%30<1&&Gdx.graphics.getDeltaTime()%30>0) {
             jugador.setSprite(texturaMovDer[con % 3]);
             con++;
         }
@@ -192,7 +202,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
         texturaBtnDer = new Texture(Gdx.files.internal("botonder.png"));
         texturaBtnIzq = new Texture(Gdx.files.internal("botonizq.png"));
-        texturaBtnBrin = new Texture(Gdx.files.internal("Escenario1Cortado.png"));
+        texturaBtnBrin = new Texture(Gdx.files.internal("touchBackground.png"));
     }
 
     @Override

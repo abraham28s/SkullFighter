@@ -3,8 +3,10 @@ package mx.itesm.skullfighter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  * Created by abrahamsoto on 18/02/16.
@@ -15,10 +17,18 @@ public class Personaje {
     private float alturaActual;
     private Estado estado;
     private float alturaMax,alturaInicial;
-
+    private float timerAnimacion;
+    private com.badlogic.gdx.graphics.g2d.Animation animacion;
 
 
     public Personaje(Texture textura){
+        /*TextureRegion[][] texturaPersonaje =  new TextureRegion(textura).split(16,32);
+        animacion = new Animation(0.25f,texturaPersonaje[0][3],texturaPersonaje[0][2],texturaPersonaje[0][1] );
+        animacion.setPlayMode(Animation.PlayMode.LOOP);
+        timerAnimacion = 0;
+        sprite = new Sprite(texturaPersonaje[0][0]);*/
+
+
         sprite = new Sprite(textura);
         sprite.setAlpha(1f);
         this.alturaInicial = sprite.getY();
@@ -84,6 +94,7 @@ public class Personaje {
 
         }
     }
+
 
     public Estado getEstado() {
         return estado;

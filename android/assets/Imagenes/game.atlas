@@ -1,0 +1,27 @@
+
+game.png
+size: 128,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+SkullCam1der
+  rotate: false
+  xy: 2, 326
+  size: 120, 160
+  orig: 120, 160
+  offset: 0, 0
+  index: -1
+SkullCam2der
+  rotate: false
+  xy: 2, 164
+  size: 120, 160
+  orig: 120, 160
+  offset: 0, 0
+  index: -1
+SkullCam3der
+  rotate: false
+  xy: 2, 2
+  size: 120, 160
+  orig: 120, 160
+  offset: 0, 0
+  index: -1
