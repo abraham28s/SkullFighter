@@ -93,8 +93,8 @@ public class Sett extends PantallaAbstracta implements Screen{
     public void cargarTexturas() {
 
         texturaFondo = new Texture(Gdx.files.internal("MainMenuSolo.jpg"));
-        texturaAD = new Texture(Gdx.files.internal("Boton ayuda.png"));
-        TextureMusic = new Texture(Gdx.files.internal("Oz2.png"));
+        texturaAD = new Texture(Gdx.files.internal("BotonSettings.png"));
+        TextureMusic = new Texture(Gdx.files.internal("BotonSettings.png"));
         TextureReturn = new Texture(Gdx.files.internal("BackMenu.png"));
 
     }
@@ -126,7 +126,7 @@ public class Sett extends PantallaAbstracta implements Screen{
         musicAD = new Boton(TextureMusic);
         musicAD.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 2));
         returnAD = new Boton(TextureReturn);
-        returnAD.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 1));
+        returnAD.setPosicion(30,30);
 
     }
 
