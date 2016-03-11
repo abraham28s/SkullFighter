@@ -20,7 +20,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  */
 
 
-public class PantallaMenu implements Screen,PantallaAbstracta {
+public class PantallaMenu extends PantallaAbstracta implements Screen {
 
     private final Principal principal;
     private OrthographicCamera camara;
@@ -160,12 +160,7 @@ public class PantallaMenu implements Screen,PantallaAbstracta {
         }
     }
 
-    @Override
-    public boolean verificarBoton(float x, float y, Boton btn) {
-        Sprite sprite = btn.getSprite();
-        return x>=sprite.getX() && x<=sprite.getX()+sprite.getWidth()
-                && y>=sprite.getY() && y<=sprite.getY()+sprite.getHeight();
-    }
+
 
     @Override
     public void resize(int width, int height) {

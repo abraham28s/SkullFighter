@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 /**
  * Created by Fer on 18/02/2016.
  */
-public class AcercaDe implements Screen {
+public class AcercaDe extends PantallaAbstracta implements Screen {
 
     private final Principal Principal;
     private OrthographicCamera camara;
@@ -51,10 +51,20 @@ public class AcercaDe implements Screen {
         batch = new SpriteBatch();
     }
 
-    private void cargarTexturas() {
+    public void cargarTexturas() {
 
         texturaFondo=new Texture(Gdx.files.internal("AboutMenu.jpg")); //AcercaDe.png
         texturaBtnPlay = new Texture((Gdx.files.internal("touchBackground.png"))); //acerca de
+    }
+
+    @Override
+    void crearYPosBotones() {
+
+    }
+
+    @Override
+    void setYUpgradeCamara() {
+
     }
 
     @Override
@@ -72,14 +82,14 @@ public class AcercaDe implements Screen {
         batch.end();
     }
 
-    private void leerEntrada() {
+    public void leerEntrada() {
         if(Gdx.input.justTouched()){//saber si el usuario toca
             Vector3 coordenadas = new Vector3();
             coordenadas.set(Gdx.input.getX(),Gdx.input.getY(),0);
             camara.unproject(coordenadas);//TRaduce coordenadas
             float x = coordenadas.x;
             float y = coordenadas.y;
-            if(verificarBoton(x,y)==true){
+            if(verificarBoton(x,y,btnPlay)==true){
                 Gdx.app.log("leerEntrada","TAp sobre el boton");
                 //cambiar a pantalla de jugar
                 Principal.setScreen(new PantallaJuego(Principal));
@@ -87,12 +97,7 @@ public class AcercaDe implements Screen {
         }
     }
 
-    private boolean verificarBoton(float x, float y) {
-        Sprite sprite = btnPlay.getSprite();
 
-        return x>sprite.getX() && x<=sprite.getX()+sprite.getWidth()
-                && y>=sprite.getY() && y<=sprite.getY()+sprite.getHeight();
-    }
 
     @Override
     public void resize(int width, int height) {

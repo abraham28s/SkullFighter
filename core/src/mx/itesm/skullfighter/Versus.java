@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 /**
  * Created by Fer on 08/03/2016.
  */
-public class Versus implements Screen {
+public class Versus extends PantallaAbstracta implements Screen {
 
     private final Principal Principal;
     private OrthographicCamera camara;
@@ -51,10 +51,20 @@ public class Versus implements Screen {
         batch = new SpriteBatch();
     }
 
-    private void cargarTexturas() {
+    public void cargarTexturas() {
 
         texturaFondo=new Texture(Gdx.files.internal("AboutMenu.jpg"));
         texturaBack = new Texture((Gdx.files.internal("botonder.png")));
+    }
+
+    @Override
+    void crearYPosBotones() {
+
+    }
+
+    @Override
+    void setYUpgradeCamara() {
+
     }
 
     @Override
@@ -72,7 +82,7 @@ public class Versus implements Screen {
         batch.end();
     }
 
-    private void leerEntrada() {
+    public void leerEntrada() {
         if(Gdx.input.justTouched()){//saber si el usuario toca
             Vector3 coordenadas = new Vector3();
             coordenadas.set(Gdx.input.getX(),Gdx.input.getY(),0);
@@ -87,7 +97,7 @@ public class Versus implements Screen {
         }
     }
 
-    private boolean verificarBoton(float x, float y, Boton btn) {
+    public boolean verificarBoton(float x, float y, Boton btn) {
         Sprite sprite = btnBack.getSprite();
 
         return x>sprite.getX() && x<=sprite.getX()+sprite.getWidth()

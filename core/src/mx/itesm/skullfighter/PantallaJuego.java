@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * Created by abrahamsoto on 17/02/16.
  */
 
-public class PantallaJuego implements Screen,PantallaAbstracta {
+public class PantallaJuego extends PantallaAbstracta implements Screen {
 
     public static final float ANCHO_MAPA = 1280;   // Como se creó en Tiled
 
@@ -118,12 +118,8 @@ public class PantallaJuego implements Screen,PantallaAbstracta {
 
 
 
-    @Override
-    public boolean verificarBoton(float x, float y, Boton btn) {
-        Sprite sprite = btn.getSprite();
-        return x>=sprite.getX() && x<=sprite.getX()+sprite.getWidth()
-                && y>=sprite.getY() && y<=sprite.getY()+sprite.getHeight();
-    }
+
+
 
 
     @Override

@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 /**
  * Created by abrahamsoto on 08/03/16.
  */
-public class Sett implements Screen,PantallaAbstracta{
+public class Sett extends PantallaAbstracta implements Screen{
 
     private final Principal principal;
     private OrthographicCamera camara;
