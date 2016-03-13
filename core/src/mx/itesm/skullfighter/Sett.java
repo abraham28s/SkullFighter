@@ -2,6 +2,7 @@ package mx.itesm.skullfighter;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -33,6 +34,9 @@ public class Sett extends PantallaAbstracta implements Screen{
     private Texture TextureMusic;
     private Boton returnAD;
     private Texture TextureReturn;
+
+    //Musica
+
 
 
     public Sett(Principal principal) {
@@ -75,6 +79,7 @@ public class Sett extends PantallaAbstracta implements Screen{
             }
         }
 
+
         if(Gdx.input.justTouched()) {
             Vector3 coordenadas = new Vector3();
             coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -89,12 +94,14 @@ public class Sett extends PantallaAbstracta implements Screen{
 
     }
 
+
+
     @Override
     public void cargarTexturas() {
 
         texturaFondo = new Texture(Gdx.files.internal("MainMenuSolo.jpg"));
         texturaAD = new Texture(Gdx.files.internal("BotonSettings.png"));
-        TextureMusic = new Texture(Gdx.files.internal("BotonSettings.png"));
+        TextureMusic = new Texture(Gdx.files.internal("musica.jpg"));
         TextureReturn = new Texture(Gdx.files.internal("BackMenu.png"));
 
     }
@@ -126,11 +133,16 @@ public class Sett extends PantallaAbstracta implements Screen{
         musicAD = new Boton(TextureMusic);
         musicAD.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 2));
         returnAD = new Boton(TextureReturn);
-        returnAD.setPosicion(30,30);
+        returnAD.setPosicion(30, 30);
+
 
         //Prueba boton
 
+
+
     }
+
+
 
     @Override
     public void render(float delta) {
@@ -181,4 +193,6 @@ public class Sett extends PantallaAbstracta implements Screen{
     public void dispose() {
 
     }
+
+
 }

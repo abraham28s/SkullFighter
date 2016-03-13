@@ -2,6 +2,7 @@ package mx.itesm.skullfighter;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,6 +20,9 @@ public class P2 implements Screen {
     private SpriteBatch batch;
     private OrthographicCamera camara;
     private StretchViewport vista;
+
+    //Música
+    public Music musicaFondo;
 
     private int cont = 0;
 
@@ -39,6 +43,8 @@ public class P2 implements Screen {
         camara.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
         camara.update();
         vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
+
+        cargarAudio();
     }
 
     @Override
@@ -53,6 +59,14 @@ public class P2 implements Screen {
         if(cont>150){
             principal.setScreen(new PantallaMenu(principal));
         }
+    }
+
+    public void cargarAudio() {
+        //Musica
+        musicaFondo = Gdx.audio.newMusic(Gdx.files.internal("WarDrum.mp3"));
+        musicaFondo.setLooping(true);
+        musicaFondo.play();
+
     }
 
     @Override

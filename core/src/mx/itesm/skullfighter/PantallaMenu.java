@@ -4,6 +4,7 @@ package mx.itesm.skullfighter;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -21,6 +22,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 
 public class PantallaMenu extends PantallaAbstracta implements Screen {
+
 
     private final Principal principal;
     private OrthographicCamera camara;
@@ -48,6 +50,8 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
 
 
 
+
+
     public PantallaMenu(Principal principal) {
         this.principal = principal;
     }
@@ -63,7 +67,17 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
         crearYPosBotones();
 
         batch = new SpriteBatch();
+
+
+
+
+
     }
+
+
+
+
+
 
     public void cargarTexturas() {
 
@@ -73,6 +87,8 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
         texturaBtnVs = new Texture(Gdx.files.internal("BotonVersus.png"));
         texturaBtnCustom = new Texture(Gdx.files.internal("BotonCustomize.png"));
         texturaBtnSettings = new Texture(Gdx.files.internal("BotonSettings.png"));
+
+
     }
 
     @Override
@@ -145,6 +161,7 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
             } else if (verificarBoton(x, y, btnSettings)) {
                 principal.setScreen(new Sett(principal));
                 Gdx.app.log("leerEntrada", "Tap sobre el boton sett");
+
             }
         }
     }
