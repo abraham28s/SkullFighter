@@ -46,6 +46,9 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     private Texture[] texturaMovIzq;
     private int con = 0;
 
+    private Boton btnBack;
+    private Texture texturaBack;
+
     public PantallaJuego(Principal principal) {
 
         this.principal = principal;
@@ -55,19 +58,15 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     public void show() {
         setYUpgradeCamara();
 
-
         cargarTexturas();
 
         fondo = new Fondo(texturaFondo);
 
         jugador = new Personaje(texturaMovDer[0]);
-        jugador.setPosicion(75, 150);
+        jugador.setPosicion(-15,-30);
 
         crearYPosBotones();
-
-
     }
-
 
     public void crearYPosBotones() {
         btnDer = new Boton(texturaBtnDer);
@@ -76,6 +75,9 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         btnIzq.setPosicion(50, 40);
         btnBrin = new Boton(texturaBtnBrin);
         btnBrin.setPosicion(1100, 40);
+        batch = new SpriteBatch();
+        btnBack = new Boton(texturaBack);
+        btnBack.setPosicion(1100, 600);
         batch = new SpriteBatch();
     }
 
@@ -108,19 +110,11 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         btnDer.render(batch);
         btnIzq.render(batch);
         btnBrin.render(batch);
+        btnBack.render(batch);
 
 
         batch.end();
     }
-
-
-
-
-
-
-
-
-
 
     @Override
     public void leerEntrada() {
@@ -158,6 +152,11 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
                 if(jugador.getEstado() == Personaje.Estado.NORMAL) {
                     jugador.movimientoBrin();
                 }
+            }
+            if(verificarBoton(x,y, btnBack)){
+                Gdx.app.log("leerEntrada","TAp sobre back");
+                //cambiar a pantalla de jugar
+                principal.setScreen(new PantallaMenu(principal));
             }
         }
     }
@@ -202,7 +201,10 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
         texturaBtnDer = new Texture(Gdx.files.internal("botonder.png"));
         texturaBtnIzq = new Texture(Gdx.files.internal("botonizq.png"));
-        texturaBtnBrin = new Texture(Gdx.files.internal("touchBackground.png"));
+        texturaBtnBrin = new Texture(Gdx.files.internal("BotonJump.png"));
+        texturaBack = new Texture(Gdx.files.internal("BackGame.png"));
+
+       // texturaFondo2 = new Texture(Gdx.files.internal("Escenario1Cortado.png"));
     }
 
     @Override

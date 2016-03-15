@@ -63,9 +63,6 @@ public class Personaje {
                 if (alturaActual <= alturaInicial) {
                     alturaActual = alturaInicial;
                     estado = Estado.NORMAL;
-
-
-
                 }
                 break;
             case NORMAL:
