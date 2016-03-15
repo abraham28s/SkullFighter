@@ -21,8 +21,6 @@ public class P2 implements Screen {
     private OrthographicCamera camara;
     private StretchViewport vista;
 
-    //Música
-    public Music musicaFondo;
 
     private int cont = 0;
 
@@ -44,7 +42,8 @@ public class P2 implements Screen {
         camara.update();
         vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
 
-        cargarAudio();
+        Sonidos.cargaAudio();
+        Sonidos.reproducirMusicaFondo();
     }
 
     @Override
@@ -61,13 +60,9 @@ public class P2 implements Screen {
         }
     }
 
-    public void cargarAudio() {
-        //Musica
-        musicaFondo = Gdx.audio.newMusic(Gdx.files.internal("WarDrum.mp3"));
-        musicaFondo.setLooping(true);
-        musicaFondo.play();
 
-    }
+
+
 
     @Override
     public void resize(int width, int height) {
@@ -76,6 +71,7 @@ public class P2 implements Screen {
 
     @Override
     public void pause() {
+
 
     }
 

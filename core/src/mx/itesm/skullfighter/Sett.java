@@ -73,10 +73,15 @@ public class Sett extends PantallaAbstracta implements Screen{
             float x = coordenadas.x;
             float y = coordenadas.y;
 
+
             if (verificarBoton(x, y, musicAD)) {
+                if (Sonidos.musicaFondo.isPlaying())
+                    Sonidos.pausarMusicaFondo();
+                else Sonidos.reproducirMusicaFondo();
+                }
 
 
-            }
+
         }
 
 
