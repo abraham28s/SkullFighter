@@ -68,6 +68,9 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
 
         batch = new SpriteBatch();
 
+        if (!Sonidos.musicaFondo.isPlaying()){
+            Sonidos.reproducirMusicaFondo();
+        }
 
 
 
@@ -152,7 +155,7 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
             float y = coordenadas.y;
             if (verificarBoton(x, y, btnStory)) {
                 principal.setScreen(new PantallaJuego(principal));
-                Sonidos.quitarMusicaFondo();
+                Sonidos.pausarMusicaFondo();
             } else if (verificarBoton(x, y, btnVs)) {
                 Gdx.app.log("leerEntrada", "Tap sobre el botonvs");
                 principal.setScreen(new Versus(principal));
