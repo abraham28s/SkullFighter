@@ -222,7 +222,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         texturaBtnIzq = new Texture(Gdx.files.internal("botonizq.png"));
         texturaBtnBrin = new Texture(Gdx.files.internal("BotonJump.png"));
         texturaBack = new Texture(Gdx.files.internal("BackGame.png"));
-       // texturaFondo2 = new Texture(Gdx.files.internal("Escenario1Cortado.png"));
+
     }
 
     @Override
