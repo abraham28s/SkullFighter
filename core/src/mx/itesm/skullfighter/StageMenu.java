@@ -21,7 +21,4 @@ public class StageMenu extends Stage {
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f);
         camera.update();
     }
-
-
-
 }

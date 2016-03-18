@@ -1,4 +1,3 @@
-
 package mx.itesm.skullfighter;
 
 import com.badlogic.gdx.Gdx;
@@ -12,20 +11,13 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-
-/**
- * Created by abrahamsoto on 17/02/16.
- */
+/** * Created by abrahamsoto on 17/02/16. */
 
 public class PantallaJuego extends PantallaAbstracta implements Screen {
 
-    public static final float ANCHO_MAPA = 1280;   // Como se creó en Tiled
+    public static final float ANCHO_MAPA = 4000;   // Como se creó en Tiled
 
     // Referencia al objeto de tipo Game (tiene setScreen para cambiar de pantalla)
-
-
-
-
     private final Principal principal;
     private OrthographicCamera camara;
     private Viewport vista;
@@ -34,7 +26,9 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
     //fondo
     private Fondo fondo;
+    private Fondo fondo2;
     private Texture texturaFondo;
+    private Texture texturaFondo2;
     private Texture texturaBtnDer;
     private Texture texturaBtnIzq;
     private Boton btnDer;
@@ -46,14 +40,16 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     private Texture[] texturaMovIzq;
     private int con = 0;
 
+    private OrthographicCamera camaraFija;
+
+    public static final int TAM_CELDA = 5;
+
     private Boton btnBack;
     private Texture texturaBack;
 
     public PantallaJuego(Principal principal) {
-
         this.principal = principal;
     }
-
     @Override
     public void show() {
         setYUpgradeCamara();
@@ -61,6 +57,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         cargarTexturas();
 
         fondo = new Fondo(texturaFondo);
+        fondo2 = new Fondo(texturaFondo2);
 
         jugador = new Personaje(texturaMovDer[0]);
         jugador.setPosicion(-15,-30);
@@ -71,6 +68,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     public void crearYPosBotones() {
         btnDer = new Boton(texturaBtnDer);
         btnDer.setPosicion(200, 40);
+        //btnDer.setPosicion(TAM_CELDA,5*TAM_CELDA);
         btnIzq = new Boton(texturaBtnIzq);
         btnIzq.setPosicion(50, 40);
         btnBrin = new Boton(texturaBtnBrin);
@@ -87,6 +85,10 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         camara.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
         camara.update();
         vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
+
+        camaraFija = new OrthographicCamera(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO);
+        camaraFija.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
+        camaraFija.update();
     }
 
     @Override
@@ -94,26 +96,43 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
         leerEntrada(); // Revisar eventos
-
+        actualizarCamara(); // Mover la cámara para que siga al personaje
 
         batch.setProjectionMatrix(camara.combined);
-
-
 
         // DIBUJA
         batch.begin();
         fondo.render(batch);
         jugador.render(batch);
         jugador.actualizar();
-        btnDer.render(batch);
-        btnIzq.render(batch);
-        btnBrin.render(batch);
-        btnBack.render(batch);
-
+        fondo2.render(batch);
 
         batch.end();
+
+        batch.setProjectionMatrix(camaraFija.combined);
+        batch.begin();
+        btnIzq.render(batch);
+        btnDer.render(batch);
+        btnBrin.render(batch);
+        btnBack.render(batch);
+        batch.end();
+    }
+
+    private void actualizarCamara() {
+        float posX = jugador.getSprite().getX();
+
+        // Si está en la parte 'media'
+        if (posX>=Principal.ANCHO_MUNDO/2 && posX<=ANCHO_MAPA-Principal.ANCHO_MUNDO/2) {
+            // El personaje define el centro de la cámara
+            camara.position.set((int) posX, camara.position.y, 0);
+            //movimientoDer();
+
+        } else if (posX>ANCHO_MAPA-Principal.ANCHO_MUNDO/2) {    // Si está en la última mitad
+            // La cámara se queda media pantalla antes del fin del mundo  :)
+            camara.position.set(ANCHO_MAPA-Principal.ANCHO_MUNDO/2, camara.position.y, 0);
+        }
+        camara.update();
     }
 
     @Override
@@ -161,8 +180,6 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         }
     }
 
-
-
     private void movimientoIzq() {
 
         float x = jugador.getSprite().getX();
@@ -172,7 +189,6 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
             con++;
         }
         jugador.setPosicion(x-5,y);
-
     }
 
     private void movimientoDer() {
@@ -187,7 +203,8 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
     @Override
     public void cargarTexturas() {
-        texturaFondo = new Texture(Gdx.files.internal("Escenario1Cortado.png"));
+        //texturaFondo = new Texture(Gdx.files.internal("Escenario1Cortado.png"));
+        texturaFondo = new Texture(Gdx.files.internal("Fondo-Capa2.png"));
 
         texturaMovDer= new Texture[3];
         texturaMovDer[0] = new Texture(Gdx.files.internal("SkullCam1der.png"));
@@ -199,11 +216,12 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         texturaMovIzq[1] = new Texture(Gdx.files.internal("SkullCam2izq.png"));
         texturaMovIzq[2] = new Texture(Gdx.files.internal("SkullCam3izq.png"));
 
+        texturaFondo2 = new Texture(Gdx.files.internal("Fondo-Capa1.png"));
+
         texturaBtnDer = new Texture(Gdx.files.internal("botonder.png"));
         texturaBtnIzq = new Texture(Gdx.files.internal("botonizq.png"));
         texturaBtnBrin = new Texture(Gdx.files.internal("BotonJump.png"));
         texturaBack = new Texture(Gdx.files.internal("BackGame.png"));
-
        // texturaFondo2 = new Texture(Gdx.files.internal("Escenario1Cortado.png"));
     }
 
@@ -211,7 +229,6 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     public void resize(int width, int height) {
 
     }
-
 
     @Override
     public void pause() {
@@ -233,4 +250,3 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
     }
 }
-

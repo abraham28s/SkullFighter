@@ -3,9 +3,7 @@ package mx.itesm.skullfighter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 
-/**
- * Created by Jorge Alvarado
- */
+/** * Created by Jorge Alvarado */
 public class Sonidos {
 
     public static Music musicaFondo;

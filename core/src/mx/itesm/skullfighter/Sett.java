@@ -75,9 +75,11 @@ public class Sett extends PantallaAbstracta implements Screen{
 
 
             if (verificarBoton(x, y, musicAD)) {
-                if (Sonidos.musicaFondo.isPlaying())
+                if (Sonidos.musicaFondo.isPlaying()){
                     Sonidos.pausarMusicaFondo();
-                else Sonidos.reproducirMusicaFondo();
+                    TextureMusic = new Texture(Gdx.files.internal("MusicaOff.png"));}
+                else { Sonidos.reproducirMusicaFondo();
+                    TextureMusic = new Texture(Gdx.files.internal("MusicaOn.png"));}
                 }
 
 
@@ -105,8 +107,9 @@ public class Sett extends PantallaAbstracta implements Screen{
     public void cargarTexturas() {
 
         texturaFondo = new Texture(Gdx.files.internal("MainMenuSolo.jpg"));
-        texturaAD = new Texture(Gdx.files.internal("BotonSettings.png"));
-        TextureMusic = new Texture(Gdx.files.internal("musica.jpg"));
+        texturaAD = new Texture(Gdx.files.internal("CreatorsBoton.png"));
+        TextureMusic = new Texture(Gdx.files.internal("MusicaOn.png"));
+
         TextureReturn = new Texture(Gdx.files.internal("BackMenu.png"));
 
     }
@@ -142,9 +145,6 @@ public class Sett extends PantallaAbstracta implements Screen{
 
 
         //Prueba boton
-
-
-
     }
 
 

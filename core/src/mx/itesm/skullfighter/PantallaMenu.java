@@ -1,5 +1,3 @@
-
-
 package mx.itesm.skullfighter;
 
 import com.badlogic.gdx.Gdx;
@@ -14,15 +12,10 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-
-
 /**
  * Created by abrahamsoto on 12/02/16.
  */
-
-
 public class PantallaMenu extends PantallaAbstracta implements Screen {
-
 
     private final Principal principal;
     private OrthographicCamera camara;
@@ -47,11 +40,6 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
     private Boton btnSettings;
     private Texture texturaBtnSettings;
 
-
-
-
-
-
     public PantallaMenu(Principal principal) {
         this.principal = principal;
     }
@@ -71,16 +59,7 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
         if (!Sonidos.musicaFondo.isPlaying()){
             Sonidos.reproducirMusicaFondo();
         }
-
-
-
-
     }
-
-
-
-
-
 
     public void cargarTexturas() {
 
@@ -90,8 +69,6 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
         texturaBtnVs = new Texture(Gdx.files.internal("BotonVersus.png"));
         texturaBtnCustom = new Texture(Gdx.files.internal("BotonCustomize.png"));
         texturaBtnSettings = new Texture(Gdx.files.internal("BotonSettings.png"));
-
-
     }
 
     @Override
@@ -124,15 +101,7 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
-
-
-
-
-
-
             leerEntrada(); // Revisar eventos
-
 
             // DIBUJA
             batch.begin();
@@ -143,7 +112,6 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
             btnSettings.render(batch);
 
             batch.end();
-
     }
 
     public void leerEntrada() {
@@ -170,8 +138,6 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
         }
     }
 
-
-
     @Override
     public void resize(int width, int height) {
 
@@ -197,5 +163,3 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
 
     }
 }
-
-

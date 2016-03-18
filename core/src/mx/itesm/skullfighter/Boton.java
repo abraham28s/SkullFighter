@@ -5,9 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-/**
- * Created by abrahamsoto on 16/02/16.
- */
+/** * Created by abrahamsoto on 16/02/16. */
 public class Boton {
     private Sprite sprite;
 
@@ -15,8 +13,6 @@ public class Boton {
         sprite = new Sprite(textura);
         sprite.setAlpha(1f);
     }
-
-    /**/
 
     public void render(SpriteBatch batch){
         sprite.draw(batch);

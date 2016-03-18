@@ -24,9 +24,17 @@ public class Costumize implements Screen {
     private Fondo fondo;
     private Texture texturaFondo;
 
+    private Texture texturaCloth;
+    private Texture texturaWeapon;
+    private Texture texturaCustom;
+
     //Botoones
     private Boton btnBack;
     private Texture texturaBack;
+
+    private Boton clothes;
+    private Boton weapons;
+    private Boton customs;
 
     public Costumize(Principal principal) {
         this.Principal = principal;
@@ -44,6 +52,13 @@ public class Costumize implements Screen {
         fondo = new Fondo(texturaFondo);
         //botones nombres
 
+        clothes = new Boton(texturaCloth);
+        clothes.setPosicion(800, 120);
+        weapons = new Boton(texturaWeapon);
+        weapons.setPosicion(800, 240);
+        customs = new Boton(texturaCustom);
+        customs.setPosicion(150, 40);
+
         btnBack = new Boton(texturaBack);
         btnBack.setPosicion(40, 40);
         //btnPlay.setPosicion(200, 200);
@@ -53,8 +68,13 @@ public class Costumize implements Screen {
 
     private void cargarTexturas() {
 
-        texturaFondo=new Texture(Gdx.files.internal("MainMenuSolo.jpg"));
+
+        texturaFondo=new Texture(Gdx.files.internal("CustomizeMenu.png"));
         texturaBack = new Texture((Gdx.files.internal("BackMenu.png")));
+        texturaCloth = new Texture((Gdx.files.internal("Cloth1Customize.jpg")));
+        texturaWeapon = new Texture((Gdx.files.internal("Arma1Customize.jpg")));
+        texturaCustom = new Texture((Gdx.files.internal("CustomizePersonaje.jpg")));
+
     }
 
     @Override
@@ -68,6 +88,9 @@ public class Costumize implements Screen {
 
         batch.begin();
         fondo.render(batch);
+       /* weapons.render(batch);
+        customs.render(batch);
+        clothes.render(batch);*/
         btnBack.render(batch);
         batch.end();
     }

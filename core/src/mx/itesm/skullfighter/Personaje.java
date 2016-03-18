@@ -97,6 +97,8 @@ public class Personaje {
         return estado;
     }
 
+
+
     public enum Estado{
         SUBIENDO,
         BAJANDO,
