@@ -97,7 +97,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         leerEntrada(); // Revisar eventos
-        actualizarCamara(); // Mover la cámara para que siga al personaje
+        // Mover la cámara para que siga al personaje
 
         batch.setProjectionMatrix(camara.combined);
 
@@ -126,30 +126,34 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         if (posX>=Principal.ANCHO_MUNDO/2 && posX<=ANCHO_MAPA-Principal.ANCHO_MUNDO/2) {
             // El personaje define el centro de la cámara
             camara.position.set((int) posX, camara.position.y, 0);
+
             //movimientoDer();
 
         } else if (posX>ANCHO_MAPA-Principal.ANCHO_MUNDO/2) {    // Si está en la última mitad
             // La cámara se queda media pantalla antes del fin del mundo  :)
             camara.position.set(ANCHO_MAPA-Principal.ANCHO_MUNDO/2, camara.position.y, 0);
+
         }
         camara.update();
     }
 
     @Override
     public void leerEntrada() {
-        btnIzq.estaTocado();
+
         Vector3 coordenadas = new Vector3();
         coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-        camara.unproject(coordenadas);  //traduce las coordenadas
+        camaraFija.unproject(coordenadas);  //traduce las coordenadas
         float x = coordenadas.x;
         float y = coordenadas.y;
 
         if(Gdx.input.isTouched()) {
             if(verificarBoton(x,y,btnDer)){
                 movimientoDer();
+                actualizarCamara();
             }
             if(verificarBoton(x,y,btnIzq)){
                 movimientoIzq();
+                actualizarCamara();
             }
         }
         if(Gdx.input.justTouched()) {
@@ -162,12 +166,13 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         if(Gdx.input.justTouched() &&Gdx.input.isTouched()){
             if(verificarBoton(x,y,btnDer) && verificarBoton(x, y, btnBrin)){
                 movimientoDer();
+                actualizarCamara();
                 if(jugador.getEstado() == Personaje.Estado.NORMAL) {
                     jugador.movimientoBrin();
                 }
             }
             if(verificarBoton(x,y,btnIzq)&& verificarBoton(x, y, btnBrin)){
-                movimientoIzq();
+                movimientoIzq();actualizarCamara();
                 if(jugador.getEstado() == Personaje.Estado.NORMAL) {
                     jugador.movimientoBrin();
                 }

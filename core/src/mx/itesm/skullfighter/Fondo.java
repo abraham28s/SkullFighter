@@ -24,4 +24,8 @@ public class Fondo {
     public void render(SpriteBatch batch){
         sprite.draw(batch);
     }
+
+    public Sprite getSprite() {
+        return sprite;
+    }
 }
