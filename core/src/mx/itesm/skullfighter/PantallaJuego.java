@@ -19,8 +19,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
     // Referencia al objeto de tipo Game (tiene setScreen para cambiar de pantalla)
     private final Principal principal;
-//    private OrthographicCamera camara;
-    public static OrthographicCamera camara;
+    private OrthographicCamera camara;
     private Viewport vista;
 
     private SpriteBatch batch;
@@ -40,8 +39,6 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     private Texture[] texturaMovDer;
     private Texture[] texturaMovIzq;
     private int con = 0;
-    private Boton vidas;
-    private Texture texturaVidas;
 
     private OrthographicCamera camaraFija;
 
@@ -63,18 +60,15 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         fondo2 = new Fondo(texturaFondo2);
 
         jugador = new Personaje(texturaMovDer[0]);
-        jugador.setPosicion(-15,-35);
+        jugador.setPosicion(-15,-30);
 
         crearYPosBotones();
-
-        if (!Sonidos.musicaFondo.isPlaying()){
-            Sonidos.reproducirMusicaFondo();
-        }
     }
 
     public void crearYPosBotones() {
         btnDer = new Boton(texturaBtnDer);
         btnDer.setPosicion(200, 40);
+        //btnDer.setPosicion(TAM_CELDA,5*TAM_CELDA);
         btnIzq = new Boton(texturaBtnIzq);
         btnIzq.setPosicion(50, 40);
         btnBrin = new Boton(texturaBtnBrin);
@@ -82,9 +76,6 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         batch = new SpriteBatch();
         btnBack = new Boton(texturaBack);
         btnBack.setPosicion(1100, 600);
-        batch = new SpriteBatch();
-        vidas = new Boton(texturaVidas);
-        vidas.setPosicion(20, 545);
         batch = new SpriteBatch();
     }
 
@@ -106,7 +97,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         leerEntrada(); // Revisar eventos
-        actualizarCamara(); // Mover la cámara para que siga al personaje
+        // Mover la cámara para que siga al personaje
 
         batch.setProjectionMatrix(camara.combined);
 
@@ -125,7 +116,6 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         btnDer.render(batch);
         btnBrin.render(batch);
         btnBack.render(batch);
-        vidas.render(batch);
         batch.end();
     }
 
@@ -136,18 +126,20 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         if (posX>=Principal.ANCHO_MUNDO/2 && posX<=ANCHO_MAPA-Principal.ANCHO_MUNDO/2) {
             // El personaje define el centro de la cámara
             camara.position.set((int) posX, camara.position.y, 0);
+
             //movimientoDer();
 
         } else if (posX>ANCHO_MAPA-Principal.ANCHO_MUNDO/2) {    // Si está en la última mitad
             // La cámara se queda media pantalla antes del fin del mundo  :)
             camara.position.set(ANCHO_MAPA - Principal.ANCHO_MUNDO / 2, camara.position.y, 0);
+
         }
         camara.update();
     }
 
     @Override
     public void leerEntrada() {
-        btnIzq.estaTocado();
+
         Vector3 coordenadas = new Vector3();
         coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         camaraFija.unproject(coordenadas);  //traduce las coordenadas
@@ -155,11 +147,13 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         float y = coordenadas.y;
 
         if(Gdx.input.isTouched()) {
-            if(verificarBoton(x,y,btnDer)){
+            if(verificarBoton(x,y,btnDer) && verificarBordes()){
                 movimientoDer();
+                actualizarCamara();
             }
-            if(verificarBoton(x,y,btnIzq)){
+            if(verificarBoton(x,y,btnIzq) && verificarBordes()){
                 movimientoIzq();
+                actualizarCamara();
             }
         }
         if(Gdx.input.justTouched()) {
@@ -170,14 +164,15 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
             }
         }
         if(Gdx.input.justTouched() &&Gdx.input.isTouched()){
-            if(verificarBoton(x,y,btnDer) && verificarBoton(x, y, btnBrin)){
+            if(verificarBoton(x,y,btnDer) && verificarBoton(x, y, btnBrin) && verificarBordes()){
                 movimientoDer();
+                actualizarCamara();
                 if(jugador.getEstado() == Personaje.Estado.NORMAL) {
                     jugador.movimientoBrin();
                 }
             }
-            if(verificarBoton(x,y,btnIzq)&& verificarBoton(x, y, btnBrin)){
-                movimientoIzq();
+            if(verificarBoton(x,y,btnIzq)&& verificarBoton(x, y, btnBrin) && verificarBordes() ){
+                movimientoIzq();actualizarCamara();
                 if(jugador.getEstado() == Personaje.Estado.NORMAL) {
                     jugador.movimientoBrin();
                 }
@@ -190,6 +185,19 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         }
     }
 
+    private boolean verificarBordes() {
+        System.out.println(jugador.getSprite().getX());
+        if(jugador.getSprite().getX()<-135 ){
+            jugador.getSprite().setX(-130);
+            return false;
+        }else if(jugador.getSprite().getX()>3750 ){
+            jugador.getSprite().setX(3745);
+            return false;
+        }
+        return true;
+
+    }
+
     private void movimientoIzq() {
 
         float x = jugador.getSprite().getX();
@@ -198,7 +206,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
             jugador.setSprite(texturaMovIzq[con % 3]);
             con++;
         }
-        jugador.setPosicion(x-3,y);
+        jugador.setPosicion(x-5,y);
     }
 
     private void movimientoDer() {
@@ -208,11 +216,12 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
             jugador.setSprite(texturaMovDer[con % 3]);
             con++;
         }
-        jugador.setPosicion(x+3,y);
+        jugador.setPosicion(x+5,y);
     }
 
     @Override
     public void cargarTexturas() {
+        //texturaFondo = new Texture(Gdx.files.internal("Escenario1Cortado.png"));
         texturaFondo = new Texture(Gdx.files.internal("Fondo-Capa2.png"));
 
         texturaMovDer= new Texture[3];
@@ -232,7 +241,6 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         texturaBtnBrin = new Texture(Gdx.files.internal("BotonJump.png"));
         texturaBack = new Texture(Gdx.files.internal("BackGame.png"));
 
-        texturaVidas=new Texture(Gdx.files.internal("VidaSkull50.png"));
     }
 
     @Override
