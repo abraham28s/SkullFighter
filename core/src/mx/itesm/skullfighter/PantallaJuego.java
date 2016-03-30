@@ -194,6 +194,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
             jugador.getSprite().setX(3745);
             return false;
         }
+
         return true;
 
     }
