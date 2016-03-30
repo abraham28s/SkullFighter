@@ -39,8 +39,6 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
 
     private Boton btnSettings;
     private Texture texturaBtnSettings;
-    private Texture texturaFondo2;
-    private Fondo fondo1;
 
     public PantallaMenu(Principal principal) {
         this.principal = principal;
@@ -53,8 +51,6 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
 
         cargarTexturas();
         fondo = new Fondo(texturaFondo);
-        fondo1 = new Fondo(texturaFondo2);
-        fondo1.getSprite().setX(fondo.getSprite().getWidth());
 
         crearYPosBotones();
 
@@ -62,13 +58,13 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
 
         if (!Sonidos.musicaFondo.isPlaying()){
             Sonidos.reproducirMusicaFondo();
+
         }
     }
 
     public void cargarTexturas() {
 
-        texturaFondo = new Texture(Gdx.files.internal("PantallaVacia.png"));
-        texturaFondo2 = new Texture(Gdx.files.internal("PantallaVacia.png"));
+        texturaFondo = new Texture(Gdx.files.internal("MainMenu.png"));
 
         texturaBtnStory = new Texture(Gdx.files.internal("BotonStory.png"));
         texturaBtnVs = new Texture(Gdx.files.internal("BotonVersus.png"));
@@ -108,30 +104,15 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
 
             leerEntrada(); // Revisar eventos
 
-
-
             // DIBUJA
             batch.begin();
             fondo.render(batch);
-            fondo1.render(batch);
             btnStory.render(batch);
             btnVs.render(batch);
             btnCustom.render(batch);
             btnSettings.render(batch);
 
             batch.end();
-        actualizarFondo();
-    }
-
-    private void actualizarFondo() {
-        fondo.getSprite().setX(fondo.getSprite().getX()-1);
-        fondo1.getSprite().setX(fondo1.getSprite().getX()-1);
-
-        if(fondo.getSprite().getX()+fondo.getSprite().getWidth() == 0){
-            fondo.getSprite().setX(fondo1.getSprite().getWidth());
-        }if(fondo1.getSprite().getX()+fondo1.getSprite().getWidth() == 0){
-            fondo1.getSprite().setX(fondo.getSprite().getWidth());
-        }
     }
 
     public void leerEntrada() {

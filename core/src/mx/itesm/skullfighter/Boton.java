@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /** * Created by abrahamsoto on 16/02/16. */
 public class Boton {
+
     private Sprite sprite;
 
     public Boton(Texture textura){
@@ -27,7 +28,7 @@ public class Boton {
     }
 
     public Boolean estaTocado() {
-        float x = Gdx.input.getX();
+        float x = Gdx.input.getX()+(PantallaJuego.camara.position.x-Principal.ANCHO_MUNDO/2);
         float y = Gdx.input.getY();
         return x>=sprite.getX() && x<=sprite.getX()+sprite.getWidth()
                 && y>=sprite.getY() && y<=sprite.getY()+sprite.getHeight();

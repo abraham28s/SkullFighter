@@ -52,7 +52,6 @@ public class AcercaDe extends PantallaAbstracta implements Screen {
 
         btnPlay = new Boton(texturaBtnBack);
         btnPlay.setPosicion(20, 20);
-        //btnPlay.setPosicion(200, 200);
 
         batch = new SpriteBatch();
     }

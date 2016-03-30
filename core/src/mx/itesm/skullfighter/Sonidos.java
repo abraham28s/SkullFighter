@@ -2,6 +2,7 @@ package mx.itesm.skullfighter;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Texture;
 
 /** * Created by Jorge Alvarado */
 public class Sonidos {
@@ -15,13 +16,17 @@ public class Sonidos {
 
     public static void reproducirMusicaFondo(){
         musicaFondo.play();
+        Sett.TextureMusic = new Texture(Gdx.files.internal("MusicaOn.png"));
     }
 
     public static void pausarMusicaFondo(){
         musicaFondo.pause();
+        Sett.TextureMusic = new Texture(Gdx.files.internal("MusicaOff.png"));
     }
 
     public static void quitarMusicaFondo(){
         musicaFondo.stop();
     }
+
+
 }

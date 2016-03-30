@@ -53,11 +53,11 @@ public class Costumize implements Screen {
         //botones nombres
 
         clothes = new Boton(texturaCloth);
-        clothes.setPosicion(800, 120);
+        clothes.setPosicion(905, 140);
         weapons = new Boton(texturaWeapon);
-        weapons.setPosicion(800, 240);
+        weapons.setPosicion(905, 400);
         customs = new Boton(texturaCustom);
-        customs.setPosicion(150, 40);
+        customs.setPosicion(130, 90);
 
         btnBack = new Boton(texturaBack);
         btnBack.setPosicion(40, 40);
@@ -71,9 +71,11 @@ public class Costumize implements Screen {
 
         texturaFondo=new Texture(Gdx.files.internal("CustomizeMenu.png"));
         texturaBack = new Texture((Gdx.files.internal("BackMenu.png")));
-        texturaCloth = new Texture((Gdx.files.internal("Cloth1Customize.jpg")));
-        texturaWeapon = new Texture((Gdx.files.internal("Arma1Customize.jpg")));
-        texturaCustom = new Texture((Gdx.files.internal("CustomizePersonaje.jpg")));
+        texturaCloth = new Texture((Gdx.files.internal("Cloth1Customize.png")));
+        //texturaWeapon = new Texture((Gdx.files.internal("Arma1Customize.png")));
+        texturaWeapon = new Texture((Gdx.files.internal("BotonWeapon.png")));
+        texturaCustom = new Texture((Gdx.files.internal("Customize.png")));
+
 
     }
 
@@ -88,9 +90,9 @@ public class Costumize implements Screen {
 
         batch.begin();
         fondo.render(batch);
-       /* weapons.render(batch);
+        weapons.render(batch);
         customs.render(batch);
-        clothes.render(batch);*/
+        clothes.render(batch);
         btnBack.render(batch);
         batch.end();
     }

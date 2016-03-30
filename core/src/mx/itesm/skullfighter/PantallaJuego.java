@@ -19,7 +19,8 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
     // Referencia al objeto de tipo Game (tiene setScreen para cambiar de pantalla)
     private final Principal principal;
-    private OrthographicCamera camara;
+//    private OrthographicCamera camara;
+    public static OrthographicCamera camara;
     private Viewport vista;
 
     private SpriteBatch batch;
@@ -60,9 +61,13 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         fondo2 = new Fondo(texturaFondo2);
 
         jugador = new Personaje(texturaMovDer[0]);
-        jugador.setPosicion(-15,-30);
+        jugador.setPosicion(-15,-35);
 
         crearYPosBotones();
+
+        if (!Sonidos.musicaFondo.isPlaying()){
+            Sonidos.reproducirMusicaFondo();
+        }
     }
 
     public void crearYPosBotones() {
@@ -97,7 +102,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         leerEntrada(); // Revisar eventos
-        // Mover la cámara para que siga al personaje
+        actualizarCamara(); // Mover la cámara para que siga al personaje
 
         batch.setProjectionMatrix(camara.combined);
 
@@ -126,20 +131,18 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         if (posX>=Principal.ANCHO_MUNDO/2 && posX<=ANCHO_MAPA-Principal.ANCHO_MUNDO/2) {
             // El personaje define el centro de la cámara
             camara.position.set((int) posX, camara.position.y, 0);
-
             //movimientoDer();
 
         } else if (posX>ANCHO_MAPA-Principal.ANCHO_MUNDO/2) {    // Si está en la última mitad
             // La cámara se queda media pantalla antes del fin del mundo  :)
-            camara.position.set(ANCHO_MAPA-Principal.ANCHO_MUNDO/2, camara.position.y, 0);
-
+            camara.position.set(ANCHO_MAPA - Principal.ANCHO_MUNDO / 2, camara.position.y, 0);
         }
         camara.update();
     }
 
     @Override
     public void leerEntrada() {
-
+        btnIzq.estaTocado();
         Vector3 coordenadas = new Vector3();
         coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         camaraFija.unproject(coordenadas);  //traduce las coordenadas
@@ -149,11 +152,9 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         if(Gdx.input.isTouched()) {
             if(verificarBoton(x,y,btnDer)){
                 movimientoDer();
-                actualizarCamara();
             }
             if(verificarBoton(x,y,btnIzq)){
                 movimientoIzq();
-                actualizarCamara();
             }
         }
         if(Gdx.input.justTouched()) {
@@ -166,13 +167,12 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         if(Gdx.input.justTouched() &&Gdx.input.isTouched()){
             if(verificarBoton(x,y,btnDer) && verificarBoton(x, y, btnBrin)){
                 movimientoDer();
-                actualizarCamara();
                 if(jugador.getEstado() == Personaje.Estado.NORMAL) {
                     jugador.movimientoBrin();
                 }
             }
             if(verificarBoton(x,y,btnIzq)&& verificarBoton(x, y, btnBrin)){
-                movimientoIzq();actualizarCamara();
+                movimientoIzq();
                 if(jugador.getEstado() == Personaje.Estado.NORMAL) {
                     jugador.movimientoBrin();
                 }
@@ -193,7 +193,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
             jugador.setSprite(texturaMovIzq[con % 3]);
             con++;
         }
-        jugador.setPosicion(x-5,y);
+        jugador.setPosicion(x-3,y);
     }
 
     private void movimientoDer() {
@@ -203,12 +203,11 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
             jugador.setSprite(texturaMovDer[con % 3]);
             con++;
         }
-        jugador.setPosicion(x+5,y);
+        jugador.setPosicion(x+3,y);
     }
 
     @Override
     public void cargarTexturas() {
-        //texturaFondo = new Texture(Gdx.files.internal("Escenario1Cortado.png"));
         texturaFondo = new Texture(Gdx.files.internal("Fondo-Capa2.png"));
 
         texturaMovDer= new Texture[3];
@@ -227,7 +226,6 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         texturaBtnIzq = new Texture(Gdx.files.internal("botonizq.png"));
         texturaBtnBrin = new Texture(Gdx.files.internal("BotonJump.png"));
         texturaBack = new Texture(Gdx.files.internal("BackGame.png"));
-
     }
 
     @Override
