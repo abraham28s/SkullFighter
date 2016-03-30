@@ -35,6 +35,8 @@ public class Sett extends PantallaAbstracta implements Screen{
     private Boton returnAD;
     private Texture TextureReturn;
     private Texture TextureMusic2;
+    private Texture texturaFondo2;
+    private Fondo fondo1;
 
     //Musica
 
@@ -79,11 +81,11 @@ public class Sett extends PantallaAbstracta implements Screen{
                 if (Sonidos.musicaFondo.isPlaying()){
                     Sonidos.pausarMusicaFondo();
                     musicAD.setTextura(TextureMusic2);
-                    musicAD.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 2));
+                    musicAD.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 2)+25);
                     }
                 else { Sonidos.reproducirMusicaFondo();
                     musicAD.setTextura(TextureMusic);
-                    musicAD.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 2));
+                    musicAD.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 2)+28);
                     }
                 }
 
@@ -111,7 +113,8 @@ public class Sett extends PantallaAbstracta implements Screen{
     @Override
     public void cargarTexturas() {
 
-        texturaFondo = new Texture(Gdx.files.internal("MainMenuSolo.jpg"));
+        texturaFondo = new Texture(Gdx.files.internal("PantallaVacia.png"));
+        texturaFondo2 = new Texture(Gdx.files.internal("PantallaVacia.png"));
         texturaAD = new Texture(Gdx.files.internal("CreatorsBoton.png"));
         TextureMusic = new Texture(Gdx.files.internal("MusicaOn.png"));
         TextureMusic2 = new Texture(Gdx.files.internal("MusicaOff.png"));
@@ -141,11 +144,13 @@ public class Sett extends PantallaAbstracta implements Screen{
 
         cargarTexturas();
         fondo = new Fondo(texturaFondo);
+        fondo1 = new Fondo(texturaFondo2);
+        fondo1.getSprite().setX(fondo.getSprite().getWidth());
         btnAD = new Boton(texturaAD);
         btnAD.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4));
         batch = new SpriteBatch();
         musicAD = new Boton(TextureMusic);
-        musicAD.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 2));
+        musicAD.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 2)+28);
         returnAD = new Boton(TextureReturn);
         returnAD.setPosicion(30, 30);
 
@@ -172,12 +177,24 @@ public class Sett extends PantallaAbstracta implements Screen{
         // DIBUJA
         batch.begin();
         fondo.render(batch);
+        fondo1.render(batch);
         btnAD.render(batch);
         musicAD.render(batch);
         returnAD.render(batch);
 
         batch.end();
+        actualizarFondo();
+    }
 
+    private void actualizarFondo() {
+        fondo.getSprite().setX(fondo.getSprite().getX() - 1);
+        fondo1.getSprite().setX(fondo1.getSprite().getX() - 1);
+
+        if(fondo.getSprite().getX()+fondo.getSprite().getWidth() == 0){
+            fondo.getSprite().setX(fondo1.getSprite().getWidth());
+        }if(fondo1.getSprite().getX()+fondo1.getSprite().getWidth() == 0){
+            fondo1.getSprite().setX(fondo.getSprite().getWidth());
+        }
     }
 
     @Override

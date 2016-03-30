@@ -126,7 +126,7 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
     private void actualizarFondo() {
         fondo.getSprite().setX(fondo.getSprite().getX()-1);
         fondo1.getSprite().setX(fondo1.getSprite().getX()-1);
-        Fondo temp;
+
         if(fondo.getSprite().getX()+fondo.getSprite().getWidth() == 0){
             fondo.getSprite().setX(fondo1.getSprite().getWidth());
         }if(fondo1.getSprite().getX()+fondo1.getSprite().getWidth() == 0){
