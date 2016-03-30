@@ -32,4 +32,9 @@ public class Boton {
         return x>=sprite.getX() && x<=sprite.getX()+sprite.getWidth()
                 && y>=sprite.getY() && y<=sprite.getY()+sprite.getHeight();
     }
+
+    public void setTextura(Texture textura) {
+        this.sprite = new Sprite(textura);
+        sprite.setAlpha(1f);
+    }
 }

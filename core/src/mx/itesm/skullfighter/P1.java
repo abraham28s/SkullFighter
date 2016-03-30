@@ -28,7 +28,7 @@ public class P1 implements Screen {
 
     @Override
     public void show() {
-        texturaFondo = new Texture(Gdx.files.internal("PantallaConLogo.jpg"));
+        texturaFondo = new Texture(Gdx.files.internal("PantallaConLogo.png"));
         fondo = new Fondo(texturaFondo);
         batch = new SpriteBatch();
         setYUpgradeCamara();

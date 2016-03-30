@@ -34,6 +34,7 @@ public class Sett extends PantallaAbstracta implements Screen{
     private Texture TextureMusic;
     private Boton returnAD;
     private Texture TextureReturn;
+    private Texture TextureMusic2;
 
     //Musica
 
@@ -77,9 +78,13 @@ public class Sett extends PantallaAbstracta implements Screen{
             if (verificarBoton(x, y, musicAD)) {
                 if (Sonidos.musicaFondo.isPlaying()){
                     Sonidos.pausarMusicaFondo();
-                    TextureMusic = new Texture(Gdx.files.internal("MusicaOff.png"));}
+                    musicAD.setTextura(TextureMusic2);
+                    musicAD.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 2));
+                    }
                 else { Sonidos.reproducirMusicaFondo();
-                    TextureMusic = new Texture(Gdx.files.internal("MusicaOn.png"));}
+                    musicAD.setTextura(TextureMusic);
+                    musicAD.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 2));
+                    }
                 }
 
 
@@ -109,6 +114,7 @@ public class Sett extends PantallaAbstracta implements Screen{
         texturaFondo = new Texture(Gdx.files.internal("MainMenuSolo.jpg"));
         texturaAD = new Texture(Gdx.files.internal("CreatorsBoton.png"));
         TextureMusic = new Texture(Gdx.files.internal("MusicaOn.png"));
+        TextureMusic2 = new Texture(Gdx.files.internal("MusicaOff.png"));
 
         TextureReturn = new Texture(Gdx.files.internal("BackMenu.png"));
 
