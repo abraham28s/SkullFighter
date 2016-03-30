@@ -28,6 +28,12 @@ public class Costumize implements Screen {
     private Texture texturaWeapon;
     private Texture texturaCustom;
 
+    private Texture texturaFondo2;
+    private Fondo fondo1;
+
+    private Boton btnTitulo;
+    private Texture texturabtnTitulo;
+
     //Botoones
     private Boton btnBack;
     private Texture texturaBack;
@@ -50,18 +56,25 @@ public class Costumize implements Screen {
 
         cargarTexturas(); //cargar texturas
         fondo = new Fondo(texturaFondo);
+
         //botones nombres
+        fondo1 = new Fondo(texturaFondo2);
+        fondo1.getSprite().setX(fondo.getSprite().getWidth());
 
         clothes = new Boton(texturaCloth);
-        clothes.setPosicion(905, 140);
+        clothes.setPosicion(805, 140);
         weapons = new Boton(texturaWeapon);
-        weapons.setPosicion(905, 400);
+        weapons.setPosicion(805, 400);
         customs = new Boton(texturaCustom);
-        customs.setPosicion(130, 90);
+        customs.setPosicion(130, 50);
+        btnTitulo =new Boton(texturabtnTitulo);
+        btnTitulo.setPosicion(700,575);
+
+
 
         btnBack = new Boton(texturaBack);
         btnBack.setPosicion(40, 40);
-        //btnPlay.setPosicion(200, 200);
+
 
         batch = new SpriteBatch();
     }
@@ -69,12 +82,14 @@ public class Costumize implements Screen {
     private void cargarTexturas() {
 
 
-        texturaFondo=new Texture(Gdx.files.internal("CustomizeMenu.png"));
-        texturaBack = new Texture((Gdx.files.internal("BackMenu.png")));
+        texturaFondo=new Texture(Gdx.files.internal("PantallaVacia.png"));
+        texturaFondo2 = new Texture(Gdx.files.internal("PantallaVacia.png"));
+        texturaBack = new Texture((Gdx.files.internal("BackGame.png")));
         texturaCloth = new Texture((Gdx.files.internal("Cloth1Customize.png")));
         //texturaWeapon = new Texture((Gdx.files.internal("Arma1Customize.png")));
         texturaWeapon = new Texture((Gdx.files.internal("BotonWeapon.png")));
-        texturaCustom = new Texture((Gdx.files.internal("Customize.png")));
+        texturaCustom = new Texture((Gdx.files.internal("Skull_Oz2.png")));
+        texturabtnTitulo = new Texture(Gdx.files.internal("BotonCustomize.png"));
 
 
     }
@@ -90,11 +105,24 @@ public class Costumize implements Screen {
 
         batch.begin();
         fondo.render(batch);
+        fondo1.render(batch);
+        btnTitulo.render(batch);
         weapons.render(batch);
         customs.render(batch);
         clothes.render(batch);
         btnBack.render(batch);
         batch.end();
+        actualizarFondo();
+    }
+    private void actualizarFondo() {
+        fondo.getSprite().setX(fondo.getSprite().getX() - 1);
+        fondo1.getSprite().setX(fondo1.getSprite().getX() - 1);
+
+        if(fondo.getSprite().getX()+fondo.getSprite().getWidth() == 0){
+            fondo.getSprite().setX(fondo1.getSprite().getWidth());
+        }if(fondo1.getSprite().getX()+fondo1.getSprite().getWidth() == 0){
+            fondo1.getSprite().setX(fondo.getSprite().getWidth());
+        }
     }
 
     private void leerEntrada() {
@@ -108,6 +136,14 @@ public class Costumize implements Screen {
                 Gdx.app.log("leerEntrada","TAp sobre back");
                 //cambiar a pantalla de jugar
                 Principal.setScreen(new PantallaMenu(Principal));
+            }
+            if(verificarBoton(x,y, weapons)){
+                Gdx.app.log("leerEntrada","TAp sobre WEAPONS");
+                //cambiar a pantalla de jugar
+            }
+            if(verificarBoton(x,y, clothes)){
+                Gdx.app.log("leerEntrada","TAp sobre CLOTHES");
+                //cambiar a pantalla de jugar
             }
         }
     }

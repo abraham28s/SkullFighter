@@ -27,9 +27,7 @@ public class AcercaDe extends PantallaAbstracta implements Screen {
 
     //Botoones
     private Boton btnPlay;
-    private Boton creador;
     private Texture texturaBtnBack;
-    private Texture creadores;
 
     public AcercaDe(Principal principal) {
         this.Principal = principal;
@@ -43,13 +41,9 @@ public class AcercaDe extends PantallaAbstracta implements Screen {
         camara.update();
         vista = new StretchViewport(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO,camara);
 
-        cargarTexturas(); //cargar texturas
+        cargarTexturas(); //cargar texturasf
         fondo = new Fondo(texturaFondo);
         //botones nombres
-
-        creador = new Boton (creadores);
-        creador.setPosicion(220, 0);
-
         btnPlay = new Boton(texturaBtnBack);
         btnPlay.setPosicion(20, 20);
 
@@ -58,9 +52,9 @@ public class AcercaDe extends PantallaAbstracta implements Screen {
 
     public void cargarTexturas() {
 
-        texturaFondo=new Texture(Gdx.files.internal("AboutMenu.png")); //AcercaDe.png
+        texturaFondo=new Texture(Gdx.files.internal("Developers.png")); //AcercaDe.png
         texturaBtnBack = new Texture((Gdx.files.internal("BackGame.png"))); //acerca de
-        creadores =  new Texture((Gdx.files.internal("Creadores.png")));
+
     }
 
     @Override
@@ -85,7 +79,6 @@ public class AcercaDe extends PantallaAbstracta implements Screen {
         batch.begin();
         fondo.render(batch);
         btnPlay.render(batch);
-        creador.render(batch);
         batch.end();
     }
 

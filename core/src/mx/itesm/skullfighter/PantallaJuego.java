@@ -40,6 +40,8 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     private Texture[] texturaMovDer;
     private Texture[] texturaMovIzq;
     private int con = 0;
+    private Boton vidas;
+    private Texture texturaVidas;
 
     private OrthographicCamera camaraFija;
 
@@ -73,7 +75,6 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     public void crearYPosBotones() {
         btnDer = new Boton(texturaBtnDer);
         btnDer.setPosicion(200, 40);
-        //btnDer.setPosicion(TAM_CELDA,5*TAM_CELDA);
         btnIzq = new Boton(texturaBtnIzq);
         btnIzq.setPosicion(50, 40);
         btnBrin = new Boton(texturaBtnBrin);
@@ -81,6 +82,9 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         batch = new SpriteBatch();
         btnBack = new Boton(texturaBack);
         btnBack.setPosicion(1100, 600);
+        batch = new SpriteBatch();
+        vidas = new Boton(texturaVidas);
+        vidas.setPosicion(20, 545);
         batch = new SpriteBatch();
     }
 
@@ -121,6 +125,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         btnDer.render(batch);
         btnBrin.render(batch);
         btnBack.render(batch);
+        vidas.render(batch);
         batch.end();
     }
 
@@ -226,6 +231,8 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         texturaBtnIzq = new Texture(Gdx.files.internal("botonizq.png"));
         texturaBtnBrin = new Texture(Gdx.files.internal("BotonJump.png"));
         texturaBack = new Texture(Gdx.files.internal("BackGame.png"));
+
+        texturaVidas=new Texture(Gdx.files.internal("VidaSkull50.png"));
     }
 
     @Override

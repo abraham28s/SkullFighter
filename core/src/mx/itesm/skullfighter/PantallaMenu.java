@@ -31,14 +31,17 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
     private Boton btnStory;
     private Texture texturaBtnStory;
 
-    private Boton btnVs;
-    private Texture texturaBtnVs;
-
     private Boton btnCustom;
     private Texture texturaBtnCustom;
 
     private Boton btnSettings;
     private Texture texturaBtnSettings;
+
+    private Boton btnMMenu;
+    private Texture texturabtnMMenu;
+
+    private Texture texturaFondo2;
+    private Fondo fondo1;
 
     public PantallaMenu(Principal principal) {
         this.principal = principal;
@@ -51,6 +54,8 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
 
         cargarTexturas();
         fondo = new Fondo(texturaFondo);
+        fondo1 = new Fondo(texturaFondo2);
+        fondo1.getSprite().setX(fondo.getSprite().getWidth());
 
         crearYPosBotones();
 
@@ -64,27 +69,31 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
 
     public void cargarTexturas() {
 
-        texturaFondo = new Texture(Gdx.files.internal("MainMenu.png"));
+        texturaFondo = new Texture(Gdx.files.internal("PantallaVacia.png"));
+        texturaFondo2 = new Texture(Gdx.files.internal("PantallaVacia.png"));
+
 
         texturaBtnStory = new Texture(Gdx.files.internal("BotonStory.png"));
-        texturaBtnVs = new Texture(Gdx.files.internal("BotonVersus.png"));
         texturaBtnCustom = new Texture(Gdx.files.internal("BotonCustomize.png"));
         texturaBtnSettings = new Texture(Gdx.files.internal("BotonSettings.png"));
+
+        texturabtnMMenu = new Texture(Gdx.files.internal("MainMenu.png"));
     }
 
     @Override
     public void crearYPosBotones() {
         btnStory = new Boton(texturaBtnStory);
-        btnStory.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4));
-
-        btnVs = new Boton(texturaBtnVs);
-        btnVs.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4) - 143);
+        btnStory.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4)-109);
 
         btnCustom = new Boton(texturaBtnCustom);
-        btnCustom.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4) - 284);
+
+        btnCustom.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4) - 270);
 
         btnSettings = new Boton(texturaBtnSettings);
         btnSettings.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4) - 431);
+
+        btnMMenu =new Boton(texturabtnMMenu);
+        btnMMenu.setPosicion(700,575);
     }
 
     @Override
@@ -107,13 +116,28 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
             // DIBUJA
             batch.begin();
             fondo.render(batch);
+            fondo1.render(batch);
+            btnMMenu.render(batch);
             btnStory.render(batch);
-            btnVs.render(batch);
             btnCustom.render(batch);
             btnSettings.render(batch);
 
+
             batch.end();
+            actualizarFondo();
     }
+
+    private void actualizarFondo() {
+        fondo.getSprite().setX(fondo.getSprite().getX() - 1);
+        fondo1.getSprite().setX(fondo1.getSprite().getX() - 1);
+
+        if(fondo.getSprite().getX()+fondo.getSprite().getWidth() == 0){
+            fondo.getSprite().setX(fondo1.getSprite().getWidth());
+        }if(fondo1.getSprite().getX()+fondo1.getSprite().getWidth() == 0){
+            fondo1.getSprite().setX(fondo.getSprite().getWidth());
+        }
+    }
+
 
     public void leerEntrada() {
         if(Gdx.input.justTouched()) {
@@ -125,10 +149,7 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
             if (verificarBoton(x, y, btnStory)) {
                 principal.setScreen(new PantallaJuego(principal));
                 Sonidos.pausarMusicaFondo();
-            } else if (verificarBoton(x, y, btnVs)) {
-                Gdx.app.log("leerEntrada", "Tap sobre el botonvs");
-                principal.setScreen(new Versus(principal));
-            } else if (verificarBoton(x, y, btnCustom)) {
+            }  else if (verificarBoton(x, y, btnCustom)) {
                 Gdx.app.log("leerEntrada", "Tap sobre el boton custom");
                 principal.setScreen(new Costumize(principal));
             } else if (verificarBoton(x, y, btnSettings)) {

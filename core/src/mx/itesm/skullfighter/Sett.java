@@ -31,11 +31,18 @@ public class Sett extends PantallaAbstracta implements Screen{
     private Boton btnAD;
     private Texture texturaAD;
     private Boton musicAD;
-
     public static Texture TextureMusic;
-
     private Boton returnAD;
     private Texture TextureReturn;
+    public static Texture TextureMusic2;
+    private Texture texturaFondo2;
+    private Fondo fondo1;
+
+    private Boton titulo;
+    private Texture texturaTitulo;
+
+    private Boton bonus;
+    private Texture texturaBonus;
 
     //Musica
 
@@ -75,12 +82,18 @@ public class Sett extends PantallaAbstracta implements Screen{
             if (verificarBoton(x, y, musicAD)) {
                 if (Sonidos.musicaFondo.isPlaying()){
                     Sonidos.pausarMusicaFondo();
-                    TextureMusic = new Texture(Gdx.files.internal("MusicaOff.png"));
+                    musicAD.setTextura(TextureMusic2);
+                    musicAD.setPosicion(630, 300);
                 }
                 else { Sonidos.reproducirMusicaFondo();
-                    Sett.TextureMusic = new Texture(Gdx.files.internal("MusicaOn.png"));
+                    musicAD.setTextura(TextureMusic);
+                    musicAD.setPosicion(630,300);
                 }
                 }
+
+            if(verificarBoton(x,y,bonus)){
+                Gdx.app.log("leerEntrada", "Tap sobre el hueso BONUS");
+            }
         }
 
         if(Gdx.input.justTouched()) {
@@ -96,12 +109,19 @@ public class Sett extends PantallaAbstracta implements Screen{
     }
 
     @Override
-    public void cargarTexturas() {
+    public void cargarTexturas() {;
 
-        texturaFondo = new Texture(Gdx.files.internal("SettingsMenu.png"));
+        texturaFondo = new Texture(Gdx.files.internal("PantallaVacia.png"));
+        texturaFondo2 = new Texture(Gdx.files.internal("PantallaVacia.png"));
+        texturaTitulo = new Texture(Gdx.files.internal("BotonSettings.png"));
         texturaAD = new Texture(Gdx.files.internal("CreatorsBoton.png"));
         TextureMusic = new Texture(Gdx.files.internal("MusicaOn.png"));
-        TextureReturn = new Texture(Gdx.files.internal("BackMenu.png"));
+        TextureMusic2 = new Texture(Gdx.files.internal("MusicaOff.png"));
+
+        TextureReturn = new Texture(Gdx.files.internal("BackGame.png"));
+
+        texturaBonus =  new Texture(Gdx.files.internal("GoldBone.png"));
+
     }
 
     @Override
@@ -125,13 +145,20 @@ public class Sett extends PantallaAbstracta implements Screen{
 
         cargarTexturas();
         fondo = new Fondo(texturaFondo);
+        fondo1 = new Fondo(texturaFondo2);
+        fondo1.getSprite().setX(fondo.getSprite().getWidth());
+        titulo = new Boton((texturaTitulo));
+        titulo.setPosicion(800,577);
         btnAD = new Boton(texturaAD);
-        btnAD.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4));
+        btnAD.setPosicion(100, 450);
         batch = new SpriteBatch();
         musicAD = new Boton(TextureMusic);
-        musicAD.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 2));
+//        musicAD.setPosicion(630, 300);
+        musicAD.setPosicion(1000, 150);
         returnAD = new Boton(TextureReturn);
         returnAD.setPosicion(30, 30);
+        bonus=new Boton(texturaBonus);
+        bonus.setPosicion(1000,100);
     }
 
     @Override
@@ -147,10 +174,25 @@ public class Sett extends PantallaAbstracta implements Screen{
         // DIBUJA
         batch.begin();
         fondo.render(batch);
+        fondo1.render(batch);
         btnAD.render(batch);
         musicAD.render(batch);
+        //bonus.render(batch);
+        titulo.render(batch);
         returnAD.render(batch);
+
         batch.end();
+        actualizarFondo();
+    }
+    private void actualizarFondo() {
+        fondo.getSprite().setX(fondo.getSprite().getX() - 1);
+        fondo1.getSprite().setX(fondo1.getSprite().getX() - 1);
+
+        if(fondo.getSprite().getX()+fondo.getSprite().getWidth() == 0){
+            fondo.getSprite().setX(fondo1.getSprite().getWidth());
+        }if(fondo1.getSprite().getX()+fondo1.getSprite().getWidth() == 0){
+            fondo1.getSprite().setX(fondo.getSprite().getWidth());
+        }
     }
 
     @Override
