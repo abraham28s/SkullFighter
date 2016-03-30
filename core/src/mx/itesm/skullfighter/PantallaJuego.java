@@ -186,7 +186,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     }
 
     private boolean verificarBordes() {
-        System.out.println(jugador.getSprite().getX());
+        //System.out.println(jugador.getSprite().getX());
         if(jugador.getSprite().getX()<-135 ){
             jugador.getSprite().setX(-130);
             return false;
