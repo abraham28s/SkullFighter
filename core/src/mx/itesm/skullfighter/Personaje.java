@@ -19,6 +19,7 @@ public class Personaje {
     private float alturaMax,alturaInicial;
     private float timerAnimacion;
     private com.badlogic.gdx.graphics.g2d.Animation animacion;
+    private String vista = "der";
 
 
     public Personaje(Texture textura){
@@ -80,6 +81,9 @@ public class Personaje {
                 }
                 break;
 
+
+
+
         }
 
     }
@@ -97,12 +101,20 @@ public class Personaje {
         return estado;
     }
 
+    public void setVista(String vista) {
+        this.vista = vista;
+    }
+
+    public String getVista() {
+        return vista;
+    }
 
 
     public enum Estado{
         SUBIENDO,
         BAJANDO,
-        NORMAL
+        NORMAL,
+        WEAPON
 
     }
 }

@@ -26,8 +26,10 @@ public class AcercaDe extends PantallaAbstracta implements Screen {
     private Texture texturaFondo;
 
     //Botoones
-    private Boton btnPlay;
+    private Componente dibujo;
     private Texture texturaBtnBack;
+    private Texture texturaDibujo;
+    private Boton btnBack;
 
     public AcercaDe(Principal principal) {
         this.Principal = principal;
@@ -44,15 +46,17 @@ public class AcercaDe extends PantallaAbstracta implements Screen {
         cargarTexturas(); //cargar texturas
         fondo = new Fondo(texturaFondo);
         //botones nombres
-        btnPlay = new Boton(texturaBtnBack);
-        btnPlay.setPosicion(20, 20);
+        dibujo = new Componente(texturaDibujo);
+        dibujo.setPosicion(200, 20);
+        btnBack = new Boton(texturaBtnBack);
+        btnBack.setPosicion(30,30);
 
         batch = new SpriteBatch();
     }
 
     public void cargarTexturas() {
-
-        texturaFondo=new Texture(Gdx.files.internal("Developers.png")); //AcercaDe.png
+        texturaDibujo = new Texture(Gdx.files.internal("Developers.png"));
+        texturaFondo=new Texture(Gdx.files.internal("AboutMenu.png")); //AcercaDe.png
         texturaBtnBack = new Texture((Gdx.files.internal("BackGame.png"))); //acerca de
 
     }
@@ -78,7 +82,8 @@ public class AcercaDe extends PantallaAbstracta implements Screen {
 
         batch.begin();
         fondo.render(batch);
-        btnPlay.render(batch);
+        btnBack.render(batch);
+        dibujo.render(batch);
         batch.end();
     }
 
@@ -89,7 +94,7 @@ public class AcercaDe extends PantallaAbstracta implements Screen {
             camara.unproject(coordenadas);//TRaduce coordenadas
             float x = coordenadas.x;
             float y = coordenadas.y;
-            if(verificarBoton(x,y,btnPlay)==true){
+            if(verificarBoton(x,y,btnBack)==true){
                 Gdx.app.log("leerEntrada","TAp sobre el boton");
                 //cambiar a pantalla de jugar
                 Principal.setScreen(new Sett(Principal));

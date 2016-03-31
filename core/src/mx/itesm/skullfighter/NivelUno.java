@@ -10,6 +10,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.util.Random;
+
 /**
  * Created by abrahamsoto on 30/03/16.
  */
@@ -38,13 +40,24 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     private Texture texturaBtnIzq;
     private Boton btnBrin;
     private Texture texturaBtnBrin;
+
+    private Boton btnWeapon;
+    private Texture texturaBtnWeapon;
+
+    private Boton btnPunch;
+    private Texture texturaBtnPunch;
+
     private Boton btnPausa;
     private Texture texturaPausa;
     private Texture texturaFondo;
     private Texture[] texturaMovDer;
     private Texture[] texturaMovIzq;
+    private Texture[] texturaOzDer;
+    private Texture[] texturaOzIzq;
     private int con = 0;
     int Mov = 0;
+    private boolean atacando = false;
+    private int conWe= 0;
 
 
     public NivelUno(Principal principal) {
@@ -91,6 +104,12 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                     jugador.movimientoBrin();
                 }
             }
+            if(verificarBoton(x,y,btnPunch)){
+
+            }
+            if(verificarBoton(x,y,btnWeapon) ){
+                atacando = true;
+            }
         }
         if(Gdx.input.justTouched() &&Gdx.input.isTouched()){
             if(verificarBoton(x,y,btnDer) && verificarBoton(x, y, btnBrin) && verificarBordes()){
@@ -131,6 +150,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         if(Mov>500){
             Mov=0;
         }
+        jugador.setVista("izq");
         jugador.setPosicion(x - 5, y);
     }
 
@@ -148,6 +168,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         if(Mov>500){
             Mov = 0;
         }
+        jugador.setVista("der");
         jugador.setPosicion(x+5,y);
     }
 
@@ -165,12 +186,29 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         texturaMovIzq[1] = new Texture(Gdx.files.internal("SkullCam2izq.png"));
         texturaMovIzq[2] = new Texture(Gdx.files.internal("SkullCam3izq.png"));
 
+        texturaOzDer = new Texture[5];
+        texturaOzDer[0] = new Texture(Gdx.files.internal("Oz1Der.png"));
+        texturaOzDer[1] = new Texture(Gdx.files.internal("Oz2Der.png"));
+        texturaOzDer[2] = new Texture(Gdx.files.internal("Oz3Der.png"));
+        texturaOzDer[3] = new Texture(Gdx.files.internal("Oz4Der.png"));
+        texturaOzDer[4] = new Texture(Gdx.files.internal("SkullCam1der.png"));
+
+        texturaOzIzq = new Texture[5];
+        texturaOzIzq[0] = new Texture(Gdx.files.internal("Oz1Izq.png"));
+        texturaOzIzq[1] = new Texture(Gdx.files.internal("Oz2Izq.png"));
+        texturaOzIzq[2] = new Texture(Gdx.files.internal("Oz3Izq.png"));
+        texturaOzIzq[3] = new Texture(Gdx.files.internal("Oz4Izq.png"));
+        texturaOzIzq[4] = new Texture(Gdx.files.internal("SkullCam1izq.png"));
+
 
 
         texturaBtnDer = new Texture(Gdx.files.internal("botonder.png"));
         texturaBtnIzq = new Texture(Gdx.files.internal("botonizq.png"));
         texturaBtnBrin = new Texture(Gdx.files.internal("BotonJump.png"));
         texturaPausa = new Texture(Gdx.files.internal("BackMenu.png"));
+        texturaBtnPunch = new Texture(Gdx.files.internal("BotonPunch.png"));
+        texturaBtnWeapon = new Texture(Gdx.files.internal("BotonWeapon.png"));
+
     }
 
     @Override
@@ -185,6 +223,11 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         batch = new SpriteBatch();
         btnPausa = new Boton(texturaPausa);
         btnPausa.setPosicion(1100, 600);
+        btnPunch = new Boton(texturaBtnPunch);
+        btnPunch.setPosicion(950,40);
+        btnWeapon = new Boton(texturaBtnWeapon);
+        btnWeapon.setPosicion(800,40);
+
         batch = new SpriteBatch();
     }
 
@@ -221,7 +264,6 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         // Mover la cámara para que siga al personaje
 
 
-
         batch.setProjectionMatrix(camara.combined);
 
         // DIBUJA
@@ -231,12 +273,57 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         jugador.actualizar();
 
 
+        revisarAtacando();
+        //ataqueEnemigo();
+
+
         btnIzq.render(batch);
         btnDer.render(batch);
         btnBrin.render(batch);
         btnPausa.render(batch);
+        btnWeapon.render(batch);
+        btnPunch.render(batch);
         batch.end();
     }
+
+    private void ataqueEnemigo() {
+        if(Math.random()*25+1 <5) {
+            atacando = true;
+        }
+    }
+
+    private void revisarAtacando() {
+        float x = jugador.getSprite().getX();
+        float y = jugador.getSprite().getY();
+        if (atacando == true) {
+
+            if (Mov % 5 == 0) {
+                if(jugador.getVista().equals("der")) {
+                    jugador.setSprite(texturaOzDer[conWe % 5]);
+
+                }else if(jugador.getVista().equals("izq")) {
+                    jugador.setSprite(texturaOzIzq[conWe % 5]);
+
+                }
+                conWe++;
+            }
+
+            if (conWe > 500) {
+                conWe = 0;
+            }
+            Mov++;
+            if (Mov > 500) {
+                Mov = 0;
+            }
+            if (conWe % 5 == 0) {
+                atacando = false;
+                conWe++;
+            }
+            System.out.print(conWe);
+            jugador.setPosicion(x, y);
+        }
+    }
+
 
     @Override
     public void resize(int width, int height) {
