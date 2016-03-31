@@ -41,7 +41,7 @@ public class AcercaDe extends PantallaAbstracta implements Screen {
         camara.update();
         vista = new StretchViewport(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO,camara);
 
-        cargarTexturas(); //cargar texturasf
+        cargarTexturas(); //cargar texturas
         fondo = new Fondo(texturaFondo);
         //botones nombres
         btnPlay = new Boton(texturaBtnBack);

@@ -59,7 +59,6 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
         fondo = new Fondo(texturaFondo);
 
-
         jugador = new Personaje(texturaMovDer[0]);
         jugador.setPosicion(-15, -30);
 
@@ -230,8 +229,6 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         fondo.render(batch);
         jugador.render(batch);
         jugador.actualizar();
-
-
 
 
         btnIzq.render(batch);
