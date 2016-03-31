@@ -31,6 +31,9 @@ public class Costumize implements Screen {
     private Texture texturaFondo2;
     private Fondo fondo1;
 
+    private Boton arma;
+    private Texture texturaArma;
+
     private Boton btnTitulo;
     private Texture texturabtnTitulo;
 
@@ -62,7 +65,7 @@ public class Costumize implements Screen {
         fondo1.getSprite().setX(fondo.getSprite().getWidth());
 
         clothes = new Boton(texturaCloth);
-        clothes.setPosicion(805, 140);
+        clothes.setPosicion(745, 120);
         weapons = new Boton(texturaWeapon);
         weapons.setPosicion(805, 400);
         customs = new Boton(texturaCustom);
@@ -85,7 +88,7 @@ public class Costumize implements Screen {
         texturaFondo=new Texture(Gdx.files.internal("PantallaVacia.png"));
         texturaFondo2 = new Texture(Gdx.files.internal("PantallaVacia.png"));
         texturaBack = new Texture((Gdx.files.internal("BackGame.png")));
-        texturaCloth = new Texture((Gdx.files.internal("Cloth1Customize.png")));
+        texturaCloth = new Texture((Gdx.files.internal("Ropa.png")));
         //texturaWeapon = new Texture((Gdx.files.internal("Arma1Customize.png")));
         texturaWeapon = new Texture((Gdx.files.internal("BotonWeapon.png")));
         texturaCustom = new Texture((Gdx.files.internal("Skull_Oz2.png")));
