@@ -46,6 +46,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
     private Boton btnBack;
     private Texture texturaBack;
+    private int Mov = 0;
 
     public PantallaJuego(Principal principal) {
         this.principal = principal;
@@ -60,7 +61,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         fondo2 = new Fondo(texturaFondo2);
 
         jugador = new Personaje(texturaMovDer[0]);
-        jugador.setPosicion(-15,-30);
+        jugador.setPosicion(-15, -30);
 
         crearYPosBotones();
     }
@@ -93,11 +94,14 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
     @Override
     public void render(float delta) {
+
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         leerEntrada(); // Revisar eventos
         // Mover la cámara para que siga al personaje
+
+
 
         batch.setProjectionMatrix(camara.combined);
 
@@ -178,14 +182,14 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
                 }
             }
             if(verificarBoton(x,y, btnBack)){
-                Gdx.app.log("leerEntrada","TAp sobre back");
+
                 //cambiar a pantalla de jugar
-                principal.setScreen(new PantallaMenu(principal));
+                principal.setScreen(new NivelUno(principal));
             }
         }
     }
 
-    private boolean verificarBordes() {
+    public boolean verificarBordes() {
         //System.out.println(jugador.getSprite().getX());
         if(jugador.getSprite().getX()<-135 ){
             jugador.getSprite().setX(-130);
@@ -203,19 +207,34 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
         float x = jugador.getSprite().getX();
         float y = jugador.getSprite().getY();
-        if(Gdx.graphics.getDeltaTime()%30<1&&Gdx.graphics.getDeltaTime()%30>0) {
+        //System.out.println(Gdx.graphics.getDeltaTime());
+        if(Mov%4==0) {
             jugador.setSprite(texturaMovIzq[con % 3]);
             con++;
         }
-        jugador.setPosicion(x-5,y);
+        if(con>500){
+            con=0;
+        }
+        Mov++;
+        if(Mov>500){
+            Mov=0;
+        }
+        jugador.setPosicion(x - 5, y);
     }
 
     private void movimientoDer() {
         float x = jugador.getSprite().getX();
         float y = jugador.getSprite().getY();
-        if(Gdx.graphics.getDeltaTime()%30<1&&Gdx.graphics.getDeltaTime()%30>0) {
+        if(Mov%4==0) {
             jugador.setSprite(texturaMovDer[con % 3]);
             con++;
+        }
+        if(con>500){
+            con=0;
+        }
+        Mov++;
+        if(Mov>500){
+            Mov = 0;
         }
         jugador.setPosicion(x+5,y);
     }

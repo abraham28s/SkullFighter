@@ -17,4 +17,5 @@ public abstract class PantallaAbstracta {
     abstract void cargarTexturas();
     abstract void crearYPosBotones();
     abstract void setYUpgradeCamara();
+
 }

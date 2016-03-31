@@ -13,7 +13,7 @@ public class Principal extends Game {
     @Override
     public void create () {
 
-        setScreen(new P1(this));
+        setScreen(new NivelUno(this));
     }
 
 }
