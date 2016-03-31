@@ -61,10 +61,7 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
 
         batch = new SpriteBatch();
 
-        if (!Sonidos.musicaFondo.isPlaying()){
-            Sonidos.reproducirMusicaFondo();
 
-        }
     }
 
     public void cargarTexturas() {
