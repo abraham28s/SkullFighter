@@ -494,7 +494,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                 this.principal.setScreen(new PantallaJuego(principal));
             }
             if(verificarBoton(x,y,BtnQuitPausa)){
-                this.principal.setScreen(new P2(principal));
+                this.principal.setScreen(new PantallaMenu(principal));
             }
 
         }
@@ -511,7 +511,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                 resumirJuego();
             }
             if(verificarBoton(x,y,BtnQuitPausa)){
-                this.principal.setScreen(new P2(principal));
+                this.principal.setScreen(new PantallaMenu(principal));
             }
 
         }
