@@ -26,9 +26,7 @@ public class AcercaDe extends PantallaAbstracta implements Screen {
     private Texture texturaFondo;
 
     //Botoones
-    //private Componente dibujo;
     private Texture texturaBtnBack;
-    //private Texture texturaDibujo;
     private Boton btnBack;
 
     public AcercaDe(Principal principal) {
@@ -46,8 +44,6 @@ public class AcercaDe extends PantallaAbstracta implements Screen {
         cargarTexturas(); //cargar texturas
         fondo = new Fondo(texturaFondo);
         //botones nombres
-        //dibujo = new Componente(texturaDibujo);
-        //dibujo.setPosicion(200, 20);
         btnBack = new Boton(texturaBtnBack);
         btnBack.setPosicion(30,30);
 
@@ -55,7 +51,6 @@ public class AcercaDe extends PantallaAbstracta implements Screen {
     }
 
     public void cargarTexturas() {
-        //texturaDibujo = new Texture(Gdx.files.internal("Developers.png"));
         texturaFondo=new Texture(Gdx.files.internal("Developers.png")); //AcercaDe.png
         texturaBtnBack = new Texture((Gdx.files.internal("BackGame.png"))); //acerca de
 
