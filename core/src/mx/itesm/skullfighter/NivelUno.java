@@ -10,6 +10,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import org.lwjgl.Sys;
+
 import java.util.Random;
 
 /**
@@ -25,10 +27,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
     Fondo fondo;
 
-    Componente vidaP;
-    Texture TexturaVidaP;
-    Componente vidaE;
-    Texture TexturaVidaE;
+
 
     Personaje jugador;
     Texture TexturaJugador;
@@ -73,6 +72,24 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     private Texture[] texturaEnePunchDer;
     private Texture[] texturaEnePunchIzq;
 
+    private Componente vidaJ;
+    private Texture[] texturaVidaJ;
+    private Componente vidaE;
+    private Texture[] texturaVidaE;
+    private int indexVidaJ = 6;
+    // 1= ejecucion, 2=pausa
+    private int estado = 1;
+
+    //Pausa
+    private Componente fondoPausa;
+    private Texture texturaFonPausa;
+    private Componente MenuPausa;
+    private Texture texturaMenuPausa;
+    private Boton BtnQuitPausa;
+    private Texture texturaQuitPausa;
+    private Boton BtnResumePausa;
+    private Texture texturaResumePausa;
+
 
     public NivelUno(Principal principal) {
         this.principal = principal;
@@ -91,6 +108,19 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
         enemigo = new Personaje(texturaEneMovIzq[0]);
         enemigo.setPosicion(1050, 30);
+
+        vidaJ = new Componente(texturaVidaJ[6]);
+        vidaJ.setPosicion(20,550);
+
+        vidaE = new Componente(texturaVidaE[6]);
+        vidaE.setPosicion(700, 550);
+
+        fondoPausa = new Componente(texturaFonPausa);
+
+        MenuPausa = new Componente(texturaMenuPausa);
+        MenuPausa.setPosicion(417,120);
+
+
 
         crearYPosBotones();
     }
@@ -145,10 +175,14 @@ public class NivelUno extends PantallaAbstracta implements Screen {
             if(verificarBoton(x,y, btnPausa)){
 
                 //cambiar a pantalla de jugar
-                principal.setScreen(new P2(principal));
+                pausarJuego();
             }
         }
 
+    }
+
+    private void pausarJuego() {
+        this.estado = 0;
     }
 
     private void movimientoIzq(Personaje per, Texture[] izq) {
@@ -282,12 +316,23 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         texturaEnePunchIzq[1] = new Texture(Gdx.files.internal("EnemigoPun2Izq.png"));
         texturaEnePunchIzq[2] = new Texture(Gdx.files.internal("Enemigo1Izq.png"));
 
+        texturaVidaJ = new Texture[7];
+        texturaVidaE = new Texture[7];
+        for (int i = 0; i<7;i++){
+            texturaVidaJ[i] = new Texture(Gdx.files.internal("VidaSkull"+ i+".png"));
+            texturaVidaE[i] = new Texture(Gdx.files.internal("VidaSkullE"+ i+".png"));
+        }
+
+        texturaMenuPausa = new Texture(Gdx.files.internal("Pausemenu.png"));
+        texturaQuitPausa = new Texture(Gdx.files.internal("Quit.png"));
+        texturaResumePausa = new Texture(Gdx.files.internal("Resume.png"));
+        texturaFonPausa =new Texture(Gdx.files.internal("negro.png"));
 
 
         texturaBtnDer = new Texture(Gdx.files.internal("botonder.png"));
         texturaBtnIzq = new Texture(Gdx.files.internal("botonizq.png"));
         texturaBtnBrin = new Texture(Gdx.files.internal("BotonJump.png"));
-        texturaPausa = new Texture(Gdx.files.internal("BackMenu.png"));
+        texturaPausa = new Texture(Gdx.files.internal("PauseBotton.png"));
         texturaBtnPunch = new Texture(Gdx.files.internal("BotonPunch.png"));
         texturaBtnWeapon = new Texture(Gdx.files.internal("BotonWeapon.png"));
 
@@ -304,11 +349,19 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         btnBrin.setPosicion(1100, 40);
         batch = new SpriteBatch();
         btnPausa = new Boton(texturaPausa);
-        btnPausa.setPosicion(1100, 600);
+        btnPausa.setPosicion(600, 645);
         btnPunch = new Boton(texturaBtnPunch);
         btnPunch.setPosicion(950, 40);
         btnWeapon = new Boton(texturaBtnWeapon);
         btnWeapon.setPosicion(800, 40);
+
+
+        BtnResumePausa = new Boton(texturaResumePausa);
+        BtnResumePausa.setPosicion(555,430);
+
+        BtnQuitPausa = new Boton(texturaQuitPausa);
+        BtnQuitPausa.setPosicion(585,270);
+
 
         batch = new SpriteBatch();
     }
@@ -342,10 +395,6 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        leerEntrada(); // Revisar eventos
-        // Mover la cámara para que siga al personaje
-
-
         batch.setProjectionMatrix(camara.combined);
 
         // DIBUJA
@@ -354,13 +403,9 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         jugador.render(batch);
         jugador.actualizar();
         enemigo.render(batch);
+        vidaJ.render(batch);
+        vidaE.render(batch);
 
-        movimientoEnemigo();
-
-        revisarAtacando(jugador, texturaOzDer, texturaOzIzq, texturaPunchDer, texturaEneMovIzq);
-
-        ataqueEnemigo();
-        revisarAtacando(enemigo, texturaOzDer, texturaOzIzq, texturaEnePunchDer, texturaEnePunchIzq);
 
 
         btnIzq.render(batch);
@@ -370,18 +415,81 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         btnPausa.render(batch);
         btnWeapon.render(batch);
         btnPunch.render(batch);
+
+
+        if(this.estado == 1) {
+            leerEntrada(); // Revisar eventos
+            // Mover la cámara para que siga al personaje
+            movimientoEnemigo();
+
+
+            revisarAtacando(jugador, texturaOzDer, texturaOzIzq, texturaPunchDer, texturaPunchIzq);
+
+            ataqueEnemigo();
+            revisarAtacando(enemigo, texturaOzDer, texturaOzIzq, texturaEnePunchDer, texturaEnePunchIzq);
+            revisarColi();
+
+        }else if(this.estado ==0){
+            leerEntradaPausa();
+            fondoPausa.render(batch);
+            MenuPausa.render(batch);
+            BtnQuitPausa.render(batch);
+            BtnResumePausa.render(batch);
+
+        }
         batch.end();
+
+    }
+
+    private void leerEntradaPausa() {
+        Vector3 coordenadas = new Vector3();
+        coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camara.unproject(coordenadas);  //traduce las coordenadas
+        float x = coordenadas.x;
+        float y = coordenadas.y;
+        if(Gdx.input.justTouched()) {
+            if(verificarBoton(x, y, BtnResumePausa)){
+                resumirJuego();
+            }
+            if(verificarBoton(x,y,BtnQuitPausa)){
+                this.principal.setScreen(new PantallaMenu(principal));
+            }
+            if(verificarBoton(x,y,btnWeapon) ){
+                jugador.setAtacandoWe(true);
+            }
+        }
+    }
+
+    private void revisarColi() {
+
+        if(enemigo.getSprite().getX()+10>jugador.getSprite().getX()&&enemigo.getSprite().getX()-10<jugador.getSprite().getX()){
+            //System.out.print("tru de x");
+            //System.out.print(conPuE);
+        if(enemigo.getAtacandoPu() == true &&conPuE%3==0){
+            //System.out.print("tru de x");
+            if(indexVidaJ!=0){
+                indexVidaJ--;
+                float x = vidaJ.getSprite().getX();
+                float y = vidaJ.getSprite().getY();
+                vidaJ.setTextura(texturaVidaJ[indexVidaJ]);
+                vidaJ.setPosicion(x,y);
+            }else if(indexVidaJ ==0){
+
+            }
+        }
+        }
+
     }
 
     private void movimientoEnemigo() {
         Random numero = new Random();
         if(jugador.getSprite().getX()>enemigo.getSprite().getX()){
 
-            if(numero.nextInt(5)<3) {
+            if(numero.nextInt(15)<3) {
                 movimientoDer(enemigo, texturaEneMovDer);
             }
         }else if(jugador.getSprite().getX()<enemigo.getSprite().getX()){
-            if(numero.nextInt(5)<3) {
+            if(numero.nextInt(15)<3) {
                 movimientoIzq(enemigo, texturaEneMovIzq);
             }
         }
@@ -506,12 +614,16 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
     @Override
     public void pause() {
-
+        pausarJuego();
     }
 
     @Override
     public void resume() {
+        resumirJuego();
+    }
 
+    private void resumirJuego() {
+        this.estado = 1;
     }
 
     @Override
