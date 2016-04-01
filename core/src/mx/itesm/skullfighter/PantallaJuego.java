@@ -40,8 +40,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     private Personaje jugador;
     private Texture[] texturaMovDer;
     private Texture[] texturaMovIzq;
-    private Personaje Civil1;
-    private Texture[] texturasCivil1;
+
     private Personaje Civil2;
     private Texture[] texturasCivil2;
     private int con = 0;
@@ -55,6 +54,13 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
     private Componente tip;
     private Texture texturaTip;
+
+    private Componente Civil1;
+    private Texture texturaCivil1;
+
+    private Boton TextoCivil1;
+    private Texture texturaTextoCivil1;
+
 
     private int Mov = 0;
     private int ConCiv = 0;
@@ -76,6 +82,12 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         jugador.setPosicion(-15, -30);
         Civil2 = new Personaje(texturasCivil2[0]);
         Civil2.setPosicion(1900, 30);
+
+        Civil1 = new Componente(texturaCivil1);
+        Civil1.setPosicion(3750,30);
+
+        TextoCivil1 = new Boton(texturaTextoCivil1);
+        TextoCivil1.setPosicion(3500,350);
 
         tip = new Componente(texturaTip);
         tip.setPosicion(1650,350);
@@ -118,6 +130,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         leerEntrada(); // Revisar eventos
         // Mover la cámara para que siga al personaje
         animacionCiviles(Civil2);
+        leerEntrada2();
 
 
         batch.setProjectionMatrix(camara.combined);
@@ -127,6 +140,8 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         fondo.render(batch);
         Civil2.render(batch);
         tip.render(batch);
+        Civil1.render(batch);
+        TextoCivil1.render(batch);
         jugador.render(batch);
         jugador.actualizar();
 
@@ -139,9 +154,23 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         batch.begin();
         btnIzq.render(batch);
         btnDer.render(batch);
-        btnBrin.render(batch);
+        //btnBrin.render(batch);
         btnBack.render(batch);
         batch.end();
+    }
+
+    private void leerEntrada2() {
+        Vector3 coordenadas = new Vector3();
+        coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camara.unproject(coordenadas);  //traduce las coordenadas
+        float x = coordenadas.x;
+        float y = coordenadas.y;
+
+        if(Gdx.input.justTouched()) {
+            if (verificarBoton(x, y, TextoCivil1) && verificarBordes()) {
+                this.principal.setScreen(new NivelUno(this.principal));
+            }
+        }
     }
 
     private void animacionCiviles(Personaje civil) {
@@ -158,7 +187,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
             if(civil.equals(Civil2)) {
                 civil.setSprite(texturasCivil2[ConCiv % 3]);
             }else{
-                civil.setSprite(texturasCivil1[ConCiv % 3]);
+                civil.setSprite(texturasCivil2[ConCiv % 3]);
             }
         }
         if(ConCiv>500){
@@ -208,33 +237,36 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
                 actualizarCamara();
             }
         }
-        if(Gdx.input.justTouched()) {
+       /* if(Gdx.input.justTouched()) {
             if(verificarBoton(x, y, btnBrin)){
                 if(jugador.getEstado() == Personaje.Estado.NORMAL) {
                     jugador.movimientoBrin();
                 }
             }
-        }
+        }*/
         if(Gdx.input.justTouched() &&Gdx.input.isTouched()){
-            if(verificarBoton(x,y,btnDer) && verificarBoton(x, y, btnBrin) && verificarBordes()){
+            if(verificarBoton(x,y,btnDer) /*&& verificarBoton(x, y, btnBrin)*/ && verificarBordes()){
                 movimientoDer();
                 actualizarCamara();
                 if(jugador.getEstado() == Personaje.Estado.NORMAL) {
-                    jugador.movimientoBrin();
+                    //jugador.movimientoBrin();
                 }
             }
-            if(verificarBoton(x,y,btnIzq)&& verificarBoton(x, y, btnBrin) && verificarBordes() ){
+            if(verificarBoton(x,y,btnIzq)/*&& verificarBoton(x, y, btnBrin) */&& verificarBordes() ){
                 movimientoIzq();actualizarCamara();
                 if(jugador.getEstado() == Personaje.Estado.NORMAL) {
-                    jugador.movimientoBrin();
+                    //jugador.movimientoBrin();
                 }
             }
             if(verificarBoton(x,y, btnBack)){
 
                 //cambiar a pantalla de jugar
-                principal.setScreen(new NivelUno(principal));
+                principal.setScreen(new P2(principal));
             }
+
         }
+
+
     }
 
     public boolean verificarBordes() {
@@ -310,6 +342,9 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         texturaFondo2 = new Texture(Gdx.files.internal("Fondo-Capa1.png"));
 
         texturaTip = new Texture(Gdx.files.internal("Civil2/Tip.png"));
+
+        texturaCivil1 = new Texture(Gdx.files.internal("CivilFrente1.png"));
+        texturaTextoCivil1 = new Texture(Gdx.files.internal("Civil2/Tip.png"));
 
         texturaBtnDer = new Texture(Gdx.files.internal("botonder.png"));
         texturaBtnIzq = new Texture(Gdx.files.internal("botonizq.png"));

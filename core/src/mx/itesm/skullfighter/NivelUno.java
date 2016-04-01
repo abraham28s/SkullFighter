@@ -77,7 +77,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     private Componente vidaE;
     private Texture[] texturaVidaE;
     private int indexVidaJ = 6;
-    // 1= ejecucion, 2=pausa
+    // 1= ejecucion, 0=pausa, 3 perdio, 4 gano
     private int estado = 1;
 
     //Pausa
@@ -89,6 +89,17 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     private Texture texturaQuitPausa;
     private Boton BtnResumePausa;
     private Texture texturaResumePausa;
+    private boolean eneAtacoPu = false;
+    private boolean juAtacoPu = false;
+    private int indexVidaE = 6;
+    private boolean juAtacoWe = false;
+    private Boton BtnRestartGame;
+    private Texture TexturaBtnRestartGame;
+
+    private Componente win;
+    private Texture texturaWin;
+    private Componente lose;
+    private Texture texturaLose;
 
 
     public NivelUno(Principal principal) {
@@ -119,6 +130,15 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
         MenuPausa = new Componente(texturaMenuPausa);
         MenuPausa.setPosicion(417,120);
+
+        win = new Componente(texturaWin);
+        win.setPosicion(585,400);
+
+        lose = new Componente(texturaLose);
+        win.setPosicion(585,400);
+
+        BtnRestartGame = new Boton(TexturaBtnRestartGame);
+        BtnRestartGame.setPosicion(585,350);
 
 
 
@@ -153,6 +173,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
             }
             if(verificarBoton(x,y,btnPunch)){
                 jugador.setAtacandoPu(true);
+                juAtacoPu = true;
             }
             if(verificarBoton(x,y,btnWeapon) ){
                 jugador.setAtacandoWe(true);
@@ -315,6 +336,10 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         texturaEnePunchIzq[0] = new Texture(Gdx.files.internal("EnemigoPun1Izq.png"));
         texturaEnePunchIzq[1] = new Texture(Gdx.files.internal("EnemigoPun2Izq.png"));
         texturaEnePunchIzq[2] = new Texture(Gdx.files.internal("Enemigo1Izq.png"));
+       ///////////////////////////
+        texturaWin = new Texture(Gdx.files.internal("BotonStory.png"));
+        texturaLose = new Texture(Gdx.files.internal("BotonSettings.png"));
+        TexturaBtnRestartGame = new Texture(Gdx.files.internal("Resume.png"));
 
         texturaVidaJ = new Texture[7];
         texturaVidaE = new Texture[7];
@@ -327,6 +352,8 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         texturaQuitPausa = new Texture(Gdx.files.internal("Quit.png"));
         texturaResumePausa = new Texture(Gdx.files.internal("Resume.png"));
         texturaFonPausa =new Texture(Gdx.files.internal("negro.png"));
+
+
 
 
         texturaBtnDer = new Texture(Gdx.files.internal("botonder.png"));
@@ -436,9 +463,41 @@ public class NivelUno extends PantallaAbstracta implements Screen {
             BtnQuitPausa.render(batch);
             BtnResumePausa.render(batch);
 
+        }else if(this.estado == 3){
+            leerEntradaFin();
+            fondoPausa.render(batch);
+            lose.render(batch);
+            BtnRestartGame.render(batch);
+            BtnQuitPausa.render(batch);
+
+
+        }else if(this.estado == 4){
+            leerEntradaFin();
+            fondoPausa.render(batch);
+            win.render(batch);
+            BtnRestartGame.render(batch);
+
+            BtnQuitPausa.render(batch);
         }
         batch.end();
 
+    }
+
+    private void leerEntradaFin() {
+        Vector3 coordenadas = new Vector3();
+        coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camara.unproject(coordenadas);  //traduce las coordenadas
+        float x = coordenadas.x;
+        float y = coordenadas.y;
+        if(Gdx.input.justTouched()) {
+            if(verificarBoton(x, y, BtnRestartGame)){
+                this.principal.setScreen(new PantallaJuego(principal));
+            }
+            if(verificarBoton(x,y,BtnQuitPausa)){
+                this.principal.setScreen(new P2(principal));
+            }
+
+        }
     }
 
     private void leerEntradaPausa() {
@@ -452,33 +511,74 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                 resumirJuego();
             }
             if(verificarBoton(x,y,BtnQuitPausa)){
-                this.principal.setScreen(new PantallaMenu(principal));
+                this.principal.setScreen(new P2(principal));
             }
-            if(verificarBoton(x,y,btnWeapon) ){
-                jugador.setAtacandoWe(true);
-            }
+
         }
     }
 
     private void revisarColi() {
-
+        //System.out.print(juAtacoWe);
+        //System.out.println(indexVidaE);
         if(enemigo.getSprite().getX()+10>jugador.getSprite().getX()&&enemigo.getSprite().getX()-10<jugador.getSprite().getX()){
             //System.out.print("tru de x");
             //System.out.print(conPuE);
-        if(enemigo.getAtacandoPu() == true &&conPuE%3==0){
+        if(eneAtacoPu== true &&conPuE%3==0){
             //System.out.print("tru de x");
-            if(indexVidaJ!=0){
+            if(indexVidaJ>0){
                 indexVidaJ--;
                 float x = vidaJ.getSprite().getX();
                 float y = vidaJ.getSprite().getY();
                 vidaJ.setTextura(texturaVidaJ[indexVidaJ]);
                 vidaJ.setPosicion(x,y);
             }else if(indexVidaJ ==0){
+                perdioJuego();
+            }
+            eneAtacoPu = false;
+        }
 
+            if(juAtacoPu== true &&conPuJ%3==0){
+                //System.out.print("tru de x");
+                if(indexVidaE>0){
+                    indexVidaE--;
+                    float x = vidaE.getSprite().getX();
+                    float y = vidaE.getSprite().getY();
+                    vidaE.setTextura(texturaVidaE[indexVidaE]);
+                    vidaE.setPosicion(x,y);
+                }else if(indexVidaE ==0){
+                    ganoJuego();
+                }
+                juAtacoPu = false;
+            }else if(juAtacoWe== true){
+                //System.out.println("tru de x");
+                //System.out.println(indexVidaE + "hola");
+                if(indexVidaE>0){
+                    indexVidaE-=2;
+                    System.out.print("llegue");
+                    float x = vidaE.getSprite().getX();
+                    float y = vidaE.getSprite().getY();
+                    vidaE.setTextura(texturaVidaE[indexVidaE]);
+                    vidaE.setPosicion(x,y);
+                }else if(indexVidaE ==0){
+                    ganoJuego();
+                }
+                juAtacoWe = false;
             }
         }
+        else{
+            eneAtacoPu = false;
+            juAtacoPu = false;
+            juAtacoWe = false;
         }
 
+    }
+
+    private void ganoJuego() {
+        this.estado = 4;
+    }
+
+    private void perdioJuego() {
+        this.estado = 3;
     }
 
     private void movimientoEnemigo() {
@@ -496,7 +596,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     }
 
     private void ataqueEnemigo() {
-        if(Math.random()*25+1 <2) {
+        if(Math.random()*80+1 <2) {
             enemigo.setAtacandoPu(true);
         }
     }
@@ -527,6 +627,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                 }
                 if (conWeJ % 5 == 0) {
                     per.setAtacandoWe(false);
+                    juAtacoWe = true;
                     conWeJ++;
                 }
                 //System.out.print(conWe);
@@ -594,6 +695,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                 }
                 if (conPuE % 4 == 0) {
                     per.setAtacandoPu(false);
+                    eneAtacoPu = true;
 
                     conPuE++;
                 }
