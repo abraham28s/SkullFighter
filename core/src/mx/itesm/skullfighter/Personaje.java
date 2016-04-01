@@ -20,6 +20,8 @@ public class Personaje {
     private float timerAnimacion;
     private com.badlogic.gdx.graphics.g2d.Animation animacion;
     private String vista = "der";
+    private boolean atacandoWe = false;
+    private boolean atacandoPu = false;
 
 
     public Personaje(Texture textura){
@@ -107,6 +109,22 @@ public class Personaje {
 
     public String getVista() {
         return vista;
+    }
+
+    public boolean getAtacandoWe() {
+        return atacandoWe;
+    }
+
+    public void setAtacandoWe(boolean atacandoWe) {
+        this.atacandoWe = atacandoWe;
+    }
+
+    public void setAtacandoPu(boolean atacandoPu) {
+        this.atacandoPu = atacandoPu;
+    }
+
+    public boolean getAtacandoPu() {
+        return atacandoPu;
     }
 
 
