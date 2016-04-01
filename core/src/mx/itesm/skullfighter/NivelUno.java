@@ -10,8 +10,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import java.util.Random;
-
 /**
  * Created by abrahamsoto on 30/03/16.
  */
@@ -56,7 +54,8 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     private Texture[] texturaOzIzq;
     private int con = 0;
     int Mov = 0;
-    private boolean atacando = false;
+    private boolean atacandoWe = false;
+    private boolean atacandoPu = false;
     private int conWe= 0;
 
 
@@ -108,7 +107,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
             }
             if(verificarBoton(x,y,btnWeapon) ){
-                atacando = true;
+                atacandoWe = true;
             }
         }
         if(Gdx.input.justTouched() &&Gdx.input.isTouched()){
@@ -288,14 +287,14 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
     private void ataqueEnemigo() {
         if(Math.random()*25+1 <5) {
-            atacando = true;
+            atacandoWe = true;
         }
     }
 
     private void revisarAtacando() {
         float x = jugador.getSprite().getX();
         float y = jugador.getSprite().getY();
-        if (atacando == true) {
+        if (atacandoWe == true) {
 
             if (Mov % 5 == 0) {
                 if(jugador.getVista().equals("der")) {
@@ -316,10 +315,10 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                 Mov = 0;
             }
             if (conWe % 5 == 0) {
-                atacando = false;
+                atacandoWe = false;
                 conWe++;
             }
-            System.out.print(conWe);
+            //System.out.print(conWe);
             jugador.setPosicion(x, y);
         }
     }

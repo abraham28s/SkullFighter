@@ -11,6 +11,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.util.Random;
+
 /** * Created by abrahamsoto on 17/02/16. */
 
 public class PantallaJuego extends PantallaAbstracta implements Screen {
@@ -38,6 +40,10 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     private Personaje jugador;
     private Texture[] texturaMovDer;
     private Texture[] texturaMovIzq;
+    private Personaje Civil1;
+    private Texture[] texturasCivil1;
+    private Personaje Civil2;
+    private Texture[] texturasCivil2;
     private int con = 0;
 
     private OrthographicCamera camaraFija;
@@ -46,7 +52,13 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
     private Boton btnBack;
     private Texture texturaBack;
+
+    private Componente tip;
+    private Texture texturaTip;
+
     private int Mov = 0;
+    private int ConCiv = 0;
+    private int ConAle=0;
 
     public PantallaJuego(Principal principal) {
         this.principal = principal;
@@ -62,6 +74,11 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
         jugador = new Personaje(texturaMovDer[0]);
         jugador.setPosicion(-15, -30);
+        Civil2 = new Personaje(texturasCivil2[0]);
+        Civil2.setPosicion(1900, 30);
+
+        tip = new Componente(texturaTip);
+        tip.setPosicion(1650,350);
 
         crearYPosBotones();
     }
@@ -100,7 +117,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
         leerEntrada(); // Revisar eventos
         // Mover la cámara para que siga al personaje
-
+        animacionCiviles(Civil2);
 
 
         batch.setProjectionMatrix(camara.combined);
@@ -108,9 +125,13 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         // DIBUJA
         batch.begin();
         fondo.render(batch);
+        Civil2.render(batch);
+        tip.render(batch);
         jugador.render(batch);
         jugador.actualizar();
+
         fondo2.render(batch);
+
 
         batch.end();
 
@@ -121,6 +142,33 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         btnBrin.render(batch);
         btnBack.render(batch);
         batch.end();
+    }
+
+    private void animacionCiviles(Personaje civil) {
+        int tiempos[] = {13,14,15,16};
+        Random numero = new Random();
+
+        if(ConAle%tiempos[numero.nextInt(4)]==0){
+
+
+        float x = civil.getSprite().getX();
+        float y = civil.getSprite().getY();
+
+        if(ConCiv % (5) == 0){
+            if(civil.equals(Civil2)) {
+                civil.setSprite(texturasCivil2[ConCiv % 3]);
+            }else{
+                civil.setSprite(texturasCivil1[ConCiv % 3]);
+            }
+        }
+        if(ConCiv>500){
+            ConCiv = 0;
+        }
+        ConCiv++;
+        civil.setPosicion(x,y);
+        }
+        ConAle++;
+
     }
 
     private void actualizarCamara() {
@@ -254,7 +302,14 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         texturaMovIzq[1] = new Texture(Gdx.files.internal("SkullCam2izq.png"));
         texturaMovIzq[2] = new Texture(Gdx.files.internal("SkullCam3izq.png"));
 
+        texturasCivil2 = new Texture[3];
+        texturasCivil2[0] = new Texture(Gdx.files.internal("Civil2/Civil2-1.png"));
+        texturasCivil2[1] = new Texture(Gdx.files.internal("Civil2/Civil2-2.png"));
+        texturasCivil2[2] = new Texture(Gdx.files.internal("Civil2/Civil2-3.png"));
+
         texturaFondo2 = new Texture(Gdx.files.internal("Fondo-Capa1.png"));
+
+        texturaTip = new Texture(Gdx.files.internal("Civil2/Tip.png"));
 
         texturaBtnDer = new Texture(Gdx.files.internal("botonder.png"));
         texturaBtnIzq = new Texture(Gdx.files.internal("botonizq.png"));
