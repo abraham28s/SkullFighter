@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import java.util.Random;
 
 /**
  * Created by Fer on 08/03/2016.
@@ -31,7 +32,7 @@ public class Costumize implements Screen {
     private Texture texturaFondo2;
     private Fondo fondo1;
 
-    private Boton arma;
+    private Boton armaS;
     private Texture texturaArma;
 
     private Boton btnTitulo;
@@ -44,6 +45,9 @@ public class Costumize implements Screen {
     private Boton clothes;
     private Boton weapons;
     private Boton customs;
+
+    private Texture[] ropa;
+    private Texture[] arma;
 
     public Costumize(Principal principal) {
         this.Principal = principal;
@@ -69,10 +73,13 @@ public class Costumize implements Screen {
         weapons = new Boton(texturaWeapon);
         weapons.setPosicion(805, 400);
         customs = new Boton(texturaCustom);
-        customs.setPosicion(130, 50);
+        customs.setPosicion(250, 150);
         btnTitulo =new Boton(texturabtnTitulo);
         btnTitulo.setPosicion(700,575);
+        armaS = new Boton(texturaArma);
+        armaS.setPosicion(400,150);
 
+//        arma.setPosicion(400,150);
 
 
         btnBack = new Boton(texturaBack);
@@ -89,12 +96,19 @@ public class Costumize implements Screen {
         texturaFondo2 = new Texture(Gdx.files.internal("PantallaVacia.png"));
         texturaBack = new Texture((Gdx.files.internal("BackGame.png")));
         texturaCloth = new Texture((Gdx.files.internal("Ropa.png")));
-        //texturaWeapon = new Texture((Gdx.files.internal("Arma1Customize.png")));
+
         texturaWeapon = new Texture((Gdx.files.internal("BotonWeapon.png")));
-        texturaCustom = new Texture((Gdx.files.internal("Skull_Oz2.png")));
+        texturaCustom = new Texture((Gdx.files.internal("Civil2-4.png")));
         texturabtnTitulo = new Texture(Gdx.files.internal("BotonCustomize.png"));
 
+        ropa = new Texture[3];
+        ropa[0] = new Texture(Gdx.files.internal("Civil2-1.png"));
+        ropa[1] = new Texture(Gdx.files.internal("CivilFrente4.png"));
 
+        texturaArma = new Texture(Gdx.files.internal("white.png"));
+        arma = new Texture[3];
+        arma[0] = new Texture(Gdx.files.internal("Oz.png"));
+        arma[1] = new Texture(Gdx.files.internal("white.png"));
     }
 
     @Override
@@ -113,7 +127,9 @@ public class Costumize implements Screen {
         weapons.render(batch);
         customs.render(batch);
         clothes.render(batch);
+        armaS.render(batch);
         btnBack.render(batch);
+        //arma.render(batch);
         batch.end();
         actualizarFondo();
     }
@@ -141,18 +157,28 @@ public class Costumize implements Screen {
                 Principal.setScreen(new PantallaMenu(Principal));
             }
             if(verificarBoton(x,y, weapons)){
-                Gdx.app.log("leerEntrada","TAp sobre WEAPONS");
-                //cambiar a pantalla de jugar
+                Gdx.app.log("leerEntrada", "TAp sobre WEAPONS");
+                //cambiar textura
+                Random rand = new Random();
+                int n = rand.nextInt(2);
+                armaS.setTextura(arma[n]);
+                armaS.setPosicion(400,150);
+
             }
             if(verificarBoton(x,y, clothes)){
-                Gdx.app.log("leerEntrada","TAp sobre CLOTHES");
-                //cambiar a pantalla de jugar
+                Random rand = new Random();
+                int j = rand.nextInt(2);
+                //Gdx.app.log("leerEntrada", "TAp sobre CLOTHES");
+                //cambiar textura
+                customs.setTextura(ropa[j]);
+                customs.setPosicion(250, 150);
+
             }
         }
     }
 
     private boolean verificarBoton(float x, float y, Boton btn) {
-        Sprite sprite = btnBack.getSprite();
+        Sprite sprite = btn.getSprite();
 
         return x>sprite.getX() && x<=sprite.getX()+sprite.getWidth()
                 && y>=sprite.getY() && y<=sprite.getY()+sprite.getHeight();
