@@ -83,11 +83,11 @@ public class Sett extends PantallaAbstracta implements Screen{
                 if (Sonidos.musicaFondo.isPlaying()){
                     Sonidos.pausarMusicaFondo();
                     musicAD.setTextura(TextureMusic2);
-                    musicAD.setPosicion(630, 300);
+                    musicAD.setPosicion(100, 297);
                 }
                 else { Sonidos.reproducirMusicaFondo();
                     musicAD.setTextura(TextureMusic);
-                    musicAD.setPosicion(630,300);
+                    musicAD.setPosicion(100,300);
                 }
                 }
 
@@ -153,8 +153,8 @@ public class Sett extends PantallaAbstracta implements Screen{
         btnAD.setPosicion(100, 450);
         batch = new SpriteBatch();
         musicAD = new Boton(TextureMusic);
-//        musicAD.setPosicion(630, 300);
-        musicAD.setPosicion(1000, 150);
+        musicAD.setPosicion(100, 300);
+
         returnAD = new Boton(TextureReturn);
         returnAD.setPosicion(30, 30);
         bonus=new Boton(texturaBonus);
