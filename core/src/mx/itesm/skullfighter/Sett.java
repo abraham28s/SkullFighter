@@ -31,6 +31,7 @@ public class Sett extends PantallaAbstracta implements Screen{
     private Boton btnAD;
     private Texture texturaAD;
     private Boton musicAD;
+    private Boton musicAD2;
     public static Texture TextureMusic;
     private Boton returnAD;
     private Texture TextureReturn;
@@ -80,6 +81,7 @@ public class Sett extends PantallaAbstracta implements Screen{
             float y = coordenadas.y;
 
             if (verificarBoton(x, y, musicAD)) {
+
                 if (Sonidos.musicaFondo.isPlaying()){
                     Sonidos.pausarMusicaFondo();
                     musicAD.setTextura(TextureMusic2);
@@ -154,7 +156,8 @@ public class Sett extends PantallaAbstracta implements Screen{
         batch = new SpriteBatch();
         musicAD = new Boton(TextureMusic);
         musicAD.setPosicion(100, 300);
-
+        musicAD2 = new Boton(TextureMusic2);
+        musicAD2.setPosicion(100,297);
         returnAD = new Boton(TextureReturn);
         returnAD.setPosicion(30, 30);
         bonus=new Boton(texturaBonus);
@@ -176,7 +179,13 @@ public class Sett extends PantallaAbstracta implements Screen{
         fondo.render(batch);
         fondo1.render(batch);
         btnAD.render(batch);
-        musicAD.render(batch);
+        if (Sonidos.musicaFondo.isPlaying()){
+            musicAD.render(batch);
+        }
+        else
+            if (!Sonidos.musicaFondo.isPlaying()){
+                musicAD2.render(batch);
+            }
         //bonus.render(batch);
         titulo.render(batch);
         returnAD.render(batch);
