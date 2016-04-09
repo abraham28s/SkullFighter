@@ -344,7 +344,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         texturaTip = new Texture(Gdx.files.internal("Civil2/Tip.png"));
 
         texturaCivil1 = new Texture(Gdx.files.internal("CivilFrente1.png"));
-        texturaTextoCivil1 = new Texture(Gdx.files.internal("Civil2/Tip.png"));
+        texturaTextoCivil1 = new Texture(Gdx.files.internal("FightText.png"));
 
         texturaBtnDer = new Texture(Gdx.files.internal("botonder.png"));
         texturaBtnIzq = new Texture(Gdx.files.internal("botonizq.png"));

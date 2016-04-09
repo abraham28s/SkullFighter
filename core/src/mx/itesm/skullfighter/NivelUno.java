@@ -132,13 +132,13 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         MenuPausa.setPosicion(417,120);
 
         win = new Componente(texturaWin);
-        win.setPosicion(585,400);
+        win.setPosicion(210,450);
 
         lose = new Componente(texturaLose);
-        win.setPosicion(585,400);
+        lose.setPosicion(250,450);
 
         BtnRestartGame = new Boton(TexturaBtnRestartGame);
-        BtnRestartGame.setPosicion(585,350);
+        BtnRestartGame.setPosicion(565,350);
 
 
 
@@ -337,9 +337,13 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         texturaEnePunchIzq[1] = new Texture(Gdx.files.internal("EnemigoPun2Izq.png"));
         texturaEnePunchIzq[2] = new Texture(Gdx.files.internal("Enemigo1Izq.png"));
        ///////////////////////////
-        texturaWin = new Texture(Gdx.files.internal("BotonStory.png"));
-        texturaLose = new Texture(Gdx.files.internal("BotonSettings.png"));
-        TexturaBtnRestartGame = new Texture(Gdx.files.internal("Resume.png"));
+        texturaWin = new Texture(Gdx.files.internal("YouWin.png"));
+        texturaLose = new Texture(Gdx.files.internal("YouLose.png"));
+        TexturaBtnRestartGame = new Texture(Gdx.files.internal("Restart.png"));
+
+
+
+
 
         texturaVidaJ = new Texture[7];
         texturaVidaE = new Texture[7];
