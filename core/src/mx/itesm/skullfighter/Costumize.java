@@ -154,11 +154,13 @@ public class Costumize implements Screen {
             if(verificarBoton(x,y, btnBack)){
                 Gdx.app.log("leerEntrada","TAp sobre back");
                 //cambiar a pantalla de jugar
+                Sonidos.efectoBoton.play();
                 Principal.setScreen(new PantallaMenu(Principal));
             }
             if(verificarBoton(x,y, weapons)){
                 Gdx.app.log("leerEntrada", "TAp sobre WEAPONS");
                 //cambiar textura
+                Sonidos.efectoBoton.play();
                 Random rand = new Random();
                 int n = rand.nextInt(2);
                 armaS.setTextura(arma[n]);
@@ -170,6 +172,7 @@ public class Costumize implements Screen {
                 int j = rand.nextInt(2);
                 //Gdx.app.log("leerEntrada", "TAp sobre CLOTHES");
                 //cambiar textura
+                Sonidos.efectoBoton.play();
                 customs.setTextura(ropa[j]);
                 customs.setPosicion(250, 150);
 

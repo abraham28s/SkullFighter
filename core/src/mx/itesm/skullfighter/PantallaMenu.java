@@ -145,12 +145,15 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
             float y = coordenadas.y;
             if (verificarBoton(x, y, btnStory)) {
                 principal.setScreen(new PantallaJuego(principal));
+                Sonidos.efectoBoton.play();
                 Sonidos.pausarMusicaFondo();
             }  else if (verificarBoton(x, y, btnCustom)) {
                 Gdx.app.log("leerEntrada", "Tap sobre el boton custom");
+                Sonidos.efectoBoton.play();
                 principal.setScreen(new Costumize(principal));
             } else if (verificarBoton(x, y, btnSettings)) {
                 principal.setScreen(new Sett(principal));
+                Sonidos.efectoBoton.play();
                 Gdx.app.log("leerEntrada", "Tap sobre el boton sett");
 
             }

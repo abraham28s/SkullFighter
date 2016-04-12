@@ -196,6 +196,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
             if(verificarBoton(x,y, btnPausa)){
 
                 //cambiar a pantalla de jugar
+                Sonidos.efectoBoton.play();
                 pausarJuego();
             }
         }
@@ -495,9 +496,11 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         float y = coordenadas.y;
         if(Gdx.input.justTouched()) {
             if(verificarBoton(x, y, BtnRestartGame)){
+                Sonidos.efectoBoton.play();
                 this.principal.setScreen(new PantallaJuego(principal));
             }
             if(verificarBoton(x,y,BtnQuitPausa)){
+                Sonidos.efectoBoton.play();
                 this.principal.setScreen(new PantallaMenu(principal));
             }
 
@@ -512,9 +515,11 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         float y = coordenadas.y;
         if(Gdx.input.justTouched()) {
             if(verificarBoton(x, y, BtnResumePausa)){
+                Sonidos.efectoBoton.play();
                 resumirJuego();
             }
             if(verificarBoton(x,y,BtnQuitPausa)){
+                Sonidos.efectoBoton.play();
                 this.principal.setScreen(new PantallaMenu(principal));
             }
 

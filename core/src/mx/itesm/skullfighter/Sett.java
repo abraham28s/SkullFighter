@@ -69,6 +69,7 @@ public class Sett extends PantallaAbstracta implements Screen{
             float x = coordenadas.x;
             float y = coordenadas.y;
             if (verificarBoton(x, y, btnAD)) {
+                Sonidos.efectoBoton.play();
                 principal.setScreen(new AcercaDe(principal));
             }
         }
@@ -83,17 +84,20 @@ public class Sett extends PantallaAbstracta implements Screen{
             if (verificarBoton(x, y, musicAD)) {
 
                 if (Sonidos.musicaFondo.isPlaying()){
+                    Sonidos.efectoBoton.play();
                     Sonidos.pausarMusicaFondo();
                     musicAD.setTextura(TextureMusic2);
                     musicAD.setPosicion(100, 297);
                 }
                 else { Sonidos.reproducirMusicaFondo();
+                    Sonidos.efectoBoton.play();
                     musicAD.setTextura(TextureMusic);
                     musicAD.setPosicion(100,300);
                 }
                 }
 
             if(verificarBoton(x,y,bonus)){
+                Sonidos.efectoBoton.play();
                 Gdx.app.log("leerEntrada", "Tap sobre el hueso BONUS");
             }
         }
@@ -105,6 +109,7 @@ public class Sett extends PantallaAbstracta implements Screen{
             float x = coordenadas.x;
             float y = coordenadas.y;
             if (verificarBoton(x, y, returnAD)) {
+                Sonidos.efectoBoton.play();
                 principal.setScreen(new PantallaMenu(principal));
             }
         }
