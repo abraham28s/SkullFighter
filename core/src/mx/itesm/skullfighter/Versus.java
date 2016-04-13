@@ -90,6 +90,7 @@ public class Versus extends PantallaAbstracta implements Screen {
             float x = coordenadas.x;
             float y = coordenadas.y;
             if(verificarBoton(x,y, btnBack)){
+                Sonidos.reproducirBoton();
                 Gdx.app.log("leerEntrada","TAp sobre back");
                 //cambiar a pantalla de jugar
                 Principal.setScreen(new PantallaMenu(Principal));

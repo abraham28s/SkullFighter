@@ -261,7 +261,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
             if(verificarBoton(x,y, btnBack)){
 
                 //cambiar a pantalla de jugar
-                Sonidos.efectoBoton.play();
+                Sonidos.reproducirBoton();
                 principal.setScreen(new PantallaMenu(principal));
             }
 

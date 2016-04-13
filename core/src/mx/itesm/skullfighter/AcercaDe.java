@@ -92,7 +92,7 @@ public class AcercaDe extends PantallaAbstracta implements Screen {
             if(verificarBoton(x,y,btnBack)==true){
                 Gdx.app.log("leerEntrada","TAp sobre el boton");
                 //cambiar a pantalla de jugar
-                Sonidos.efectoBoton.play();
+                Sonidos.reproducirBoton();
                 Principal.setScreen(new Sett(Principal));
             }
         }
