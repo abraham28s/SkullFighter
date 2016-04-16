@@ -97,10 +97,10 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
     public void crearYPosBotones() {
         btnDer = new Boton(texturaBtnDer);
-        btnDer.setPosicion(200, 40);
+        btnDer.setPosicion(160, 12);
         //btnDer.setPosicion(TAM_CELDA,5*TAM_CELDA);
         btnIzq = new Boton(texturaBtnIzq);
-        btnIzq.setPosicion(50, 40);
+        btnIzq.setPosicion(10, 12);
         btnBrin = new Boton(texturaBtnBrin);
         btnBrin.setPosicion(1100, 40);
         batch = new SpriteBatch();
@@ -347,8 +347,8 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         texturaCivil1 = new Texture(Gdx.files.internal("CivilFrente1.png"));
         texturaTextoCivil1 = new Texture(Gdx.files.internal("FightText.png"));
 
-        texturaBtnDer = new Texture(Gdx.files.internal("botonder.png"));
-        texturaBtnIzq = new Texture(Gdx.files.internal("botonizq.png"));
+        texturaBtnDer = new Texture(Gdx.files.internal("Boton_Derecha.png"));
+        texturaBtnIzq = new Texture(Gdx.files.internal("Boton_Izquierda.png"));
         texturaBtnBrin = new Texture(Gdx.files.internal("BotonJump.png"));
         texturaBack = new Texture(Gdx.files.internal("BackGame.png"));
 

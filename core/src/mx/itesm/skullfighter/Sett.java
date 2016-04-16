@@ -20,32 +20,21 @@ public class Sett extends PantallaAbstracta implements Screen{
     private final Principal principal;
     private OrthographicCamera camara;
     private Viewport vista;
-
     private SpriteBatch batch;
 
     //fondo
-    private Fondo fondo;
-    private Texture texturaFondo;
+    private Fondo fondo, fondo1;
 
     //botones
-    private Boton btnAD;
-    private Texture texturaAD;
-    private Boton musicAD;
-    private Boton musicAD2;
-    public static Texture TextureMusic;
+    private Boton titulo, btnAD;
+    private Boton musicAD, musicAD2;
     private Boton returnAD;
+
+    //texturas
+    private Texture texturaTitulo, texturaAD;
+    private Texture texturaFondo, texturaFondo2;
+    public static Texture TextureMusic, TextureMusic2;
     private Texture TextureReturn;
-    public static Texture TextureMusic2;
-    private Texture texturaFondo2;
-    private Fondo fondo1;
-
-    private Boton titulo;
-    private Texture texturaTitulo;
-
-    private Boton bonus;
-    private Texture texturaBonus;
-
-    //Musica
 
     public Sett(Principal principal) {
         this.principal = principal;
@@ -87,19 +76,14 @@ public class Sett extends PantallaAbstracta implements Screen{
                     Sonidos.reproducirBoton();
                     Sonidos.pausarMusicaFondo();
                     musicAD.setTextura(TextureMusic2);
-                    musicAD.setPosicion(100, 297);
+                    musicAD.setPosicion(900, 267);
                 }
                 else { Sonidos.reproducirMusicaFondo();
                     Sonidos.reproducirBoton();
                     musicAD.setTextura(TextureMusic);
-                    musicAD.setPosicion(100,300);
+                    musicAD.setPosicion(900,270);
                 }
                 }
-
-            if(verificarBoton(x,y,bonus)){
-                Sonidos.reproducirBoton();
-                Gdx.app.log("leerEntrada", "Tap sobre el hueso BONUS");
-            }
         }
 
         if(Gdx.input.justTouched()) {
@@ -121,14 +105,10 @@ public class Sett extends PantallaAbstracta implements Screen{
         texturaFondo = new Texture(Gdx.files.internal("PantallaVacia.png"));
         texturaFondo2 = new Texture(Gdx.files.internal("PantallaVacia.png"));
         texturaTitulo = new Texture(Gdx.files.internal("BotonSettings.png"));
-        texturaAD = new Texture(Gdx.files.internal("CreatorsBoton.png"));
+        texturaAD = new Texture(Gdx.files.internal("CreatorsButton.png"));
         TextureMusic = new Texture(Gdx.files.internal("MusicaOn.png"));
         TextureMusic2 = new Texture(Gdx.files.internal("MusicaOff.png"));
-
         TextureReturn = new Texture(Gdx.files.internal("BackGame.png"));
-
-        texturaBonus =  new Texture(Gdx.files.internal("GoldBone.png"));
-
     }
 
     @Override
@@ -154,19 +134,21 @@ public class Sett extends PantallaAbstracta implements Screen{
         fondo = new Fondo(texturaFondo);
         fondo1 = new Fondo(texturaFondo2);
         fondo1.getSprite().setX(fondo.getSprite().getWidth());
+
         titulo = new Boton((texturaTitulo));
         titulo.setPosicion(800,577);
+
         btnAD = new Boton(texturaAD);
-        btnAD.setPosicion(100, 450);
+        btnAD.setPosicion(160, 265);
+
         batch = new SpriteBatch();
         musicAD = new Boton(TextureMusic);
-        musicAD.setPosicion(100, 300);
+        musicAD.setPosicion(900, 270);
         musicAD2 = new Boton(TextureMusic2);
-        musicAD2.setPosicion(100,297);
+        musicAD2.setPosicion(900,267);
+
         returnAD = new Boton(TextureReturn);
         returnAD.setPosicion(30, 30);
-        bonus=new Boton(texturaBonus);
-        bonus.setPosicion(1000,100);
     }
 
     @Override
@@ -186,12 +168,12 @@ public class Sett extends PantallaAbstracta implements Screen{
         btnAD.render(batch);
         if (Sonidos.musicaFondo.isPlaying()){
             musicAD.render(batch);
+
         }
         else
             if (!Sonidos.musicaFondo.isPlaying()){
                 musicAD2.render(batch);
             }
-        //bonus.render(batch);
         titulo.render(batch);
         returnAD.render(batch);
 

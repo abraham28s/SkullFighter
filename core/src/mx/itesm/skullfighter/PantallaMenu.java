@@ -43,6 +43,13 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
     private Texture texturaFondo2;
     private Fondo fondo1;
 
+    private Boton   titCustomize;
+    private Texture textCustomize;
+    private Boton   titStory;
+    private Texture textStory;
+    private Boton   titSettings;
+    private Texture textSettings;
+
     public PantallaMenu(Principal principal) {
         this.principal = principal;
     }
@@ -60,8 +67,6 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
         crearYPosBotones();
 
         batch = new SpriteBatch();
-
-
     }
 
     public void cargarTexturas() {
@@ -69,28 +74,38 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
         texturaFondo = new Texture(Gdx.files.internal("PantallaVacia.png"));
         texturaFondo2 = new Texture(Gdx.files.internal("PantallaVacia.png"));
 
+        //Botones
+        texturaBtnStory = new Texture(Gdx.files.internal("Boton_Story.png"));
+        texturaBtnCustom = new Texture(Gdx.files.internal("Boton_Customize.png"));
+        texturaBtnSettings = new Texture(Gdx.files.internal("Boton_Settings.png"));
 
-        texturaBtnStory = new Texture(Gdx.files.internal("BotonStory.png"));
-        texturaBtnCustom = new Texture(Gdx.files.internal("BotonCustomize.png"));
-        texturaBtnSettings = new Texture(Gdx.files.internal("BotonSettings.png"));
-
+        //Titulos
         texturabtnMMenu = new Texture(Gdx.files.internal("MainMenu.png"));
+        textCustomize = new Texture(Gdx.files.internal("BotonCustomize.png"));
+        textStory = new Texture(Gdx.files.internal("BotonStory.png"));
+        textSettings = new Texture(Gdx.files.internal("BotonSettings.png"));
     }
 
     @Override
     public void crearYPosBotones() {
+
         btnStory = new Boton(texturaBtnStory);
-        btnStory.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4)-109);
+        btnStory.setPosicion(65, 60);
+        titStory = new Boton(textStory);
+        titStory.setPosicion(95,400);
 
         btnCustom = new Boton(texturaBtnCustom);
-
-        btnCustom.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4) - 270);
+        btnCustom.setPosicion(488,60);
+        titCustomize = new Boton(textCustomize);
+        titCustomize.setPosicion(430,400);
 
         btnSettings = new Boton(texturaBtnSettings);
-        btnSettings.setPosicion(Principal.ANCHO_MUNDO / 15, Principal.ALTO_MUNDO - (Principal.ALTO_MUNDO / 4) - 431);
+        btnSettings.setPosicion(910,60);
+        titSettings = new Boton(textSettings);
+        titSettings.setPosicion(900,400);
 
         btnMMenu =new Boton(texturabtnMMenu);
-        btnMMenu.setPosicion(700,575);
+        btnMMenu.setPosicion(733,600);
     }
 
     @Override
@@ -108,16 +123,25 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-            leerEntrada(); // Revisar eventos
+        leerEntrada(); // Revisar eventos
 
             // DIBUJA
-            batch.begin();
-            fondo.render(batch);
-            fondo1.render(batch);
-            btnMMenu.render(batch);
-            btnStory.render(batch);
-            btnCustom.render(batch);
-            btnSettings.render(batch);
+        batch.begin();
+        fondo.render(batch);
+        fondo1.render(batch);
+        btnMMenu.render(batch);
+        btnStory.render(batch);
+        btnCustom.render(batch);
+        btnSettings.render(batch);
+        titStory.render(batch);
+        titCustomize.render(batch);
+        titSettings.render(batch);
+
+
+        /*textCustomize
+        textStory
+        textSettings*/
+
 
 
             batch.end();

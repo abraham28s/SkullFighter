@@ -20,34 +20,37 @@ public class Costumize implements Screen {
     private final Principal Principal;
     private OrthographicCamera camara;
     private Viewport vista;
-
     private SpriteBatch batch;
-    private Fondo fondo;
-    private Texture texturaFondo;
 
-    private Texture texturaCloth;
-    private Texture texturaWeapon;
-    private Texture texturaCustom;
-
-    private Texture texturaFondo2;
-    private Fondo fondo1;
-
-    private Boton armaS;
-    private Texture texturaArma;
-
-    private Boton btnTitulo;
-    private Texture texturabtnTitulo;
+    //Fondo
+    private Fondo fondo, fondo1;
+    private Texture texturaFondo, texturaFondo2;
 
     //Botoones
     private Boton btnBack;
+
+    private Boton btnTitulo;
+    private Boton labelWeapon, labelClothes;
+
+    private Boton customs, weapons, armaS, army;
+
+    private Boton clothes, ropas;
+
+    //Texturas
     private Texture texturaBack;
 
-    private Boton clothes;
-    private Boton weapons;
-    private Boton customs;
+    private Texture texturabtnTitulo;
+    private Texture texturaLabelW, texturaLabelC;
 
-    private Texture[] ropa;
-    private Texture[] arma;
+    private Texture texturaCustom;
+
+    private Texture texturaWeapon;
+    private Texture texturaArma;
+    private Texture texturaArmy;
+
+    private Texture texturaCloth, texturaRopas;
+    private Texture Mazo, Oz;
+    private Texture Negro, Verde;
 
     public Costumize(Principal principal) {
         this.Principal = principal;
@@ -62,53 +65,75 @@ public class Costumize implements Screen {
         vista = new StretchViewport(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO,camara);
 
         cargarTexturas(); //cargar texturas
-        fondo = new Fondo(texturaFondo);
 
-        //botones nombres
+        //Fondo
+        fondo = new Fondo(texturaFondo);
         fondo1 = new Fondo(texturaFondo2);
         fondo1.getSprite().setX(fondo.getSprite().getWidth());
 
-        clothes = new Boton(texturaCloth);
-        clothes.setPosicion(745, 120);
-        weapons = new Boton(texturaWeapon);
-        weapons.setPosicion(805, 400);
-        customs = new Boton(texturaCustom);
-        customs.setPosicion(250, 150);
+        //Titulos
         btnTitulo =new Boton(texturabtnTitulo);
-        btnTitulo.setPosicion(700,575);
+        btnTitulo.setPosicion(760, 600);
+
+        labelClothes = new Boton(texturaLabelC);
+        labelClothes.setPosicion(645,170);
+
+        labelWeapon = new Boton(texturaLabelW);
+        labelWeapon.setPosicion(660,450);
+
+        //Personaje
+        customs = new Boton(texturaCustom);
+        customs.setPosicion(185, 100);
+
+        //Prenda negra
+        clothes = new Boton(texturaCloth);
+        clothes.setPosicion(875, 120);
+
+        //Prenda verde
+        ropas= new Boton (texturaRopas);
+        ropas.setPosicion(1065,120);
+
+        //Mazo
+        weapons = new Boton(texturaWeapon);
+        weapons.setPosicion(1065, 390);
+
+        //Oz
         armaS = new Boton(texturaArma);
-        armaS.setPosicion(400,150);
+        armaS.setPosicion(900,390);
 
-//        arma.setPosicion(400,150);
-
+        //Arma general
+        army = new Boton(texturaArmy);
+        army.setPosicion(0,0);
 
         btnBack = new Boton(texturaBack);
         btnBack.setPosicion(40, 40);
-
 
         batch = new SpriteBatch();
     }
 
     private void cargarTexturas() {
 
-
         texturaFondo=new Texture(Gdx.files.internal("PantallaVacia.png"));
         texturaFondo2 = new Texture(Gdx.files.internal("PantallaVacia.png"));
-        texturaBack = new Texture((Gdx.files.internal("BackGame.png")));
-        texturaCloth = new Texture((Gdx.files.internal("Ropa.png")));
-
-        texturaWeapon = new Texture((Gdx.files.internal("BotonWeapon.png")));
-        texturaCustom = new Texture((Gdx.files.internal("Civil2-4.png")));
         texturabtnTitulo = new Texture(Gdx.files.internal("BotonCustomize.png"));
+        texturaBack = new Texture((Gdx.files.internal("BackGame.png")));
+        texturaLabelC = new Texture((Gdx.files.internal("clothes.png")));
+        texturaLabelW = new Texture((Gdx.files.internal("weapon.png")));
 
-        ropa = new Texture[3];
-        ropa[0] = new Texture(Gdx.files.internal("Civil2-1.png"));
-        ropa[1] = new Texture(Gdx.files.internal("CivilFrente4.png"));
+        texturaCustom = new Texture((Gdx.files.internal("SkullSolo1.png")));
 
-        texturaArma = new Texture(Gdx.files.internal("white.png"));
-        arma = new Texture[3];
-        arma[0] = new Texture(Gdx.files.internal("Oz.png"));
-        arma[1] = new Texture(Gdx.files.internal("white.png"));
+        //Armas
+        texturaWeapon = new Texture((Gdx.files.internal("mazo.png")));
+        texturaArma = new Texture(Gdx.files.internal("Oz.png"));
+        texturaArmy = new Texture(Gdx.files.internal("white.png"));
+        Mazo = new Texture((Gdx.files.internal("MazoEquipado.png")));
+        Oz = new Texture((Gdx.files.internal("OzEquipada.png")));
+
+        //Ropa
+        texturaCloth = new Texture((Gdx.files.internal("Ropa.png")));
+        texturaRopas = new Texture((Gdx.files.internal("Ropa2.png")));
+        Negro = new Texture((Gdx.files.internal("SkullSolo1.png")));
+        Verde =  new Texture((Gdx.files.internal("SkullSolo2.png")));
     }
 
     @Override
@@ -124,12 +149,17 @@ public class Costumize implements Screen {
         fondo.render(batch);
         fondo1.render(batch);
         btnTitulo.render(batch);
+        btnBack.render(batch);
+        labelWeapon.render(batch);
+        labelClothes.render(batch);
+
         weapons.render(batch);
         customs.render(batch);
         clothes.render(batch);
+        ropas.render(batch);
         armaS.render(batch);
-        btnBack.render(batch);
-        //arma.render(batch);
+        army.render(batch);
+
         batch.end();
         actualizarFondo();
     }
@@ -152,30 +182,43 @@ public class Costumize implements Screen {
             float x = coordenadas.x;
             float y = coordenadas.y;
             if(verificarBoton(x,y, btnBack)){
-                Gdx.app.log("leerEntrada","TAp sobre back");
-                //cambiar a pantalla de jugar
+                Gdx.app.log("leerEntrada","TAp sobre BACK");
+                //cambiar a pantalla
                 Sonidos.reproducirBoton();
                 Principal.setScreen(new PantallaMenu(Principal));
             }
             if(verificarBoton(x,y, weapons)){
-                Gdx.app.log("leerEntrada", "TAp sobre WEAPONS");
-                //cambiar textura
+                Gdx.app.log("leerEntrada", "TAp sobre MAZO");
                 Sonidos.reproducirBoton();
-                Random rand = new Random();
-                int n = rand.nextInt(2);
-                armaS.setTextura(arma[n]);
-                armaS.setPosicion(400,150);
+                //cambiar textura
+                army.setTextura(Mazo);
+                army.setPosicion(412, 236);
 
             }
-            if(verificarBoton(x,y, clothes)){
-                Random rand = new Random();
-                int j = rand.nextInt(2);
-                //Gdx.app.log("leerEntrada", "TAp sobre CLOTHES");
-                //cambiar textura
+            if(verificarBoton(x,y,armaS)){
+                Gdx.app.log("leerEntrada", "Tap sobre OZ");
                 Sonidos.reproducirBoton();
-                customs.setTextura(ropa[j]);
-                customs.setPosicion(250, 150);
-
+                //cambiar textura
+                army.setTextura(Oz);
+                army.setPosicion(432,136);
+            }
+            if(verificarBoton(x,y,labelWeapon)){
+                Sonidos.reproducirBoton();
+                //Limpiar
+                army.setTextura(texturaArmy);
+            }
+            if(verificarBoton(x,y, clothes)){
+                Sonidos.reproducirBoton();
+                Gdx.app.log("leerEntrada", "TAp sobre NEGRO");
+                //cambiar textura
+                customs.setTextura(Negro);
+                customs.setPosicion(185, 100);
+            }
+            if(verificarBoton(x,y,ropas)){
+                Sonidos.reproducirBoton();
+                Gdx.app.log("leerEntrada", "Tap sobre VERDE");
+                customs.setTextura(Verde);
+                customs.setPosicion(185,100);
             }
         }
     }
