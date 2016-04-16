@@ -123,7 +123,7 @@ public class Costumize implements Screen {
         texturaCustom = new Texture((Gdx.files.internal("SkullSolo1.png")));
 
         //Armas
-        texturaWeapon = new Texture((Gdx.files.internal("mazo.png")));
+        texturaWeapon = new Texture((Gdx.files.internal("Mazo.png")));
         texturaArma = new Texture(Gdx.files.internal("Oz.png"));
         texturaArmy = new Texture(Gdx.files.internal("white.png"));
         Mazo = new Texture((Gdx.files.internal("MazoEquipado.png")));
