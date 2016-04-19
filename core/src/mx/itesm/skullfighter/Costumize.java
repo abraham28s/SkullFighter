@@ -1,6 +1,7 @@
 package mx.itesm.skullfighter;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -11,6 +12,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import java.util.Random;
+
+import javax.xml.soap.Text;
 
 /**
  * Created by Fer on 08/03/2016.
@@ -51,6 +54,9 @@ public class Costumize implements Screen {
     private Texture texturaCloth, texturaRopas;
     private Texture Mazo, Oz;
     private Texture Negro, Verde;
+
+    //Preferencias
+    private Preferences pref;
 
     public Costumize(Principal principal) {
         this.Principal = principal;
@@ -187,6 +193,9 @@ public class Costumize implements Screen {
                 Sonidos.reproducirBoton();
                 Principal.setScreen(new PantallaMenu(Principal));
             }
+
+
+
             if(verificarBoton(x,y, weapons)){
                 Gdx.app.log("leerEntrada", "TAp sobre MAZO");
                 Sonidos.reproducirBoton();

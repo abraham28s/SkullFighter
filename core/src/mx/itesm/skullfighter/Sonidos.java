@@ -23,12 +23,18 @@ public class Sonidos {
     public static void reproducirMusicaFondo(){
         musicaFondo.play();
         Sett.TextureMusic = new Texture(Gdx.files.internal("MusicaOn.png"));
+
     }
+
 
     public static void pausarMusicaFondo(){
         musicaFondo.pause();
         Sett.TextureMusic = new Texture(Gdx.files.internal("MusicaOff.png"));
+
     }
+
+
+
 
     public static void quitarMusicaFondo(){
         musicaFondo.stop();
