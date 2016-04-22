@@ -42,6 +42,9 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     private Texture[] texturaMovDer;
     private Texture[] texturaMovIzq;
 
+    private Boton skip;
+    private Texture texturaSkip;
+
     private Personaje Civil2;
     private Texture[] texturasCivil2;
     private int con = 0;
@@ -72,6 +75,9 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     }
     @Override
     public void show() {
+
+        Gdx.input.setCatchBackKey(true);
+        Gdx.input.setCatchMenuKey(true);
         setYUpgradeCamara();
 
         cargarTexturas();
@@ -92,6 +98,9 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
         tip = new Componente(texturaTip);
         tip.setPosicion(1650,350);
+
+        skip = new Boton(texturaSkip);
+        skip.setPosicion(1100,12);
 
         crearYPosBotones();
     }
@@ -155,6 +164,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         batch.begin();
         btnIzq.render(batch);
         btnDer.render(batch);
+        skip.render(batch);
         //btnBrin.render(batch);
         btnBack.render(batch);
         batch.end();
@@ -172,6 +182,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
                 this.principal.setScreen(new NivelUno(this.principal));
             }
         }
+
     }
 
     private void animacionCiviles(Personaje civil) {
@@ -237,6 +248,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
                 movimientoIzq();
                 actualizarCamara();
             }
+
         }
        /* if(Gdx.input.justTouched()) {
             if(verificarBoton(x, y, btnBrin)){
@@ -274,6 +286,10 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
                     Sonidos.reproducirMusicaFondo();
                 }
 
+            }
+            if(verificarBoton(x,y,skip)){
+                Sonidos.reproducirBoton();
+                this.principal.setScreen(new NivelUno(this.principal));
             }
 
         }
@@ -362,6 +378,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         texturaBtnIzq = new Texture(Gdx.files.internal("Boton_Izquierda.png"));
         texturaBtnBrin = new Texture(Gdx.files.internal("BotonJump.png"));
         texturaBack = new Texture(Gdx.files.internal("BackGame.png"));
+        texturaSkip = new Texture(Gdx.files.internal("BotonJump.png"));
 
     }
 

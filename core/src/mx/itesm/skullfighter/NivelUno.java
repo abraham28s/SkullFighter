@@ -96,7 +96,6 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     private boolean juAtacoWe = false;
     private Boton BtnRestartGame;
     private Texture TexturaBtnRestartGame;
-
     private Componente win;
     private Texture texturaWin;
     private Componente lose;
@@ -139,7 +138,9 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         lose.setPosicion(250,450);
 
         BtnRestartGame = new Boton(TexturaBtnRestartGame);
-        BtnRestartGame.setPosicion(565,350);
+        BtnRestartGame.setPosicion(565,310);
+
+
 
 
 
@@ -386,7 +387,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         btnBrin.setPosicion(1100, 40);
         batch = new SpriteBatch();
         btnPausa = new Boton(texturaPausa);
-        btnPausa.setPosicion(600, 645);
+        btnPausa.setPosicion(570, 580);
         btnPunch = new Boton(texturaBtnPunch);
         btnPunch.setPosicion(950, 40);
         btnWeapon = new Boton(texturaBtnWeapon);
