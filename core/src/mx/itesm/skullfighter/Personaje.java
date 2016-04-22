@@ -35,7 +35,7 @@ public class Personaje {
         sprite = new Sprite(textura);
         sprite.setAlpha(1f);
         this.alturaInicial = sprite.getY();
-        this.alturaMax = this.alturaInicial+70;
+        this.alturaMax = this.alturaInicial+270;
         estado = Estado.NORMAL;
 
     }
@@ -61,21 +61,19 @@ public class Personaje {
         switch (estado) {
 
             case BAJANDO:
-                alturaActual -= 5;
-                this.setPosicion(this.sprite.getX(),this.sprite.getY()-5);
+                alturaActual -= 12.5;
+                this.setPosicion(this.sprite.getX(),this.sprite.getY()-12);
                 if (alturaActual <= alturaInicial) {
                     alturaActual = alturaInicial;
                     estado = Estado.NORMAL;
                 }
                 break;
             case NORMAL:
-
-
                 break;
 
             case SUBIENDO:
-                alturaActual += 5;
-                this.setPosicion(this.sprite.getX(),this.sprite.getY()+5);
+                alturaActual += 12.5;
+                this.setPosicion(this.sprite.getX(),this.sprite.getY()+12);
                 if (alturaActual >= alturaMax) {
                     alturaActual = alturaMax;
                     estado = Estado.BAJANDO;
