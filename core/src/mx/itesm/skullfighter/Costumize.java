@@ -115,6 +115,28 @@ public class Costumize implements Screen {
         btnBack.setPosicion(40, 40);
 
         batch = new SpriteBatch();
+
+        Preferences prefe = Gdx.app.getPreferences("Preferencias");
+
+        if (prefe.getInteger("arma") == 1) {
+            army.setTextura(Mazo);
+            army.setPosicion(412, 236);
+        }
+
+        if (prefe.getInteger("arma") == 2) {
+            army.setTextura(Oz);
+            army.setPosicion(432, 136);
+        }
+
+        if (prefe.getInteger("ropa") == 1){
+            customs.setTextura(Negro);
+            customs.setPosicion(185, 100);
+        }
+
+        if (prefe.getInteger("ropa") == 2){
+            customs.setTextura(Verde);
+            customs.setPosicion(185, 100);
+        }
     }
 
     private void cargarTexturas() {
@@ -181,54 +203,75 @@ public class Costumize implements Screen {
     }
 
     private void leerEntrada() {
-        if(Gdx.input.justTouched()){//saber si el usuario toca
+        if(Gdx.input.justTouched()) {//saber si el usuario toca
             Vector3 coordenadas = new Vector3();
-            coordenadas.set(Gdx.input.getX(),Gdx.input.getY(),0);
+            coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camara.unproject(coordenadas);//TRaduce coordenadas
             float x = coordenadas.x;
             float y = coordenadas.y;
-            if(verificarBoton(x,y, btnBack)){
-                Gdx.app.log("leerEntrada","TAp sobre BACK");
+            if (verificarBoton(x, y, btnBack)) {
+                Gdx.app.log("leerEntrada", "TAp sobre BACK");
                 //cambiar a pantalla
                 Sonidos.reproducirBoton();
                 Principal.setScreen(new PantallaMenu(Principal));
             }
 
+            Preferences prefe = Gdx.app.getPreferences("Preferencias");
 
 
-            if(verificarBoton(x,y, weapons)){
+            if (verificarBoton(x, y, weapons)) {
                 Gdx.app.log("leerEntrada", "TAp sobre MAZO");
                 Sonidos.reproducirBoton();
+                //Preferencias
+
+                prefe.putInteger("arma",1);
+                prefe.flush();
+
                 //cambiar textura
                 army.setTextura(Mazo);
                 army.setPosicion(412, 236);
 
+
+
             }
-            if(verificarBoton(x,y,armaS)){
-                Gdx.app.log("leerEntrada", "Tap sobre OZ");
-                Sonidos.reproducirBoton();
-                //cambiar textura
-                army.setTextura(Oz);
-                army.setPosicion(432,136);
-            }
-            if(verificarBoton(x,y,labelWeapon)){
-                Sonidos.reproducirBoton();
-                //Limpiar
-                army.setTextura(texturaArmy);
-            }
-            if(verificarBoton(x,y, clothes)){
-                Sonidos.reproducirBoton();
-                Gdx.app.log("leerEntrada", "TAp sobre NEGRO");
-                //cambiar textura
-                customs.setTextura(Negro);
-                customs.setPosicion(185, 100);
-            }
-            if(verificarBoton(x,y,ropas)){
-                Sonidos.reproducirBoton();
-                Gdx.app.log("leerEntrada", "Tap sobre VERDE");
-                customs.setTextura(Verde);
-                customs.setPosicion(185,100);
-            }
+
+
+
+                if (verificarBoton(x, y, armaS)) {
+                    Gdx.app.log("leerEntrada", "Tap sobre OZ");
+                    Sonidos.reproducirBoton();
+
+                    prefe.putInteger("arma", 2);
+                    prefe.flush();
+                    //cambiar textura
+                    army.setTextura(Oz);
+                    army.setPosicion(432, 136);
+
+                }
+
+                if (verificarBoton(x, y, labelWeapon)) {
+                    Sonidos.reproducirBoton();
+                    //Limpiar
+                    army.setTextura(texturaArmy);
+                }
+
+                if (verificarBoton(x, y, clothes)) {
+                    Sonidos.reproducirBoton();
+                    Gdx.app.log("leerEntrada", "TAp sobre NEGRO");
+                    prefe.putInteger("ropa",1);
+                    //cambiar textura
+                    customs.setTextura(Negro);
+                    customs.setPosicion(185, 100);
+                }
+
+                if (verificarBoton(x, y, ropas)) {
+                    Sonidos.reproducirBoton();
+                    prefe.putInteger("ropa",2);
+                    Gdx.app.log("leerEntrada", "Tap sobre VERDE");
+                    customs.setTextura(Verde);
+                    customs.setPosicion(185, 100);
+                }
+
         }
     }
 
