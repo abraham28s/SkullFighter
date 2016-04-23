@@ -1,6 +1,7 @@
 package mx.itesm.skullfighter;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
@@ -71,17 +72,21 @@ public class Sett extends PantallaAbstracta implements Screen{
             float y = coordenadas.y;
 
             if (verificarBoton(x, y, musicAD)) {
-
+                Preferences pref = Gdx.app.getPreferences("Preferencias");
                 if (Sonidos.musicaFondo.isPlaying()){
                     Sonidos.reproducirBoton();
                     Sonidos.pausarMusicaFondo();
                     musicAD.setTextura(TextureMusic2);
                     musicAD.setPosicion(900, 267);
+                    pref.putBoolean("musica",false);
+                    pref.flush();
                 }
                 else { Sonidos.reproducirMusicaFondo();
                     Sonidos.reproducirBoton();
                     musicAD.setTextura(TextureMusic);
-                    musicAD.setPosicion(900,270);
+                    musicAD.setPosicion(900, 270);
+                    pref.putBoolean("musica",true);
+                    pref.flush();
                 }
                 }
         }
@@ -97,6 +102,8 @@ public class Sett extends PantallaAbstracta implements Screen{
                 principal.setScreen(new PantallaMenu(principal));
             }
         }
+
+
     }
 
     @Override
@@ -149,6 +156,7 @@ public class Sett extends PantallaAbstracta implements Screen{
 
         returnAD = new Boton(TextureReturn);
         returnAD.setPosicion(30, 30);
+
     }
 
     @Override

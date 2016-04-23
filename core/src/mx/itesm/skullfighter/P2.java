@@ -72,6 +72,11 @@ public class P2 implements Screen {
 
         if(cont>150){
             principal.setScreen(new PantallaMenu(principal));
+            Preferences pref = Gdx.app.getPreferences("Preferencias");
+            pref.getBoolean("guardar",false);
+            if (pref.getBoolean("guardar") == false) {
+                pref.putInteger("nivel", 0);
+            }
         }
     }
 

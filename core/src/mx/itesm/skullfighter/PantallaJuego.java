@@ -178,7 +178,10 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         float y = coordenadas.y;
 
         if(Gdx.input.justTouched()) {
+            Preferences pref = Gdx.app.getPreferences("Preferencias");
             if (verificarBoton(x, y, TextoCivil1) && verificarBordes()) {
+                pref.putInteger("nivel",2);
+                pref.flush();
                 this.principal.setScreen(new NivelUno(this.principal));
             }
         }
