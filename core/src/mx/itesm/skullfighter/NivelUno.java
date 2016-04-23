@@ -27,9 +27,6 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     private SpriteBatch batch;
 
     Fondo fondo;
-
-
-
     Personaje jugador;
     Texture TexturaJugador;
 
@@ -60,7 +57,6 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     int MovJ = 0;
     private int conE = 0;
     int MovE = 0;
-
 
     private int conWeJ= 0;
     private int conWeE= 0;
@@ -101,7 +97,6 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     private Componente lose;
     private Texture texturaLose;
 
-
     public NivelUno(Principal principal) {
         this.principal = principal;
     }
@@ -140,13 +135,8 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         BtnRestartGame = new Boton(TexturaBtnRestartGame);
         BtnRestartGame.setPosicion(565,310);
 
-
-
-
-
         crearYPosBotones();
     }
-
 
     @Override
     void leerEntrada() {
@@ -160,11 +150,9 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         if(Gdx.input.isTouched()) {
             if(verificarBoton(x,y,btnDer) && verificarBordes()){
                 movimientoDer(jugador,texturaMovDer);
-
             }
             if(verificarBoton(x,y,btnIzq) && verificarBordes()){
                 movimientoIzq(jugador,texturaMovIzq);
-
             }
         }
         if(Gdx.input.justTouched()) {
@@ -199,13 +187,11 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                 }
             }
             if(verificarBoton(x,y, btnPausa)){
-
                 //cambiar a pantalla de jugar
                 Sonidos.reproducirBoton();
                 pausarJuego();
             }
         }
-
     }
 
     private void pausarJuego() {
@@ -337,19 +323,14 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         texturaEnePunchDer[1] = new Texture(Gdx.files.internal("EnemigoPun2Der.png"));
         texturaEnePunchDer[2] = new Texture(Gdx.files.internal("Enemigo1Der.png"));
 
-
         texturaEnePunchIzq= new Texture[3];
         texturaEnePunchIzq[0] = new Texture(Gdx.files.internal("EnemigoPun1Izq.png"));
         texturaEnePunchIzq[1] = new Texture(Gdx.files.internal("EnemigoPun2Izq.png"));
         texturaEnePunchIzq[2] = new Texture(Gdx.files.internal("Enemigo1Izq.png"));
-       ///////////////////////////
+
         texturaWin = new Texture(Gdx.files.internal("YouWin.png"));
         texturaLose = new Texture(Gdx.files.internal("YouLose.png"));
         TexturaBtnRestartGame = new Texture(Gdx.files.internal("Restart.png"));
-
-
-
-
 
         texturaVidaJ = new Texture[7];
         texturaVidaE = new Texture[7];
@@ -363,16 +344,12 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         texturaResumePausa = new Texture(Gdx.files.internal("Resume.png"));
         texturaFonPausa =new Texture(Gdx.files.internal("negro.png"));
 
-
-
-
         texturaBtnDer = new Texture(Gdx.files.internal("Boton_Derecha.png"));
         texturaBtnIzq = new Texture(Gdx.files.internal("Boton_Izquierda.png"));
         texturaBtnBrin = new Texture(Gdx.files.internal("BotonJump.png"));
         texturaPausa = new Texture(Gdx.files.internal("PauseBotton.png"));
         texturaBtnPunch = new Texture(Gdx.files.internal("BotonPunch.png"));
         texturaBtnWeapon = new Texture(Gdx.files.internal("BotonWeapon.png"));
-
     }
 
     @Override
@@ -384,22 +361,20 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         btnIzq.setPosicion(10, 12);
 
         btnBrin = new Boton(texturaBtnBrin);
-        btnBrin.setPosicion(1100, 40);
+        btnBrin.setPosicion(1100, 12);
         batch = new SpriteBatch();
         btnPausa = new Boton(texturaPausa);
         btnPausa.setPosicion(570, 580);
         btnPunch = new Boton(texturaBtnPunch);
-        btnPunch.setPosicion(950, 40);
+        btnPunch.setPosicion(950, 12);
         btnWeapon = new Boton(texturaBtnWeapon);
-        btnWeapon.setPosicion(800, 40);
-
+        btnWeapon.setPosicion(800, 12);
 
         BtnResumePausa = new Boton(texturaResumePausa);
         BtnResumePausa.setPosicion(555,430);
 
         BtnQuitPausa = new Boton(texturaQuitPausa);
         BtnQuitPausa.setPosicion(585,270);
-
 
         batch = new SpriteBatch();
     }
@@ -410,9 +385,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         camara.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
         camara.update();
         vista = new StretchViewport(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO, camara);
-
     }
-
 
     boolean verificarBordes() {
         //System.out.println(jugador.getSprite().getX());
@@ -423,10 +396,8 @@ public class NivelUno extends PantallaAbstracta implements Screen {
             jugador.getSprite().setX(1035);
             return false;
         }
-
         return true;
     }
-
 
     @Override
     public void render(float delta) {
@@ -444,22 +415,17 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         vidaJ.render(batch);
         vidaE.render(batch);
 
-
-
         btnIzq.render(batch);
-
         btnDer.render(batch);
         btnBrin.render(batch);
         btnPausa.render(batch);
         btnWeapon.render(batch);
         btnPunch.render(batch);
 
-
         if(this.estado == 1) {
             leerEntrada(); // Revisar eventos
             // Mover la cámara para que siga al personaje
             movimientoEnemigo();
-
 
             revisarAtacando(jugador, texturaOzDer, texturaOzIzq, texturaPunchDer, texturaPunchIzq);
 
@@ -481,17 +447,14 @@ public class NivelUno extends PantallaAbstracta implements Screen {
             BtnRestartGame.render(batch);
             BtnQuitPausa.render(batch);
 
-
         }else if(this.estado == 4){
             leerEntradaFin();
             fondoPausa.render(batch);
             win.render(batch);
             BtnRestartGame.render(batch);
-
             BtnQuitPausa.render(batch);
         }
         batch.end();
-
     }
 
     private void leerEntradaFin() {
@@ -509,7 +472,6 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                 Sonidos.reproducirBoton();
                 this.principal.setScreen(new PantallaMenu(principal));
             }
-
         }
     }
 
@@ -536,14 +498,13 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                     Sonidos.reproducirMusicaFondo();
                 }
             }
-
         }
     }
 
     private void revisarColi() {
         //System.out.print(juAtacoWe);
         //System.out.println(indexVidaE);
-        if(enemigo.getSprite().getX()+10>jugador.getSprite().getX()&&enemigo.getSprite().getX()-10<jugador.getSprite().getX()){
+        if(enemigo.getSprite().getX()+100>jugador.getSprite().getX()&&enemigo.getSprite().getX()-100<jugador.getSprite().getX()){
             //System.out.print("tru de x");
             //System.out.print(conPuE);
         if(eneAtacoPu== true &&conPuE%3==0){
@@ -593,7 +554,6 @@ public class NivelUno extends PantallaAbstracta implements Screen {
             juAtacoPu = false;
             juAtacoWe = false;
         }
-
     }
 
     private void ganoJuego() {
@@ -636,7 +596,6 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
                     } else if (per.getVista().equals("izq")) {
                         per.setSprite(izqW[conWeJ % 5]);
-
                     }
                     conWeJ++;
                 }
@@ -658,8 +617,6 @@ public class NivelUno extends PantallaAbstracta implements Screen {
             }
             if (per.getAtacandoPu() == true) {
                 //float ypr = y-40;
-
-
                 if (MovJ % 5 == 0) {
                     if (per.getVista().equals("der")) {
 
@@ -667,13 +624,9 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
                     } else if (per.getVista().equals("izq")) {
                         per.setSprite(izqP[conPuJ % 3]);
-
                     }
-
-
                     conPuJ++;
                 }
-
                 if (conPuJ > 500) {
                     conPuJ = 0;
                 }
@@ -683,32 +636,23 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                 }
                 if (conPuJ % 4 == 0) {
                     per.setAtacandoPu(false);
-
                     conPuJ++;
                 }
                 //System.out.print(conPu);
                 per.setPosicion(x, y);
-
             }
         }else{
-
             if (per.getAtacandoPu() == true) {
                 //float ypr = y-40;
-
-
                 if (MovE % 5 == 0) {
                     if (per.getVista().equals("der")) {
                         per.setSprite(derP[conPuJ % 3]);
 
                     } else if (per.getVista().equals("izq")) {
                         per.setSprite(izqP[conPuJ % 3]);
-
                     }
-
-
                     conPuE++;
                 }
-
                 if (conPuE > 500) {
                     conPuE = 0;
                 }
@@ -719,22 +663,16 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                 if (conPuE % 4 == 0) {
                     per.setAtacandoPu(false);
                     eneAtacoPu = true;
-
                     conPuE++;
                 }
                 //System.out.print(conPu);
                 per.setPosicion(x, y);
-
             }
         }
-
-
     }
-
 
     @Override
     public void resize(int width, int height) {
-
     }
 
     @Override
@@ -753,11 +691,9 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
     @Override
     public void hide() {
-
     }
 
     @Override
     public void dispose() {
-
     }
 }

@@ -100,7 +100,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         tip.setPosicion(1650,350);
 
         skip = new Boton(texturaSkip);
-        skip.setPosicion(1100,12);
+        skip.setPosicion(1110,12);
 
         crearYPosBotones();
     }
@@ -115,7 +115,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         btnBrin.setPosicion(1100, 40);
         batch = new SpriteBatch();
         btnBack = new Boton(texturaBack);
-        btnBack.setPosicion(1100, 600);
+        btnBack.setPosicion(1110, 580);
         batch = new SpriteBatch();
     }
 
@@ -381,7 +381,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         texturaBtnIzq = new Texture(Gdx.files.internal("Boton_Izquierda.png"));
         texturaBtnBrin = new Texture(Gdx.files.internal("BotonJump.png"));
         texturaBack = new Texture(Gdx.files.internal("BackGame.png"));
-        texturaSkip = new Texture(Gdx.files.internal("BotonJump.png"));
+        texturaSkip = new Texture(Gdx.files.internal("skip.png"));
 
     }
 
