@@ -1,6 +1,7 @@
 package mx.itesm.skullfighter;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
@@ -29,12 +30,14 @@ public class Sett extends PantallaAbstracta implements Screen{
     private Boton titulo, btnAD;
     private Boton musicAD, musicAD2;
     private Boton returnAD;
+    private Boton restartAD;
 
     //texturas
     private Texture texturaTitulo, texturaAD;
     private Texture texturaFondo, texturaFondo2;
     public static Texture TextureMusic, TextureMusic2;
     private Texture TextureReturn;
+    private Texture TextureRestart;
 
     public Sett(Principal principal) {
         this.principal = principal;
@@ -71,19 +74,25 @@ public class Sett extends PantallaAbstracta implements Screen{
             float y = coordenadas.y;
 
             if (verificarBoton(x, y, musicAD)) {
-
+                Preferences pref = Gdx.app.getPreferences("Preferencias");
                 if (Sonidos.musicaFondo.isPlaying()){
                     Sonidos.reproducirBoton();
                     Sonidos.pausarMusicaFondo();
                     musicAD.setTextura(TextureMusic2);
                     musicAD.setPosicion(900, 267);
+                    pref.putBoolean("musica", false);
+                    pref.flush();
                 }
                 else { Sonidos.reproducirMusicaFondo();
                     Sonidos.reproducirBoton();
                     musicAD.setTextura(TextureMusic);
-                    musicAD.setPosicion(900,270);
+                    musicAD.setPosicion(900, 270);
+                    pref.putBoolean("musica", true);
+                    pref.flush();
                 }
                 }
+
+
         }
 
         if(Gdx.input.justTouched()) {
@@ -97,6 +106,23 @@ public class Sett extends PantallaAbstracta implements Screen{
                 principal.setScreen(new PantallaMenu(principal));
             }
         }
+
+        if(Gdx.input.justTouched()) {
+            Vector3 coordenadas = new Vector3();
+            coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            camara.unproject(coordenadas);  //traduce las coordenadas
+            float x = coordenadas.x;
+            float y = coordenadas.y;
+            if (verificarBoton(x, y, restartAD)) {
+                Preferences pref = Gdx.app.getPreferences("Preferencias");
+                pref.putBoolean("guardar", false);
+                pref.flush();
+                Sonidos.reproducirBoton();
+                Gdx.app.exit();
+            }
+        }
+
+
     }
 
     @Override
@@ -109,6 +135,7 @@ public class Sett extends PantallaAbstracta implements Screen{
         TextureMusic = new Texture(Gdx.files.internal("MusicaOn.png"));
         TextureMusic2 = new Texture(Gdx.files.internal("MusicaOff.png"));
         TextureReturn = new Texture(Gdx.files.internal("BackGame.png"));
+        TextureRestart = new Texture(Gdx.files.internal("resetear.png"));
     }
 
     @Override
@@ -149,6 +176,10 @@ public class Sett extends PantallaAbstracta implements Screen{
 
         returnAD = new Boton(TextureReturn);
         returnAD.setPosicion(30, 30);
+
+        restartAD = new Boton (TextureRestart);
+        restartAD.setPosicion(350,30);
+
     }
 
     @Override
@@ -176,6 +207,7 @@ public class Sett extends PantallaAbstracta implements Screen{
             }
         titulo.render(batch);
         returnAD.render(batch);
+        restartAD.render(batch);
 
         batch.end();
         actualizarFondo();

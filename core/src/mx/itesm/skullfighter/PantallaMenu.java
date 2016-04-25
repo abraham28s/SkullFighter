@@ -1,6 +1,7 @@
 package mx.itesm.skullfighter;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
@@ -161,6 +162,7 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
 
 
     public void leerEntrada() {
+        Preferences pref = Gdx.app.getPreferences("Preferencias");
         if(Gdx.input.justTouched()) {
             Vector3 coordenadas = new Vector3();
             coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -168,10 +170,25 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
             float x = coordenadas.x;
             float y = coordenadas.y;
             if (verificarBoton(x, y, btnStory)) {
-                principal.setScreen(new PantallaJuego(principal));
-                Sonidos.reproducirBoton();
-                Sonidos.pausarMusicaFondo();
-                Sonidos.cargarEfectos();
+
+                pref.putBoolean("guardar",true);
+                pref.flush();
+
+                if (pref.getInteger("nivel") == 1 || pref.getInteger("nivel") == 2){
+                    principal.setScreen(new SeleccionarNiveles(principal));
+                    Sonidos.reproducirBoton();
+                    Sonidos.cargarEfectos();
+                }
+
+                if (pref.getInteger("nivel") == 0) {
+                    principal.setScreen(new PantallaJuego(principal));
+                    pref.putInteger("nivel", 1);
+                    pref.flush();
+                    Sonidos.reproducirBoton();
+                    Sonidos.pausarMusicaFondo();
+                    Sonidos.cargarEfectos();
+                }
+
             }  else if (verificarBoton(x, y, btnCustom)) {
                 Gdx.app.log("leerEntrada", "Tap sobre el boton custom");
                 Sonidos.reproducirBoton();
@@ -207,6 +224,7 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
 
     @Override
     public void dispose() {
+
 
     }
 }
