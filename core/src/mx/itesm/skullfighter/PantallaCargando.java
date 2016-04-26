@@ -13,7 +13,7 @@ import javax.xml.soap.Text;
 /**
  * Created by PAVILION on 11/04/2016.
  */
-public class PantallaCargando implements Screen {
+public class PantallaCargando extends PantallaAbstracta implements Screen {
 
     private Principal principal;
 
@@ -23,10 +23,10 @@ public class PantallaCargando implements Screen {
 
     //Imagen Cargando
     private Texture texturaCargado;
-    private Sprite spriteCargando;
+    private Componente spriteCargando;
     //Fondo de la textura
     private Texture texturaFondoCargando;
-    private Sprite spriteFondoCargando;
+    private Fondo spriteFondoCargando;
 
     private int pantallaCargar; 
 
@@ -38,6 +38,8 @@ public class PantallaCargando implements Screen {
         camara.update();
         vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
         batch = new SpriteBatch();
+
+
     }
 
     @Override
@@ -67,6 +69,26 @@ public class PantallaCargando implements Screen {
 
     @Override
     public void dispose() {
+
+    }
+
+    @Override
+    void leerEntrada() {
+
+    }
+
+    @Override
+    void cargarTexturas() {
+
+    }
+
+    @Override
+    void crearYPosBotones() {
+
+    }
+
+    @Override
+    void setYUpgradeCamara() {
 
     }
 }
