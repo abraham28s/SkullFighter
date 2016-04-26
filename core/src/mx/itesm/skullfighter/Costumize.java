@@ -223,16 +223,12 @@ public class Costumize implements Screen {
                 Gdx.app.log("leerEntrada", "TAp sobre MAZO");
                 Sonidos.reproducirBoton();
                 //Preferencias
-
                 prefe.putInteger("arma",1);
                 prefe.flush();
 
                 //cambiar textura
                 army.setTextura(Mazo);
                 army.setPosicion(412, 236);
-
-
-
             }
 
 
