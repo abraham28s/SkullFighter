@@ -118,7 +118,8 @@ public class Sett extends PantallaAbstracta implements Screen{
                 pref.putBoolean("guardar", false);
                 pref.flush();
                 Sonidos.reproducirBoton();
-                Gdx.app.exit();
+                principal.setScreen(new PantallaMenu(principal));
+                //Gdx.app.exit();
             }
         }
 
@@ -163,7 +164,7 @@ public class Sett extends PantallaAbstracta implements Screen{
         fondo1.getSprite().setX(fondo.getSprite().getWidth());
 
         titulo = new Boton((texturaTitulo));
-        titulo.setPosicion(800,577);
+        titulo.setPosicion(800, 577);
 
         btnAD = new Boton(texturaAD);
         btnAD.setPosicion(160, 265);
