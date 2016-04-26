@@ -132,6 +132,7 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
                 //cambiar a pantalla
                 Sonidos.reproducirBoton();
                 fondo.setTextura(comic[contador + 1]);
+                Sonidos.hojaSound();
                 contador++;
                 System.out.println("Contador+: " + contador);
                 if (contador>=7){
@@ -143,8 +144,9 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
                 //cambiar a pantalla
                 Sonidos.reproducirBoton();
                 fondo.setTextura(comic[contador - 1]);
+                Sonidos.hojaSound();
                 contador--;
-                System.out.println("Contador-: "+ contador);
+                System.out.println("Contador-: " + contador);
                 if(contador<=0){
                 principal.setScreen(new PantallaMenu(principal));
                 }

@@ -13,6 +13,7 @@ public class Sonidos {
     public static Sound efectoGolpear;
     public static Sound efectoSaltar;
     public static Sound efectoCuchillo;
+    public static Sound hojas;
 
     public static void cargaAudio(){
         efectoBoton = Gdx.audio.newSound(Gdx.files.internal("botonSound.mp3"));
@@ -33,9 +34,6 @@ public class Sonidos {
 
     }
 
-
-
-
     public static void quitarMusicaFondo(){
         musicaFondo.stop();
     }
@@ -48,6 +46,7 @@ public class Sonidos {
         efectoGolpear = Gdx.audio.newSound(Gdx.files.internal("golpeo.mp3"));
         efectoSaltar = Gdx.audio.newSound(Gdx.files.internal("Saltar.mp3"));
         efectoCuchillo = Gdx.audio.newSound(Gdx.files.internal("Arma.mp3"));
+        hojas = Gdx.audio.newSound(Gdx.files.internal("hoja.mp3"));
     }
 
     public static void golpearSound(){
@@ -60,4 +59,7 @@ public class Sonidos {
     public static void cuchilloSound(){
         efectoCuchillo.play();
     }
+    public static void hojaSound(){        hojas.play();    }
+
+
 }
