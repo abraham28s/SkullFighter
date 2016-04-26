@@ -74,8 +74,8 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     private Componente vidaE;
     private Texture[] texturaVidaE;
     private int indexVidaJ = 6;
-    // 1= ejecucion, 0=pausa, 3 perdio, 4 gano
-    private int estado = 1;
+    // 1= ejecucion, 0=pausa, 3 perdio, 4 gano, 5 cargando
+    private int estado = 5;
 
     //Pausa
     private Componente fondoPausa;
@@ -97,13 +97,19 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     private Componente lose;
     private Texture texturaLose;
 
+
+
+
     public NivelUno(Principal principal) {
         this.principal = principal;
     }
 
+
     @Override
     public void show() {
         setYUpgradeCamara();
+
+
 
         cargarTexturas();
 
