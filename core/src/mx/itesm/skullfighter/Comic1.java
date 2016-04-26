@@ -37,7 +37,7 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
     private Texture texturaBack;
 
     private Texture[] comic;
-    private int contador = 0;
+    private int contador = 1;
 
     private Texture texturaComic2;
     private Texture texturaComic3;
@@ -62,14 +62,15 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
         texturaNext = new Texture(Gdx.files.internal("Boton_Derecha.png"));
 //        texturaComic2 = new Texture(Gdx.files.internal("Comic2.png"));
 
-        comic = new Texture[7];
-        comic[0] = new Texture(Gdx.files.internal("Comic1.png"));
-        comic[1] = new Texture(Gdx.files.internal("Comic2.png"));
-        comic[2] = new Texture(Gdx.files.internal("Comic3.png"));
-        comic[3] = new Texture(Gdx.files.internal("Comic4.png"));
-        comic[4] = new Texture(Gdx.files.internal("Comic5.png"));
-        comic[5] = new Texture(Gdx.files.internal("Comic6.png"));
-        comic[6] = new Texture(Gdx.files.internal("LoadingScreen.png"));
+        comic = new Texture[8];
+        comic[0] = new Texture(Gdx.files.internal("Escenario1Cortado.png"));
+        comic[1] = new Texture(Gdx.files.internal("Comic1.png"));
+        comic[2] = new Texture(Gdx.files.internal("Comic2.png"));
+        comic[3] = new Texture(Gdx.files.internal("Comic3.png"));
+        comic[4] = new Texture(Gdx.files.internal("Comic4.png"));
+        comic[5] = new Texture(Gdx.files.internal("Comic5.png"));
+        comic[6] = new Texture(Gdx.files.internal("Comic6.png"));
+        comic[7] = new Texture(Gdx.files.internal("Escenario1Cortado.png"));
             }
 
     @Override
@@ -135,8 +136,8 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
                 fondo.setTextura(comic[contador + 1]);
                 contador++;
                 System.out.println("Contador+: " + contador);
-                if (contador==6){
-                principal.setScreen(new PantallaJuego(principal));
+                if (contador>=7){
+                principal.setScreen(new SeleccionarNiveles(principal));
                  }
             }
             if (verificarBoton(x, y, back)) {
@@ -145,8 +146,10 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
                 Sonidos.reproducirBoton();
                 fondo.setTextura(comic[contador - 1]);
                 contador--;
-                System.out.print("Contador-: "+ contador);
-                //Principal.setScreen(new PantallaMenu(Principal));
+                System.out.println("Contador-: "+ contador);
+                if(contador<=0){
+                principal.setScreen(new PantallaMenu(principal));
+                }
             }
 
 
