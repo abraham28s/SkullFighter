@@ -75,12 +75,10 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
 
     @Override
     void crearYPosBotones() {
-
     }
 
     @Override
     void setYUpgradeCamara() {
-
     }
 
     @Override
@@ -100,7 +98,7 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
         next.setPosicion(1110,12);
 
         skip = new Boton(texturaSkip);
-        skip.setPosicion(1160,580);
+        skip.setPosicion(1110,580);
 
         batch = new SpriteBatch();
     }
