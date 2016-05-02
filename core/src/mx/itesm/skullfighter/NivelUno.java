@@ -155,10 +155,10 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                 float x1 = coordenadas.x;
                 float y1 = coordenadas.y;
 
-                if(verificarBoton(x1,y1,btnIzq)){
+                if(verificarBoton(x1,y1,btnIzq)&& movPointerIzq == pointer){
                     jugador.setEstadoMov(Personaje.EstadoMov.QUIETO);
 
-                }else if(verificarBoton(x1, y1, btnDer)  ) {
+                }else if(verificarBoton(x1, y1, btnDer) &&movPointerDer == pointer) {
                     jugador.setEstadoMov(Personaje.EstadoMov.QUIETO);
                 }
                 if(verificarBoton(x,y,btnPunch)){
@@ -190,10 +190,6 @@ public class NivelUno extends PantallaAbstracta implements Screen {
             }
 
             public boolean touchDown(int x, int y, int pointer, int button) {
-
-
-
-
                 Vector3 coordenadas = new Vector3();
                 coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
                 camara.unproject(coordenadas);  //traduce las coordenadas
@@ -502,7 +498,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         if(Gdx.input.justTouched()) {
             if(verificarBoton(x, y, BtnRestartGame)){
                 Sonidos.reproducirBoton();
-                this.principal.setScreen(new PantallaJuego(principal));
+                this.principal.setScreen(new PantallaCargando(principal,0));
             }
             if(verificarBoton(x,y,BtnQuitPausa)){
                 Sonidos.reproducirBoton();

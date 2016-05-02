@@ -94,7 +94,8 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
 
 
                 break;
-            case 1:
+            case 1://NivelUno
+
                 break;
 
         }
@@ -112,27 +113,23 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
         spriteCargando.render(batch);
         load.render(batch);
         batch.end();
-        switch (pantallaCargar) {
-            case 0://PantallaJuego
-                actualizar(Manager);
-            case 1:
-
-        }
+        actualizar();
 
     }
 
-    private void actualizar(AssetManager man) {
-        if(man.update()) {
+    private void actualizar() {
+        if(this.Manager.update()) {
             switch (pantallaCargar) {
                 case 0://PantallaJuego
                     this.principal.setScreen(new PantallaJuego(this.principal,this.Manager));
+                    break;
                 case 1:
 
             }
         }else{
             float x = spriteCargando.getSprite().getX();
             float y = spriteCargando.getSprite().getY();
-            variableTexuta = man.getProgress()*100;
+            variableTexuta = this.Manager.getProgress()*100;
             if (variableTexuta>=0 && variableTexuta<=25){
                 spriteCargando.setTextura(texturaCargado[0]);
             }else if (variableTexuta>25 && variableTexuta<=50){
