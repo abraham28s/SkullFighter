@@ -48,19 +48,16 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
 
     @Override
     public boolean verificarBoton(float x, float y, Boton btn) {
-
         Sprite sprite = btn.getSprite();
         return x>=sprite.getX() && x<=sprite.getX()+sprite.getWidth()
                 && y>=sprite.getY() && y<=sprite.getY()+sprite.getHeight();
     }
     @Override
-    public void cargarTexturas() {;
-
+    public void cargarTexturas() {
         texturaFondo = new Texture(Gdx.files.internal("Comic1.png"));
         texturaSkip = new Texture(Gdx.files.internal("skip.png"));
         texturaBack = new Texture(Gdx.files.internal("Boton_Izquierda.png"));
         texturaNext = new Texture(Gdx.files.internal("Boton_Derecha.png"));
-//        texturaComic2 = new Texture(Gdx.files.internal("Comic2.png"));
 
         comic = new Texture[8];
         comic[0] = new Texture(Gdx.files.internal("Escenario1Cortado.png"));
@@ -107,7 +104,6 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
     public void render(float delta) { Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         leerEntrada();
-
         batch.setProjectionMatrix(camara.combined);
 
         batch.begin();
@@ -116,7 +112,6 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
         back.render(batch);
         skip.render(batch);
         batch.end();
-
     }
 
     @Override
@@ -151,34 +146,27 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
                 principal.setScreen(new PantallaMenu(principal));
                 }
             }
-
-
             Preferences prefe = Gdx.app.getPreferences("Preferencias");
         }
     }
 
     @Override
     public void resize(int width, int height) {
-
     }
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override
     public void dispose() {
-
     }
 }

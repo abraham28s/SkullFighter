@@ -1,20 +1,20 @@
 package mx.itesm.skullfighter;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+        import com.badlogic.gdx.Gdx;
+        import com.badlogic.gdx.InputAdapter;
+        import com.badlogic.gdx.Preferences;
+        import com.badlogic.gdx.Screen;
+        import com.badlogic.gdx.graphics.GL20;
+        import com.badlogic.gdx.graphics.OrthographicCamera;
+        import com.badlogic.gdx.graphics.Texture;
+        import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+        import com.badlogic.gdx.math.Vector3;
+        import com.badlogic.gdx.utils.viewport.StretchViewport;
+        import com.badlogic.gdx.utils.viewport.Viewport;
 
-import org.lwjgl.Sys;
+        import org.lwjgl.Sys;
 
-import java.util.Random;
+        import java.util.Random;
 
 /**
  * Created by abrahamsoto on 30/03/16.
@@ -176,16 +176,16 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
             @Override
             public boolean touchDragged(int x, int y, int pointer) {
-               // if(leftPointer == pointer){
+                // if(leftPointer == pointer){
 
 
-                        if(verificarBoton(x,y,btnIzq)){
-                            jugador.movimiento("izq");
-                        }else if(verificarBoton(x, y, btnDer)){
-                            jugador.movimiento("der");
-                        }
+                if(verificarBoton(x,y,btnIzq)){
+                    jugador.movimiento("izq");
+                }else if(verificarBoton(x, y, btnDer)){
+                    jugador.movimiento("der");
+                }
 
-               // }
+                // }
                 return true;
             }
 
@@ -238,13 +238,11 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
 
    /* void leerEntrada() {
-
         Vector3 coordenadas = new Vector3();
         coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         camara.unproject(coordenadas);  //traduce las coordenadas
         float x = coordenadas.x;
         float y = coordenadas.y;
-
         if(Gdx.input.isTouched()) {
             if(verificarBoton(x,y,btnDer) && verificarBordes()){
                 movimientoDer(jugador,texturaMovDer);
@@ -273,7 +271,6 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         if(Gdx.input.justTouched() &&Gdx.input.isTouched()){
             if(verificarBoton(x,y,btnDer) && verificarBoton(x, y, btnBrin) && verificarBordes()){
                 movimientoDer(jugador,texturaMovDer);
-
                 if(jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
                     jugador.movimientoBrin();
                 }
@@ -441,7 +438,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         fondo.render(batch);
         jugador.render(batch);
         jugador.actualizar();
-       // System.out.println(jugador.getEstadoMov());
+        // System.out.println(jugador.getEstadoMov());
         enemigo.render(batch);
         vidaJ.render(batch);
         vidaE.render(batch);
@@ -539,21 +536,21 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         if(enemigo.getSprite().getX()+100>jugador.getSprite().getX()+100&&enemigo.getSprite().getX()-150<jugador.getSprite().getX()-150){
             //System.out.print("tru de x");
             //System.out.print(conPuE);
-        if(eneAtacoPu== true &&conPuE%3==0){
-            //System.out.print("tru de x");
-            if(indexVidaJ>0){
-                indexVidaJ--;
+            if(eneAtacoPu== true &&conPuE%3==0){
+                //System.out.print("tru de x");
+                if(indexVidaJ>0){
+                    indexVidaJ--;
 
-                float x = vidaJ.getSprite().getX();
-                float y = vidaJ.getSprite().getY();
-                vidaJ.setTextura(texturaVidaJ[indexVidaJ]);
-                vidaJ.setPosicion(x,y);
-                return false;
-            }else if(indexVidaJ ==0){
-                perdioJuego();
+                    float x = vidaJ.getSprite().getX();
+                    float y = vidaJ.getSprite().getY();
+                    vidaJ.setTextura(texturaVidaJ[indexVidaJ]);
+                    vidaJ.setPosicion(x,y);
+                    return false;
+                }else if(indexVidaJ ==0){
+                    perdioJuego();
+                }
+                eneAtacoPu = false;
             }
-            eneAtacoPu = false;
-        }
 
             if(juAtacoPu== true &&conPuJ%3==0){
                 //System.out.print("tru de x");
