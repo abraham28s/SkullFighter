@@ -3,6 +3,7 @@ package mx.itesm.skullfighter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -26,26 +27,24 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
     private SpriteBatch batch;
 
+    private AssetManager AssManager;
+
     //fondo
     private Fondo fondo;
     private Fondo fondo2;
-    private Texture texturaFondo;
-    private Texture texturaFondo2;
-    private Texture texturaBtnDer;
-    private Texture texturaBtnIzq;
+
     private Boton btnDer;
     private Boton btnIzq;
-    private Texture texturaBtnBrin;
+
     private Boton btnBrin;
     private Personaje jugador;
-    private Texture[] texturaMovDer;
-    private Texture[] texturaMovIzq;
+
 
     private Boton skip;
-    private Texture texturaSkip;
+
 
     private Componente Civil2;
-    private Texture[] texturasCivil2;
+
     private int con = 0;
 
     private OrthographicCamera camaraFija;
@@ -53,24 +52,38 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     public static final int TAM_CELDA = 5;
 
     private Boton btnBack;
-    private Texture texturaBack;
+
 
     private Componente tip;
-    private Texture texturaTip;
+
 
     private Componente Civil1;
-    private Texture texturaCivil1;
+
 
     private Boton TextoCivil1;
+
+    private Texture texturaBtnBrin;
+    private Texture texturaTip;
+    private Texture[] texturaMovDer;
+    private Texture[] texturaMovIzq;
+    private Texture texturaSkip;
+    private Texture[] texturasCivil2;
+    private Texture texturaBack;
     private Texture texturaTextoCivil1;
+    private Texture texturaCivil1;
+    private Texture texturaFondo;
+    private Texture texturaFondo2;
+    private Texture texturaBtnDer;
+    private Texture texturaBtnIzq;
 
 
     private int Mov = 0;
     private int ConCiv = 0;
     private int ConAle=0;
 
-    public PantallaJuego(Principal principal) {
+    public PantallaJuego(Principal principal, AssetManager assetManager) {
         this.principal = principal;
+        this.AssManager = assetManager;
     }
     @Override
     public void show() {
@@ -352,35 +365,45 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     @Override
     public void cargarTexturas() {
         //texturaFondo = new Texture(Gdx.files.internal("Escenario1Cortado.png"));
-        texturaFondo = new Texture(Gdx.files.internal("Fondo-Capa2.png"));
+
+
+
+
+        texturaFondo = AssManager.get("Fondo-Capa2.png",Texture.class);
 
         texturaMovDer= new Texture[3];
-        texturaMovDer[0] = new Texture(Gdx.files.internal("SkullCam1der.png"));
-        texturaMovDer[1] = new Texture(Gdx.files.internal("SkullCam2der.png"));
-        texturaMovDer[2] = new Texture(Gdx.files.internal("SkullCam3der.png"));
 
         texturaMovIzq = new Texture[3];
-        texturaMovIzq[0] = new Texture(Gdx.files.internal("SkullCam1izq.png"));
-        texturaMovIzq[1] = new Texture(Gdx.files.internal("SkullCam2izq.png"));
-        texturaMovIzq[2] = new Texture(Gdx.files.internal("SkullCam3izq.png"));
 
         texturasCivil2 = new Texture[3];
-        texturasCivil2[0] = new Texture(Gdx.files.internal("Civil2/Civil2-1.png"));
-        texturasCivil2[1] = new Texture(Gdx.files.internal("Civil2/Civil2-2.png"));
-        texturasCivil2[2] = new Texture(Gdx.files.internal("Civil2/Civil2-3.png"));
 
-        texturaFondo2 = new Texture(Gdx.files.internal("Fondo-Capa1.png"));
+        for (int i = 1; i <= 3; i++) {
+            texturaMovDer[i-1] = AssManager.get("SkullCam"+i+"der.png",Texture.class);
+            texturaMovIzq[i-1] = AssManager.get("SkullCam"+i+"izq.png",Texture.class);
+            texturasCivil2[i-1] = AssManager.get("Civil2/Civil2-" + i + ".png", Texture.class);
+        }
 
-        texturaTip = new Texture(Gdx.files.internal("Civil2/Tip.png"));
+        texturaFondo2 = AssManager.get("Fondo-Capa1.png",Texture.class);
 
-        texturaCivil1 = new Texture(Gdx.files.internal("CivilFrente1.png"));
-        texturaTextoCivil1 = new Texture(Gdx.files.internal("FightText.png"));
 
-        texturaBtnDer = new Texture(Gdx.files.internal("Boton_Derecha.png"));
-        texturaBtnIzq = new Texture(Gdx.files.internal("Boton_Izquierda.png"));
-        texturaBtnBrin = new Texture(Gdx.files.internal("BotonJump.png"));
-        texturaBack = new Texture(Gdx.files.internal("BackGame.png"));
-        texturaSkip = new Texture(Gdx.files.internal("skip.png"));
+
+
+
+
+
+
+
+
+        texturaTip = AssManager.get("Civil2/Tip.png", Texture.class);
+
+        texturaCivil1 = AssManager.get("CivilFrente1.png", Texture.class);
+        texturaTextoCivil1 = AssManager.get("FightText.png", Texture.class);
+
+        texturaBtnDer = AssManager.get("Boton_Derecha.png", Texture.class);
+        texturaBtnIzq = AssManager.get("Boton_Izquierda.png", Texture.class);
+        texturaBtnBrin = AssManager.get("BotonJump.png", Texture.class);
+        texturaBack = AssManager.get("BackGame.png", Texture.class);
+        texturaSkip = AssManager.get("skip.png", Texture.class);
 
     }
 
