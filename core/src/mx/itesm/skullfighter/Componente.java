@@ -33,4 +33,7 @@ public class Componente {
     }
 
 
+    public void setSprite(Texture sprite) {
+        this.sprite = new Sprite(sprite);
+    }
 }

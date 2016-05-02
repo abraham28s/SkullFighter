@@ -1,6 +1,7 @@
 package mx.itesm.skullfighter;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -75,7 +76,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     private Texture[] texturaVidaE;
     private int indexVidaJ = 6;
     // 1= ejecucion, 0=pausa, 3 perdio, 4 gano, 5 cargando
-    private int estado = 5;
+    private int estado = 1;
 
     //Pausa
     private Componente fondoPausa;
@@ -96,6 +97,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     private Texture texturaWin;
     private Componente lose;
     private Texture texturaLose;
+    int  movPointerDer,movPointerIzq, brincoPointer;
 
 
 
@@ -115,10 +117,10 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
         fondo = new Fondo(texturaFondo);
 
-        jugador = new Personaje(texturaMovDer[0]);
+        jugador = new Personaje(texturaMovDer,texturaMovIzq,"jugador");
         jugador.setPosicion(-15, -30);
 
-        enemigo = new Personaje(texturaEneMovIzq[0]);
+        enemigo = new Personaje(texturaEneMovDer,texturaEneMovIzq,"enemigo");
         enemigo.setPosicion(1050, 30);
 
         vidaJ = new Componente(texturaVidaJ[6]);
@@ -144,8 +146,102 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         crearYPosBotones();
     }
 
-    @Override
     void leerEntrada() {
+        Gdx.input.setInputProcessor(new InputAdapter() {
+            public boolean touchUp(int x, int y, int pointer, int button) {
+                Vector3 coordenadas = new Vector3();
+                coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+                camara.unproject(coordenadas);  //traduce las coordenadas
+                float x1 = coordenadas.x;
+                float y1 = coordenadas.y;
+
+                if(verificarBoton(x1,y1,btnIzq)){
+                    jugador.setEstadoMov(Personaje.EstadoMov.QUIETO);
+
+                }else if(verificarBoton(x1, y1, btnDer)  ) {
+                    jugador.setEstadoMov(Personaje.EstadoMov.QUIETO);
+                }
+                if(verificarBoton(x,y,btnPunch)){
+                    //Sonidos.golpearSound();
+                    jugador.setAtacandoPu(true);
+                    juAtacoPu = true;
+                }
+                if(verificarBoton(x,y,btnWeapon) ){
+                    //Sonidos.cuchilloSound();
+                    jugador.setAtacandoWe(true);
+                }
+
+                return true;
+            }
+
+            @Override
+            public boolean touchDragged(int x, int y, int pointer) {
+               // if(leftPointer == pointer){
+
+
+                        if(verificarBoton(x,y,btnIzq)){
+                            jugador.movimiento("izq");
+                        }else if(verificarBoton(x, y, btnDer)){
+                            jugador.movimiento("der");
+                        }
+
+               // }
+                return true;
+            }
+
+            public boolean touchDown(int x, int y, int pointer, int button) {
+
+
+
+
+                Vector3 coordenadas = new Vector3();
+                coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+                camara.unproject(coordenadas);  //traduce las coordenadas
+                float x1 = coordenadas.x;
+                float y1 = coordenadas.y;
+
+                if(verificarBoton(x1,y1,btnIzq)&& pointer == 0){
+                    jugador.movimiento("izq");
+                    System.out.println("down izq");
+                    movPointerIzq = pointer;
+
+                }else if(verificarBoton(x1, y1, btnDer) && pointer == 0){
+                    jugador.movimiento("der");
+                    movPointerDer = pointer;
+
+                }
+                if(verificarBoton(x1, y1, btnBrin) && pointer !=0){
+                    //Sonidos.saltarSound();
+                    if(jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
+                        jugador.movimientoBrin();
+                        jugador.movimiento("der");
+                    }
+                    brincoPointer = pointer;
+                }else if(verificarBoton(x1, y1, btnBrin) && pointer ==0){
+                    if(jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
+                        jugador.movimientoBrin();
+
+                    }
+                    brincoPointer = pointer;
+                }
+                if(verificarBoton(x1,y1,btnPunch)){
+                    //Sonidos.golpearSound();
+                    jugador.setAtacandoPu(true);
+                    juAtacoPu = true;
+                }
+                if(verificarBoton(x1,y1,btnWeapon) ){
+                    //Sonidos.cuchilloSound();
+                    jugador.setAtacandoWe(true);
+                }
+
+
+                return true;
+            }
+        });
+    }
+
+
+   /* void leerEntrada() {
 
         Vector3 coordenadas = new Vector3();
         coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -163,18 +259,18 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         }
         if(Gdx.input.justTouched()) {
             if(verificarBoton(x, y, btnBrin)){
-                Sonidos.saltarSound();
-                if(jugador.getEstado() == Personaje.Estado.NORMAL) {
+                //Sonidos.saltarSound();
+                if(jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
                     jugador.movimientoBrin();
                 }
             }
             if(verificarBoton(x,y,btnPunch)){
-                Sonidos.golpearSound();
+                //Sonidos.golpearSound();
                 jugador.setAtacandoPu(true);
                 juAtacoPu = true;
             }
             if(verificarBoton(x,y,btnWeapon) ){
-                Sonidos.cuchilloSound();
+                //Sonidos.cuchilloSound();
                 jugador.setAtacandoWe(true);
             }
         }
@@ -182,97 +278,29 @@ public class NivelUno extends PantallaAbstracta implements Screen {
             if(verificarBoton(x,y,btnDer) && verificarBoton(x, y, btnBrin) && verificarBordes()){
                 movimientoDer(jugador,texturaMovDer);
 
-                if(jugador.getEstado() == Personaje.Estado.NORMAL) {
+                if(jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
                     jugador.movimientoBrin();
                 }
             }
             if(verificarBoton(x,y,btnIzq)&& verificarBoton(x, y, btnBrin) && verificarBordes() ){
                 movimientoIzq(jugador,texturaMovIzq);
-                if(jugador.getEstado() == Personaje.Estado.NORMAL) {
+                if(jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
                     jugador.movimientoBrin();
                 }
             }
             if(verificarBoton(x,y, btnPausa)){
                 //cambiar a pantalla de jugar
-                Sonidos.reproducirBoton();
+                //Sonidos.reproducirBoton();
                 pausarJuego();
             }
         }
-    }
+    }  */
 
     private void pausarJuego() {
         this.estado = 0;
     }
 
-    private void movimientoIzq(Personaje per, Texture[] izq) {
 
-        float x = per.getSprite().getX();
-        float y = per.getSprite().getY();
-        //System.out.println(Gdx.graphics.getDeltaTime());
-        if(per.equals(jugador)) {
-            if (conJ % 4 == 0) {
-                per.setSprite(izq[MovJ % 3]);
-                MovJ++;
-            }
-            if (MovJ > 500) {
-                MovJ = 0;
-            }
-            conJ++;
-            if (conJ > 500) {
-                conJ = 0;
-            }
-            per.setVista("izq");
-            per.setPosicion(x - 5, y);
-        }else{
-            if (conE % 4 == 0) {
-                per.setSprite(izq[MovE % 3]);
-                MovE++;
-            }
-            if (MovE > 500) {
-                MovE = 0;
-            }
-            conE++;
-            if (conE > 500) {
-                conE = 0;
-            }
-            per.setVista("izq");
-            per.setPosicion(x - 5, y);
-        }
-    }
-
-    private void movimientoDer(Personaje per, Texture[] der) {
-        float x = per.getSprite().getX();
-        float y = per.getSprite().getY();
-        if(per.equals(jugador)) {
-            if (conJ % 4 == 0) {
-                per.setSprite(der[MovJ % 3]);
-                MovJ++;
-            }
-            if (MovJ > 500) {
-                MovJ = 0;
-            }
-            conJ++;
-            if (conJ > 500) {
-                conJ = 0;
-            }
-            per.setVista("der");
-            per.setPosicion(x + 5, y);
-        }else{
-            if (conE % 4 == 0) {
-                per.setSprite(der[MovE % 3]);
-                MovE++;
-            }
-            if (MovE > 500) {
-                MovE = 0;
-            }
-            conE++;
-            if (conE > 500) {
-                conE = 0;
-            }
-            per.setVista("der");
-            per.setPosicion(x + 5, y);
-        }
-    }
 
     @Override
     void cargarTexturas() {
@@ -417,6 +445,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         fondo.render(batch);
         jugador.render(batch);
         jugador.actualizar();
+       // System.out.println(jugador.getEstadoMov());
         enemigo.render(batch);
         vidaJ.render(batch);
         vidaE.render(batch);
@@ -431,13 +460,14 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         if(this.estado == 1) {
             leerEntrada(); // Revisar eventos
             // Mover la cámara para que siga al personaje
+
             movimientoEnemigo();
 
             revisarAtacando(jugador, texturaOzDer, texturaOzIzq, texturaPunchDer, texturaPunchIzq);
 
             ataqueEnemigo();
             revisarAtacando(enemigo, texturaOzDer, texturaOzIzq, texturaEnePunchDer, texturaEnePunchIzq);
-            revisarColi();
+
 
         }else if(this.estado ==0){
             leerEntradaPausa();
@@ -507,20 +537,22 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         }
     }
 
-    private void revisarColi() {
+    private boolean revisarColi() {
         //System.out.print(juAtacoWe);
         //System.out.println(indexVidaE);
-        if(enemigo.getSprite().getX()+100>jugador.getSprite().getX()&&enemigo.getSprite().getX()-100<jugador.getSprite().getX()){
+        if(enemigo.getSprite().getX()+100>jugador.getSprite().getX()+100&&enemigo.getSprite().getX()-150<jugador.getSprite().getX()-150){
             //System.out.print("tru de x");
             //System.out.print(conPuE);
         if(eneAtacoPu== true &&conPuE%3==0){
             //System.out.print("tru de x");
             if(indexVidaJ>0){
                 indexVidaJ--;
+
                 float x = vidaJ.getSprite().getX();
                 float y = vidaJ.getSprite().getY();
                 vidaJ.setTextura(texturaVidaJ[indexVidaJ]);
                 vidaJ.setPosicion(x,y);
+                return false;
             }else if(indexVidaJ ==0){
                 perdioJuego();
             }
@@ -531,10 +563,12 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                 //System.out.print("tru de x");
                 if(indexVidaE>0){
                     indexVidaE--;
+
                     float x = vidaE.getSprite().getX();
                     float y = vidaE.getSprite().getY();
                     vidaE.setTextura(texturaVidaE[indexVidaE]);
                     vidaE.setPosicion(x,y);
+                    return false;
                 }else if(indexVidaE ==0){
                     ganoJuego();
                 }
@@ -544,11 +578,13 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                 //System.out.println(indexVidaE + "hola");
                 if(indexVidaE>0){
                     indexVidaE-=2;
+
                     System.out.print("llegue");
                     float x = vidaE.getSprite().getX();
                     float y = vidaE.getSprite().getY();
                     vidaE.setTextura(texturaVidaE[indexVidaE]);
                     vidaE.setPosicion(x,y);
+                    return false;
                 }else if(indexVidaE ==0){
                     ganoJuego();
                 }
@@ -560,6 +596,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
             juAtacoPu = false;
             juAtacoWe = false;
         }
+        return true;
     }
 
     private void ganoJuego() {
@@ -572,14 +609,14 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
     private void movimientoEnemigo() {
         Random numero = new Random();
-        if(jugador.getSprite().getX()>enemigo.getSprite().getX()){
+        if(jugador.getSprite().getX()+70>enemigo.getSprite().getX()+100 && revisarColi()){
 
             if(numero.nextInt(15)<3) {
-                movimientoDer(enemigo, texturaEneMovDer);
+                enemigo.movimiento("der");
             }
-        }else if(jugador.getSprite().getX()<enemigo.getSprite().getX()){
+        }else if(jugador.getSprite().getX()+100<enemigo.getSprite().getX()-100){
             if(numero.nextInt(15)<3) {
-                movimientoIzq(enemigo, texturaEneMovIzq);
+                enemigo.movimiento("izq");
             }
         }
     }

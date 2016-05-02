@@ -176,17 +176,17 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
 
                 if (pref.getInteger("nivel") == 1 || pref.getInteger("nivel") == 2){
                     principal.setScreen(new SeleccionarNiveles(principal));
-                    Sonidos.reproducirBoton();
-                    Sonidos.cargarEfectos();
+                    //Sonidos.reproducirBoton();
+                    //Sonidos.cargarEfectos();
                 }
 
                 if (pref.getInteger("nivel") == 0) {
                     principal.setScreen(new Comic1(principal));
                     pref.putInteger("nivel", 1);
                     pref.flush();
-                    Sonidos.reproducirBoton();
-                    Sonidos.pausarMusicaFondo();
-                    Sonidos.cargarEfectos();
+                    //Sonidos.reproducirBoton();
+                    //Sonidos.pausarMusicaFondo();
+                    //Sonidos.cargarEfectos();
                 }
 
             }  else if (verificarBoton(x, y, btnCustom)) {

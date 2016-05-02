@@ -6,7 +6,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -45,7 +44,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     private Boton skip;
     private Texture texturaSkip;
 
-    private Personaje Civil2;
+    private Componente Civil2;
     private Texture[] texturasCivil2;
     private int con = 0;
 
@@ -85,9 +84,9 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         fondo = new Fondo(texturaFondo);
         fondo2 = new Fondo(texturaFondo2);
 
-        jugador = new Personaje(texturaMovDer[0]);
+        jugador = new Personaje(texturaMovDer,texturaMovIzq,"jugador");
         jugador.setPosicion(-15, -30);
-        Civil2 = new Personaje(texturasCivil2[0]);
+        Civil2 = new Componente(texturasCivil2[0]);
         Civil2.setPosicion(1900, 30);
 
         Civil1 = new Componente(texturaCivil1);
@@ -188,7 +187,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
     }
 
-    private void animacionCiviles(Personaje civil) {
+    private void animacionCiviles(Componente civil) {
         int tiempos[] = {13,14,15,16};
         Random numero = new Random();
 
@@ -255,7 +254,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         }
        /* if(Gdx.input.justTouched()) {
             if(verificarBoton(x, y, btnBrin)){
-                if(jugador.getEstado() == Personaje.Estado.NORMAL) {
+                if(jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
                     jugador.movimientoBrin();
                 }
             }
@@ -264,13 +263,13 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
             if(verificarBoton(x,y,btnDer) /*&& verificarBoton(x, y, btnBrin)*/ && verificarBordes()){
                 movimientoDer();
                 actualizarCamara();
-                if(jugador.getEstado() == Personaje.Estado.NORMAL) {
+                if(jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
                     //jugador.movimientoBrin();
                 }
             }
             if(verificarBoton(x,y,btnIzq)/*&& verificarBoton(x, y, btnBrin) */&& verificarBordes() ){
                 movimientoIzq();actualizarCamara();
-                if(jugador.getEstado() == Personaje.Estado.NORMAL) {
+                if(jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
                     //jugador.movimientoBrin();
                 }
             }

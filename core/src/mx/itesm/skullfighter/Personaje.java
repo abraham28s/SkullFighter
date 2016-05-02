@@ -1,12 +1,10 @@
 package mx.itesm.skullfighter;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import org.lwjgl.Sys;
 
 /**
  * Created by abrahamsoto on 18/02/16.
@@ -15,28 +13,31 @@ public class Personaje {
     private Sprite sprite;
 
     private float alturaActual;
-    private Estado estado;
+    private EstadoBrinco estado;
+    private EstadoMov estadoMov;
     private float alturaMax,alturaInicial;
     private float timerAnimacion;
     private com.badlogic.gdx.graphics.g2d.Animation animacion;
     private String vista = "der";
     private boolean atacandoWe = false;
     private boolean atacandoPu = false;
+    private Texture[] texturaMovDer;
+    private Texture[] texturaMovIzq;
+    private int variableMovimiento = 0;
 
 
-    public Personaje(Texture textura){
-        /*TextureRegion[][] texturaPersonaje =  new TextureRegion(textura).split(16,32);
-        animacion = new Animation(0.25f,texturaPersonaje[0][3],texturaPersonaje[0][2],texturaPersonaje[0][1] );
-        animacion.setPlayMode(Animation.PlayMode.LOOP);
-        timerAnimacion = 0;
-        sprite = new Sprite(texturaPersonaje[0][0]);*/
+    public Personaje(Texture[] texturaMovDer,Texture[] texturaMovIzq,String tipo){
+        this.texturaMovDer = texturaMovDer;
+        this.texturaMovIzq = texturaMovIzq;
 
+        if(tipo.equals("jugador"))sprite = new Sprite(texturaMovDer[0]);
+        else if (tipo.equals("enemigo"))sprite = new Sprite(texturaMovIzq[0]);
 
-        sprite = new Sprite(textura);
         sprite.setAlpha(1f);
         this.alturaInicial = sprite.getY();
         this.alturaMax = this.alturaInicial+270;
-        estado = Estado.NORMAL;
+        estado = EstadoBrinco.NORMAL;
+        estadoMov = EstadoMov.QUIETO;
 
     }
 
@@ -65,7 +66,7 @@ public class Personaje {
                 this.setPosicion(this.sprite.getX(),this.sprite.getY()-12);
                 if (alturaActual <= alturaInicial) {
                     alturaActual = alturaInicial;
-                    estado = Estado.NORMAL;
+                    estado = EstadoBrinco.NORMAL;
                 }
                 break;
             case NORMAL:
@@ -76,7 +77,7 @@ public class Personaje {
                 this.setPosicion(this.sprite.getX(),this.sprite.getY()+12);
                 if (alturaActual >= alturaMax) {
                     alturaActual = alturaMax;
-                    estado = Estado.BAJANDO;
+                    estado = EstadoBrinco.BAJANDO;
 
                 }
                 break;
@@ -86,20 +87,59 @@ public class Personaje {
 
         }
 
+        switch (estadoMov){
+            case DERECHA:
+                movimiento("der");
+                //System.out.println("movder");
+                break;
+            case IZQUIERDA:
+                movimiento("izq");
+                //System.out.println("movizq");
+                break;
+            case QUIETO:
+                break;
+        }
+
+
+    }
+
+    public void movimiento(String direccion) {
+        float x = this.getSprite().getX();
+        float y = this.getSprite().getY();
+
+            if (direccion.equals("der")) {
+                this.estadoMov = EstadoMov.DERECHA;
+                //System.out.println("derechaaaa");
+                if (variableMovimiento % 4 == 0)this.setSprite(texturaMovDer[variableMovimiento % 3]);
+                this.getSprite().setPosition(x+5,y);
+
+            } else if (direccion.equals("izq")) {
+                this.estadoMov = EstadoMov.IZQUIERDA;
+                if (variableMovimiento % 4 == 0)this.setSprite(texturaMovIzq[variableMovimiento % 3]);
+                this.getSprite().setPosition(x-5,y);
+            }
+
+
+        variableMovimiento++;
+
+        if(variableMovimiento>50)variableMovimiento=0;
+
+
     }
 
     public void movimientoBrin() {
-        if(this.estado != Estado.SUBIENDO){
-            this.estado = Estado.SUBIENDO;
+        if(this.estado != EstadoBrinco.SUBIENDO){
+            this.estado = EstadoBrinco.SUBIENDO;
 
 
         }
     }
 
 
-    public Estado getEstado() {
+    public EstadoBrinco getEstado() {
         return estado;
     }
+    public void setEstadoMov(EstadoMov estado){this.estadoMov = estado;}
 
     public void setVista(String vista) {
         this.vista = vista;
@@ -125,12 +165,28 @@ public class Personaje {
         return atacandoPu;
     }
 
+    public EstadoMov getEstadoMov() {
+        return estadoMov;
+    }
 
-    public enum Estado{
+
+    public enum EstadoBrinco {
         SUBIENDO,
         BAJANDO,
         NORMAL,
-        WEAPON
 
+
+    }
+
+    public enum EstadoMov{
+        DERECHA,
+        IZQUIERDA,
+        QUIETO
+    }
+
+    public enum EstadoAtacando {
+        WEAPON,
+        PUÑO,
+        NORMAL
     }
 }
