@@ -28,15 +28,17 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
     private Texture texturaFondoCargando;
     private Fondo spriteFondoCargando;
 
-    private int pantallaCargar; 
+    private int pantallaCargar;
+
+    public PantallaCargando(Principal principal,int pantalla){
+        this.principal = principal;
+        this.pantallaCargar = pantalla;
+    }
 
 
     @Override
     public void show() {
-        camara = new OrthographicCamera(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO);
-        camara.position.set(Principal.ANCHO_MUNDO/2,Principal.ALTO_MUNDO/2,0);
-        camara.update();
-        vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
+        setYUpgradeCamara();
         batch = new SpriteBatch();
 
 
@@ -89,6 +91,9 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
 
     @Override
     void setYUpgradeCamara() {
-
+        camara = new OrthographicCamera(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO);
+        camara.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
+        camara.update();
+        vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
     }
 }
