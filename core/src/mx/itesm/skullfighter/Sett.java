@@ -31,6 +31,7 @@ public class Sett extends PantallaAbstracta implements Screen{
     private Boton musicAD, musicAD2;
     private Boton returnAD;
     private Boton restartAD;
+    private Boton comic;
 
     //texturas
     private Texture texturaTitulo, texturaAD;
@@ -38,6 +39,7 @@ public class Sett extends PantallaAbstracta implements Screen{
     public static Texture TextureMusic, TextureMusic2;
     private Texture TextureReturn;
     private Texture TextureRestart;
+    private Texture texturaComic;
 
     public Sett(Principal principal) {
         this.principal = principal;
@@ -100,8 +102,6 @@ public class Sett extends PantallaAbstracta implements Screen{
                     pref.flush();
                 }
                 }
-
-
         }
 
         if(Gdx.input.justTouched()) {
@@ -150,7 +150,8 @@ public class Sett extends PantallaAbstracta implements Screen{
         TextureMusic = new Texture(Gdx.files.internal("MusicaOn.png"));
         TextureMusic2 = new Texture(Gdx.files.internal("MusicaOff.png"));
         TextureReturn = new Texture(Gdx.files.internal("BackGame.png"));
-        TextureRestart = new Texture(Gdx.files.internal("resetear.png"));
+        TextureRestart = new Texture(Gdx.files.internal("Restart.png"));
+        texturaComic = new Texture(Gdx.files.internal("PauseBotton.png"));
     }
 
     @Override
@@ -193,7 +194,10 @@ public class Sett extends PantallaAbstracta implements Screen{
         returnAD.setPosicion(30, 30);
 
         restartAD = new Boton (TextureRestart);
-        restartAD.setPosicion(350,30);
+        restartAD.setPosicion(1050,30);
+
+        comic = new Boton (texturaComic);
+        comic.setPosicion(900,30);
 
     }
 
@@ -223,6 +227,7 @@ public class Sett extends PantallaAbstracta implements Screen{
         titulo.render(batch);
         returnAD.render(batch);
         restartAD.render(batch);
+        comic.render(batch);
 
         batch.end();
         actualizarFondo();
