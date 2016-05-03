@@ -190,7 +190,7 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
                         Sonidos.reproducirBoton();
                     }
 
-                    //Sonidos.pausarMusicaFondo();
+                    Sonidos.pausarMusicaFondo();
                     //Sonidos.cargarEfectos();
                 }
 

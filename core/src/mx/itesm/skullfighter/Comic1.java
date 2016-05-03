@@ -146,7 +146,16 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
                 principal.setScreen(new PantallaMenu(principal));
                 }
             }
-            Preferences prefe = Gdx.app.getPreferences("Preferencias");
+
+            if(verificarBoton(x,y,skip)){
+                Preferences pref = Gdx.app.getPreferences("Preferencias");
+                if (pref.getBoolean("boton") == true) {
+                    Sonidos.reproducirBoton();
+                }
+
+                this.principal.setScreen(new PantallaCargando(principal,0));
+            }
+
         }
     }
 

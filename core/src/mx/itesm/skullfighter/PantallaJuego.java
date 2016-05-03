@@ -310,6 +310,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
                     Sonidos.reproducirBoton();
                 }
                 pref.putInteger("nivel",2);
+                pref.flush();
                 this.principal.setScreen(new NivelUno(this.principal));
             }
 
