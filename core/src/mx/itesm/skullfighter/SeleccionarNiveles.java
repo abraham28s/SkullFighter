@@ -59,9 +59,8 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
         returnAD = new Boton(TextureReturn);
         returnAD.setPosicion(1100, 30);
 
-
         if (pref.getInteger("nivel") == 1 || pref.getInteger("nivel") == 2 || pref.getInteger("nivel") == 3 || pref.getInteger("nivel") == 4){
-            introAD = new Boton (TextureIntro);
+            introAD = new Boton(TextureIntro);
             introAD.setPosicion(30,30);
         }
 
@@ -83,6 +82,9 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
 
         //if (pref.getInteger("nivel") == 1 || pref.getInteger("nivel") == 2){
 
+
+        nivel1 = new Boton (TextureNivel1);
+        nivel1.setPosicion(360, 30);
 
 
         crearYPosBotones();

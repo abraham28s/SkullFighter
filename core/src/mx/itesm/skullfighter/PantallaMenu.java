@@ -174,7 +174,7 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
                 pref.putBoolean("guardar",true);
                 pref.flush();
 
-                if (pref.getInteger("nivel") == 1 || pref.getInteger("nivel") == 2){
+                if (pref.getInteger("nivel") == 1 || pref.getInteger("nivel") == 2 || pref.getInteger("nivel") == 3 || pref.getInteger("nivel") == 4){
                     principal.setScreen(new SeleccionarNiveles(principal));
                     if (pref.getBoolean("boton") == true) {
                         Sonidos.reproducirBoton();
