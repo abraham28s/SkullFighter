@@ -15,6 +15,7 @@ public class Personaje {
     private float alturaActual;
     private EstadoBrinco estado;
     private EstadoMov estadoMov;
+    private EstadoAtacando estadoAca;
     private float alturaMax,alturaInicial;
     private float timerAnimacion;
     private com.badlogic.gdx.graphics.g2d.Animation animacion;
@@ -24,12 +25,13 @@ public class Personaje {
     private Texture[] texturaMovDer;
     private Texture[] texturaMovIzq;
     private int variableMovimiento = 0;
+    private NivelUno pantalla;
 
 
-    public Personaje(Texture[] texturaMovDer,Texture[] texturaMovIzq,String tipo){
+    public Personaje(Texture[] texturaMovDer,Texture[] texturaMovIzq,String tipo,NivelUno pantalla){
         this.texturaMovDer = texturaMovDer;
         this.texturaMovIzq = texturaMovIzq;
-
+        this.pantalla = pantalla;
         if(tipo.equals("jugador"))sprite = new Sprite(texturaMovDer[0]);
         else if (tipo.equals("enemigo"))sprite = new Sprite(texturaMovIzq[0]);
 
@@ -38,6 +40,7 @@ public class Personaje {
         this.alturaMax = this.alturaInicial+270;
         estado = EstadoBrinco.NORMAL;
         estadoMov = EstadoMov.QUIETO;
+        estadoAca = EstadoAtacando.NORMAL;
 
     }
 
@@ -89,18 +92,63 @@ public class Personaje {
 
         switch (estadoMov){
             case DERECHA:
-                movimiento("der");
+                if(this.equals(pantalla.jugador)){
+                    if(this.pantalla.verificarBordes(this,pantalla.enemigo)){
+                        movimiento("der");
+                        vista = "der";
+                    }
+                }else{
+                    if(this.pantalla.verificarBordes(this,pantalla.jugador)){
+                        movimiento("der");
+                        vista = "der";
+                    }
+
+                }
                 //System.out.println("movder");
                 break;
             case IZQUIERDA:
-                movimiento("izq");
+                if(this.equals(pantalla.jugador)){
+                    if(this.pantalla.verificarBordes(this,pantalla.enemigo)){
+                        movimiento("izq");
+                        vista = "izq";
+                    }
+                }
+                else{
+                    if(this.pantalla.verificarBordes(this,pantalla.jugador)) {
+                        movimiento("izq");
+                        vista = "izq";
+                    }
+                }
                 //System.out.println("movizq");
                 break;
             case QUIETO:
                 break;
         }
+        switch (estadoAca){
+            case NORMAL:
+                break;
+            case WEAPON:
+                ataqueArma(vista);
+                break;
+            case PUNO:
+                break;
+            case TERMINOPUNO:
+                break;
+            case TERMINOWEAPON:
+                break;
+        }
 
+    }
 
+    private void ataqueArma(String vista) {
+        float x = this.getSprite().getX();
+        float y = this.getSprite().getY();
+        if(vista.equals("der")){
+            this.estadoAca = EstadoAtacando.WEAPON;
+
+        }else if(vista.equals("izq")){
+
+        }
     }
 
     public void movimiento(String direccion) {
@@ -185,8 +233,8 @@ public class Personaje {
     }
 
     public enum EstadoAtacando {
-        WEAPON,
-        PUÑO,
+        WEAPON,TERMINOWEAPON,TERMINOPUNO,
+        PUNO,
         NORMAL
     }
 }

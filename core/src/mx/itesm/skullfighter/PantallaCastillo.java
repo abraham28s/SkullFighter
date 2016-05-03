@@ -37,7 +37,7 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
     private Boton btnIzq;
 
     private Boton btnBrin;
-    private Personaje jugador;
+    private Componente jugador;
 
     private Boton skip;
 
@@ -94,7 +94,7 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
         fondo = new Fondo(texturaFondo);
         fondo2 = new Fondo(texturaFondo2);
 
-        jugador = new Personaje(texturaMovDer,texturaMovIzq,"jugador");
+        jugador = new Componente(texturaMovDer[0]);
         jugador.setPosicion(-15, -30);
         Civil2 = new Componente(texturasCivil2[0]);
         Civil2.setPosicion(1900, 30);
@@ -170,7 +170,7 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
         Civil3.render(batch);
         Espantapajaros.render(batch);
         jugador.render(batch);
-        jugador.actualizar();
+
 
         fondo2.render(batch);
         TextoCivil1.render(batch);
@@ -281,15 +281,11 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
             if(verificarBoton(x,y,btnDer) /*&& verificarBoton(x, y, btnBrin)*/ && verificarBordes()){
                 movimientoDer();
                 actualizarCamara();
-                if(jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
-                    //jugador.movimientoBrin();
-                }
+
             }
             if(verificarBoton(x,y,btnIzq)/*&& verificarBoton(x, y, btnBrin) */&& verificarBordes() ){
                 movimientoIzq();actualizarCamara();
-                if(jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
-                    //jugador.movimientoBrin();
-                }
+
             }
             if(verificarBoton(x,y, btnBack)){
 

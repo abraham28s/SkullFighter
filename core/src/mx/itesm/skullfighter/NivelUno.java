@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -116,10 +117,10 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
         fondo = new Fondo(texturaFondo);
 
-        jugador = new Personaje(texturaMovDer,texturaMovIzq,"jugador");
+        jugador = new Personaje(texturaMovDer,texturaMovIzq,"jugador",this);
         jugador.setPosicion(-15, -30);
 
-        enemigo = new Personaje(texturaEneMovDer,texturaEneMovIzq,"enemigo");
+        enemigo = new Personaje(texturaEneMovDer,texturaEneMovIzq,"enemigo",this);
         enemigo.setPosicion(1050, 30);
 
         vidaJ = new Componente(texturaVidaJ[6]);
@@ -182,9 +183,10 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                     // if(leftPointer == pointer){
 
 
-                    if (verificarBoton(x, y, btnIzq)) {
+                    if (verificarBoton(x, y, btnIzq) ) {
                         jugador.movimiento("izq");
-                    } else if (verificarBoton(x, y, btnDer)) {
+                    } else if (verificarBoton(x, y, btnDer)
+                            ) {
                         jugador.movimiento("der");
                     }
 
@@ -209,13 +211,14 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                             movPointerIzq = pointer;
                             banderaMoviendo = "izq";
 
-                        } else if (verificarBoton(x1, y1, btnDer) && pointer == 0) {
+                        } else if (verificarBoton(x1, y1, btnDer) && pointer == 0
+                                )  {
                             jugador.movimiento("der");
                             movPointerDer = pointer;
                             banderaMoviendo = "der";
 
                         }
-                        if (verificarBoton(x1, y1, btnBrin) && pointer != 0 && movPointerDer == 0 && banderaMoviendo.equals("der")) {
+                        if (verificarBoton(x1, y1, btnBrin) && pointer != 0 && movPointerDer == 0 && banderaMoviendo.equals("der") ) {
                             //Sonidos.saltarSound();
                             if (jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
                                 jugador.movimientoBrin();
@@ -224,7 +227,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                             }
                             brincoPointer = pointer;
                         }
-                        if (verificarBoton(x1, y1, btnBrin) && pointer != 0 && movPointerIzq == 0 && banderaMoviendo.equals("izq")) {
+                        if (verificarBoton(x1, y1, btnBrin) && pointer != 0 && movPointerIzq == 0 && banderaMoviendo.equals("izq") ) {
                             //Sonidos.saltarSound();
                             if (jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
                                 jugador.movimientoBrin();
@@ -290,67 +293,9 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
     }
 
-
-   /* void leerEntrada() {
-
-        Vector3 coordenadas = new Vector3();
-        coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-        camara.unproject(coordenadas);  //traduce las coordenadas
-        float x = coordenadas.x;
-        float y = coordenadas.y;
-
-        if(Gdx.input.isTouched()) {
-            if(verificarBoton(x,y,btnDer) && verificarBordes()){
-                movimientoDer(jugador,texturaMovDer);
-            }
-            if(verificarBoton(x,y,btnIzq) && verificarBordes()){
-                movimientoIzq(jugador,texturaMovIzq);
-            }
-        }
-        if(Gdx.input.justTouched()) {
-            if(verificarBoton(x, y, btnBrin)){
-                //Sonidos.saltarSound();
-                if(jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
-                    jugador.movimientoBrin();
-                }
-            }
-            if(verificarBoton(x,y,btnPunch)){
-                //Sonidos.golpearSound();
-                jugador.setAtacandoPu(true);
-                juAtacoPu = true;
-            }
-            if(verificarBoton(x,y,btnWeapon) ){
-                //Sonidos.cuchilloSound();
-                jugador.setAtacandoWe(true);
-            }
-        }
-        if(Gdx.input.justTouched() &&Gdx.input.isTouched()){
-            if(verificarBoton(x,y,btnDer) && verificarBoton(x, y, btnBrin) && verificarBordes()){
-                movimientoDer(jugador,texturaMovDer);
-
-                if(jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
-                    jugador.movimientoBrin();
-                }
-            }
-            if(verificarBoton(x,y,btnIzq)&& verificarBoton(x, y, btnBrin) && verificarBordes() ){
-                movimientoIzq(jugador,texturaMovIzq);
-                if(jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
-                    jugador.movimientoBrin();
-                }
-            }
-            if(verificarBoton(x,y, btnPausa)){
-                //cambiar a pantalla de jugar
-                //Sonidos.reproducirBoton();
-                pausarJuego();
-            }
-        }
-    }  */
-
     private void pausarJuego() {
         this.estado = 0;
     }
-
-
 
     @Override
     void cargarTexturas() {
@@ -471,7 +416,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         vista = new StretchViewport(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO, camara);
     }
 
-    boolean verificarBordes() {
+    public boolean verificarBordes() {
         //System.out.println(jugador.getSprite().getX());
         if(jugador.getSprite().getX()<-135 ){
             jugador.getSprite().setX(-130);
@@ -489,7 +434,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(camara.combined);
-        System.out.println(estado);
+
         // DIBUJA
         batch.begin();
         fondo.render(batch);
@@ -513,10 +458,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
             movimientoEnemigo();
 
-            revisarAtacando(jugador, texturaOzDer, texturaOzIzq, texturaPunchDer, texturaPunchIzq);
 
-            ataqueEnemigo();
-            revisarAtacando(enemigo, texturaOzDer, texturaOzIzq, texturaEnePunchDer, texturaEnePunchIzq);
 
 
         }else if(this.estado ==0){
@@ -543,114 +485,14 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         batch.end();
     }
 
-    private void leerEntradaFin() {
-        Vector3 coordenadas = new Vector3();
-        coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-        camara.unproject(coordenadas);  //traduce las coordenadas
-        float x = coordenadas.x;
-        float y = coordenadas.y;
-        if(Gdx.input.justTouched()) {
-            if(verificarBoton(x, y, BtnRestartGame)){
-                Sonidos.reproducirBoton();
-                this.principal.setScreen(new PantallaCargando(principal,0));
-            }
-            if(verificarBoton(x,y,BtnQuitPausa)){
-                Sonidos.reproducirBoton();
-                this.principal.setScreen(new PantallaMenu(principal));
-            }
+
+    public boolean verificarBordes(Personaje player,Personaje otro){
+        System.out.println(player.getSprite().getX());
+        System.out.println(player.getSprite().getX()-(player.getSprite().getWidth()/2));
+        if(player.getSprite().getX()-(player.getSprite().getWidth()/2) >= -280 && player.getSprite().getX()+player.getSprite().getWidth()/2 +10 <= 1220){
+            return true;
         }
-    }
-
-    private void leerEntradaPausa() {
-        Vector3 coordenadas = new Vector3();
-        coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-        camara.unproject(coordenadas);  //traduce las coordenadas
-        float x = coordenadas.x;
-        float y = coordenadas.y;
-        if(Gdx.input.justTouched()) {
-            if(verificarBoton(x, y, BtnResumePausa)){
-                Sonidos.reproducirBoton();
-                resumirJuego();
-            }
-            if(verificarBoton(x,y,BtnQuitPausa)){
-                Sonidos.reproducirBoton();
-                this.principal.setScreen(new PantallaMenu(principal));
-
-                //Preferencias música
-                Preferences pref = Gdx.app.getPreferences("Preferencias");
-                pref.getBoolean("musica", true);
-                pref.flush();
-                if (pref.getBoolean("musica")) {
-                    Sonidos.reproducirMusicaFondo();
-                }
-            }
-        }
-    }
-
-    private boolean revisarColi() {
-        //System.out.print(juAtacoWe);
-        //System.out.println(indexVidaE);
-        if(enemigo.getSprite().getX()+100>jugador.getSprite().getX()+100&&enemigo.getSprite().getX()-150<jugador.getSprite().getX()-150){
-            //System.out.print("tru de x");
-            //System.out.print(conPuE);
-        if(eneAtacoPu== true &&conPuE%3==0){
-            //System.out.print("tru de x");
-            if(indexVidaJ>0){
-                indexVidaJ--;
-
-                float x = vidaJ.getSprite().getX();
-                float y = vidaJ.getSprite().getY();
-                vidaJ.setTextura(texturaVidaJ[indexVidaJ]);
-                vidaJ.setPosicion(x,y);
-                return false;
-            }else if(indexVidaJ ==0){
-                perdioJuego();
-            }
-            eneAtacoPu = false;
-        }
-
-            if(juAtacoPu== true &&conPuJ%3==0){
-                //System.out.print("tru de x");
-                if(indexVidaE>0){
-                    indexVidaE--;
-
-                    float x = vidaE.getSprite().getX();
-                    float y = vidaE.getSprite().getY();
-                    vidaE.setTextura(texturaVidaE[indexVidaE]);
-                    vidaE.setPosicion(x,y);
-                    return false;
-                }else if(indexVidaE ==0){
-                    ganoJuego();
-                }
-                juAtacoPu = false;
-            }else if(juAtacoWe== true){
-                //System.out.println("tru de x");
-                //System.out.println(indexVidaE + "hola");
-                if(indexVidaE>0){
-                    indexVidaE-=2;
-
-                    System.out.print("llegue");
-                    float x = vidaE.getSprite().getX();
-                    float y = vidaE.getSprite().getY();
-                    vidaE.setTextura(texturaVidaE[indexVidaE]);
-                    vidaE.setPosicion(x,y);
-                    return false;
-                }else if(indexVidaE ==0){
-                    ganoJuego();
-                }
-                juAtacoWe = false;
-            }
-        }
-        else{
-            eneAtacoPu = false;
-            juAtacoPu = false;
-            juAtacoWe = false;
-        }
-        return true;
-    }
-
-    private void ganoJuego() {
-        this.estado = 4;
+        return false;
     }
 
     private void perdioJuego() {
@@ -659,7 +501,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
     private void movimientoEnemigo() {
         Random numero = new Random();
-        if(jugador.getSprite().getX()+70>enemigo.getSprite().getX()+100 && revisarColi()){
+        if(jugador.getSprite().getX()+70>enemigo.getSprite().getX()+100 ){
 
             if(numero.nextInt(15)<3) {
                 enemigo.movimiento("der");
@@ -671,98 +513,9 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         }
     }
 
-    private void ataqueEnemigo() {
-        if(Math.random()*80+1 <2) {
-            enemigo.setAtacandoPu(true);
-        }
-    }
 
-    private void revisarAtacando(Personaje per, Texture[] derW, Texture[] izqW, Texture[] derP, Texture[] izqP) {
-        float x = per.getSprite().getX();
-        float y = per.getSprite().getY();
-        if(per.equals(jugador)) {
-            if (per.getAtacandoWe() == true) {
 
-                if (MovJ % 5 == 0) {
-                    if (per.getVista().equals("der")) {
-                        per.setSprite(derW[conWeJ % 5]);
 
-                    } else if (per.getVista().equals("izq")) {
-                        per.setSprite(izqW[conWeJ % 5]);
-                    }
-                    conWeJ++;
-                }
-
-                if (conWeJ > 500) {
-                    conWeJ = 0;
-                }
-                MovJ++;
-                if (MovJ > 500) {
-                    MovJ = 0;
-                }
-                if (conWeJ % 5 == 0) {
-                    per.setAtacandoWe(false);
-                    juAtacoWe = true;
-                    conWeJ++;
-                }
-                //System.out.print(conWe);
-                per.setPosicion(x, y);
-            }
-            if (per.getAtacandoPu() == true) {
-                //float ypr = y-40;
-                if (MovJ % 5 == 0) {
-                    if (per.getVista().equals("der")) {
-
-                        per.setSprite(derP[conPuJ % 3]);
-
-                    } else if (per.getVista().equals("izq")) {
-                        per.setSprite(izqP[conPuJ % 3]);
-                    }
-                    conPuJ++;
-                }
-                if (conPuJ > 500) {
-                    conPuJ = 0;
-                }
-                MovJ++;
-                if (MovJ > 500) {
-                    MovJ = 0;
-                }
-                if (conPuJ % 4 == 0) {
-                    per.setAtacandoPu(false);
-                    conPuJ++;
-                }
-                //System.out.print(conPu);
-                per.setPosicion(x, y);
-            }
-        }else{
-            if (per.getAtacandoPu() == true) {
-                //float ypr = y-40;
-                if (MovE % 5 == 0) {
-                    if (per.getVista().equals("der")) {
-                        per.setSprite(derP[conPuJ % 3]);
-
-                    } else if (per.getVista().equals("izq")) {
-                        per.setSprite(izqP[conPuJ % 3]);
-                    }
-                    conPuE++;
-                }
-                if (conPuE > 500) {
-                    conPuE = 0;
-                }
-                MovE++;
-                if (MovE > 500) {
-                    MovE = 0;
-                }
-                if (conPuE % 4 == 0) {
-                    per.setAtacandoPu(false);
-                    eneAtacoPu = true;
-                    conPuE++;
-                }
-                //System.out.print(conPu);
-                per.setPosicion(x, y);
-            }
-        }
-    }
 
     @Override
     public void resize(int width, int height) {
@@ -788,5 +541,6 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
     @Override
     public void dispose() {
+
     }
 }
