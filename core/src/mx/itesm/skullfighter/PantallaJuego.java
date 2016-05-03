@@ -36,8 +36,9 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     private Boton btnDer;
     private Boton btnIzq;
 
-    private Boton btnBrin;
+    private Boton btnBrin, btnEspanta;
     private Componente jugador;
+
 
     private Boton skip;
 
@@ -52,7 +53,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
     public static final int TAM_CELDA = 5;
 
-    private Boton btnBack;
+    private Boton btnBack,botonTexto1, botonTexto2, botonTexto3;
 
     private Componente tip;
 
@@ -73,14 +74,18 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     private Texture texturaBtnIzq;
     private Texture texturaCivil3;
     private Texture texturaEspantapajaro;
+    private Texture texturaTexto1, texturaTexto2, texturaTexto3,texturaBtnEspanta;
 
     private int Mov = 0;
     private int ConCiv = 0;
     private int ConAle=0;
+    private int huesos;
+    private Texture texturaBtnEspanta1;
 
-    public PantallaJuego(Principal principal, AssetManager assetManager) {
+    public PantallaJuego(Principal principal, AssetManager assetManager,int huesos) {
         this.principal = principal;
         this.AssManager = assetManager;
+        this.huesos = huesos;
     }
     @Override
     public void show() {
@@ -96,7 +101,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
         jugador = new Componente(texturaMovDer[0]);
         jugador.setPosicion(-15, -30);
-        Civil2 = new Componente(texturasCivil2[0]);
+        Civil2 = new Componente(texturaCivil3);
         Civil2.setPosicion(1900, 30);
 
         Civil1 = new Componente(texturaEspantapajaro);
@@ -106,16 +111,16 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         Civil3.setPosicion(800,30);
 
         Espantapajaros = new Componente(texturaCivil1);
-        Espantapajaros.setPosicion(2620,30);
+        Espantapajaros.setPosicion(2720,30);
 
-        TextoCivil1 = new Boton(texturaTextoCivil1);
-        TextoCivil1.setPosicion(3500,350);
+        TextoCivil1 = new Boton(texturaBtnEspanta);
+        TextoCivil1.setPosicion(3500, 350);
 
         tip = new Componente(texturaTip);
         tip.setPosicion(1650,350);
 
         skip = new Boton(texturaSkip);
-        skip.setPosicion(1110,12);
+        skip.setPosicion(1110, 12);
 
         crearYPosBotones();
     }
@@ -128,9 +133,15 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         btnIzq.setPosicion(10, 12);
         btnBrin = new Boton(texturaBtnBrin);
         btnBrin.setPosicion(1100, 40);
-        batch = new SpriteBatch();
+
         btnBack = new Boton(texturaBack);
         btnBack.setPosicion(1110, 580);
+        botonTexto1 = new Boton(texturaTexto1);
+        botonTexto1.setPosicion(900, 350);
+        botonTexto2 = new Boton(texturaTexto2);
+        botonTexto2.setPosicion(1950,350);
+        botonTexto3 = new Boton(texturaTexto3);
+        botonTexto3.setPosicion(2800, 350);
         batch = new SpriteBatch();
     }
 
@@ -152,9 +163,13 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        if(huesos>=15){
+            btnEspanta.setTextura(texturaBtnEspanta1);
+        }
+
         leerEntrada(); // Revisar eventos
         // Mover la cámara para que siga al personaje
-        animacionCiviles(Civil2);
+
         leerEntrada2();
 
 
@@ -164,7 +179,9 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         batch.begin();
         fondo.render(batch);
         Civil2.render(batch);
-        tip.render(batch);
+        botonTexto2.render(batch);
+        botonTexto1.render(batch);
+        botonTexto3.render(batch);
         Civil1.render(batch);
         TextoCivil1.render(batch);
         Civil3.render(batch);
@@ -181,7 +198,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         batch.begin();
         btnIzq.render(batch);
         btnDer.render(batch);
-        skip.render(batch);
+        //skip.render(batch);
         //btnBrin.render(batch);
         btnBack.render(batch);
         batch.end();
@@ -196,7 +213,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
         if(Gdx.input.justTouched()) {
             Preferences pref = Gdx.app.getPreferences("Preferencias");
-            if (verificarBoton(x, y, TextoCivil1) && verificarBordes()) {
+            if (verificarBoton(x, y, TextoCivil1) && verificarBordes()&& huesos>15) {
                 pref.putInteger("nivel",2);
                 pref.flush();
                 this.principal.setScreen(new NivelUno(this.principal));
@@ -269,6 +286,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
                 actualizarCamara();
             }
 
+
         }
        /* if(Gdx.input.justTouched()) {
             if(verificarBoton(x, y, btnBrin)){
@@ -282,6 +300,12 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
                 movimientoDer();
                 actualizarCamara();
 
+            }
+            if(huesos>=15) {
+                if (verificarBoton(x, y, btnEspanta)) {
+                    huesos-=15;
+                    principal.setScreen(new PantallaCargando(this.principal,2,huesos));
+                }
             }
             if(verificarBoton(x,y,btnIzq)/*&& verificarBoton(x, y, btnBrin) */&& verificarBordes() ){
                 movimientoIzq();actualizarCamara();
@@ -370,6 +394,8 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         texturaFondo = AssManager.get("Fondo-Capa2.png",Texture.class);
         texturaEspantapajaro = AssManager.get("Espantapajaros3.png", Texture.class);
         texturaCivil3 = AssManager.get("CivilMalo3.png", Texture.class);
+        texturaBtnEspanta = AssManager.get("DialogosEspantaPajaros/TextScarecrow1.png",Texture.class);
+        texturaBtnEspanta1 = AssManager.get("DialogosEspantaPajaros/TextScarecrow2.png",Texture.class);
 
         texturaMovDer= new Texture[3];
 
@@ -382,6 +408,10 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
             texturaMovIzq[i-1] = AssManager.get("SkullCam"+i+"izq.png",Texture.class);
             texturasCivil2[i-1] = AssManager.get("Civil2/Civil2-" + i + ".png", Texture.class);
         }
+
+        texturaTexto1 = AssManager.get("Dialogos/TextCivil1.png", Texture.class);
+        texturaTexto2 = AssManager.get("Dialogos/TextCivil2.png", Texture.class);
+        texturaTexto3 = AssManager.get("Dialogos/TextCivil3.png", Texture.class);
 
         texturaFondo2 = AssManager.get("Fondo-Capa1.png",Texture.class);
         texturaTip = AssManager.get("Civil2/Tip.png", Texture.class);

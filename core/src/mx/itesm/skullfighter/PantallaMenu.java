@@ -1,6 +1,7 @@
 package mx.itesm.skullfighter;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -51,12 +52,14 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
     private Boton   titSettings;
     private Texture textSettings;
 
+
     public PantallaMenu(Principal principal) {
         this.principal = principal;
     }
 
     @Override
     public void show() {
+
         //Crear camara y vista
         setYUpgradeCamara();
 
@@ -68,6 +71,8 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
         crearYPosBotones();
 
         batch = new SpriteBatch();
+
+
     }
 
     public void cargarTexturas() {

@@ -17,11 +17,8 @@ public class Personaje {
     private EstadoMov estadoMov;
     private EstadoAtacando estadoAca;
     private float alturaMax,alturaInicial;
-    private float timerAnimacion;
-    private com.badlogic.gdx.graphics.g2d.Animation animacion;
+
     private String vista = "der";
-    private boolean atacandoWe = false;
-    private boolean atacandoPu = false;
 
     private Texture[] texturaMovDer;
     private Texture[] texturaMovIzq;
@@ -32,7 +29,11 @@ public class Personaje {
 
     private int variableMovimiento = 0;
     private NivelUno pantalla;
-    private int variableWeapon = 1;
+
+    private int variableWeapon1 = 0;
+    private int variableWeapon2 = 0;
+    private int variablePuno1 = 0;
+    private int variablePuno2 = 0;
 
 
     public Personaje(Texture[] texturaMovDer,Texture[] texturaMovIzq,Texture[] texturaArmaDer,Texture[] texturaArmaIzq,
@@ -120,20 +121,84 @@ public class Personaje {
             case QUIETO:
                 break;
         }
+        float xp = pantalla.jugador.getSprite().getX();
+        float wp = pantalla.jugador.getSprite().getWidth();
+        float xe = pantalla.enemigo.getSprite().getX();
+        float we = pantalla.enemigo.getSprite().getWidth();
         switch (estadoAca){
             case NORMAL:
                 break;
             case WEAPON:
+
                 ataqueArma();
                 break;
             case PUNO:
+
+                ataquePuno();
                 break;
             case TERMINOPUNO:
+
+                if((xp-(wp/2)-5<= xe + (we/2)+5 && xp>xe) || (xp+(wp/2)+5 >= xe-(xe/2) - 5) && xe>xp) {
+                    if (this.equals(pantalla.jugador)) {
+
+
+                        pantalla.actualizarVida(1, 'j');
+
+                    } else if (this.equals(pantalla.enemigo)) {
+
+                        pantalla.actualizarVida(1, 'e');
+
+                    }
+                }
+
+                this.estadoAca = EstadoAtacando.NORMAL;
                 break;
             case TERMINOWEAPON:
+
+                if((xp-(wp/2)<= xe + (we/2) && xp>xe) || (xp+(wp/2) >= xe-(xe/2)) && xe>xp) {
+                    if(this.equals(pantalla.jugador)){
+                        pantalla.actualizarVida(2,'j');
+                    }else if(this.equals(pantalla.enemigo)){
+                        pantalla.actualizarVida(2,'e');
+
+                    }
+                }
+                this.estadoAca = EstadoAtacando.NORMAL;
                 break;
         }
 
+    }
+
+    public void ataquePuno() {
+        float x = this.getSprite().getX();
+        float y = this.getSprite().getY();
+
+        if(vista.equals("der")){
+            this.estadoAca = EstadoAtacando.PUNO;
+            if(variablePuno1 %5==0){
+
+                this.setSprite(texturaGolpeDer[variablePuno2]);
+                variablePuno2++;
+                if(variablePuno2 > 3){
+                    variablePuno2 = 0;
+                    this.estadoAca = EstadoAtacando.TERMINOPUNO;
+                }
+            }
+        }else if(vista.equals("izq")){
+            this.estadoAca = EstadoAtacando.PUNO;
+            if(variablePuno1 %5==0){
+                this.setSprite(texturaGolpeIzq[variablePuno2]);
+                variablePuno2++;
+                if(variablePuno2 > 3){
+                    variablePuno2 = 0;
+                    this.estadoAca = EstadoAtacando.TERMINOPUNO;
+                }
+            }
+        }
+        this.getSprite().setX(x);
+        this.getSprite().setY(y);
+        variablePuno1++;
+        if(variablePuno1>100)variablePuno1 = 0;
     }
 
     public void ataqueArma() {
@@ -142,27 +207,30 @@ public class Personaje {
         float y = this.getSprite().getY();
         if(vista.equals("der")){
             this.estadoAca = EstadoAtacando.WEAPON;
-            if(variableWeapon %5==0){
-                System.out.println(variableWeapon/5);
-                this.setSprite(texturaArmaDer[variableWeapon%5]);
-                if(variableWeapon == 30){
+            if(variableWeapon1 %5==0){
+
+                this.setSprite(texturaArmaDer[variableWeapon2]);
+                variableWeapon2++;
+                if(variableWeapon2 > 4){
+                    variableWeapon2 = 0;
                     this.estadoAca = EstadoAtacando.TERMINOWEAPON;
-                    variableWeapon = 1;
                 }
             }
         }else if(vista.equals("izq")){
             this.estadoAca = EstadoAtacando.WEAPON;
-            if(variableWeapon %5==0){
-                this.setSprite(texturaArmaIzq[variableWeapon%5]);
-                if(variableWeapon == 30){
+            if(variableWeapon1 %5==0){
+                this.setSprite(texturaArmaIzq[variableWeapon2]);
+                variableWeapon2++;
+                if(variableWeapon2 > 4){
+                    variableWeapon2 = 0;
                     this.estadoAca = EstadoAtacando.TERMINOWEAPON;
-                    variableWeapon = 1;
                 }
             }
         }
         this.getSprite().setX(x);
         this.getSprite().setY(y);
-        variableWeapon++;
+        variableWeapon1++;
+        if(variableWeapon1>100)variableWeapon1 = 0;
     }
 
     public void movimiento(String direccion) {
@@ -211,21 +279,9 @@ public class Personaje {
         return vista;
     }
 
-    public boolean getAtacandoWe() {
-        return atacandoWe;
-    }
 
-    public void setAtacandoWe(boolean atacandoWe) {
-        this.atacandoWe = atacandoWe;
-    }
 
-    public void setAtacandoPu(boolean atacandoPu) {
-        this.atacandoPu = atacandoPu;
-    }
 
-    public boolean getAtacandoPu() {
-        return atacandoPu;
-    }
 
     public EstadoMov getEstadoMov() {
         return estadoMov;
@@ -233,6 +289,10 @@ public class Personaje {
 
     public void setEstadoAca(EstadoAtacando estadoAca) {
         this.estadoAca = estadoAca;
+    }
+
+    public EstadoAtacando getEstadoAca() {
+        return estadoAca;
     }
 
 

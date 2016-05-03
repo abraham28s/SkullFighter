@@ -36,14 +36,16 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
     private Fondo spriteFondoCargando;
 
     AssetManager Manager;
+    private int huesos;
 
 
     private int pantallaCargar;
     private float variableTexuta;
 
-    public PantallaCargando(Principal principal,int pantalla){
+    public PantallaCargando(Principal principal,int pantalla,int huesos){
         this.principal = principal;
         this.pantallaCargar = pantalla;
+        this.huesos = huesos;
     }
 
 
@@ -79,7 +81,10 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
                     Manager.load("SkullCam"+i+"der.png",Texture.class);
                     Manager.load("SkullCam"+i+"izq.png",Texture.class);
                     Manager.load("Civil2/Civil2-" + i + ".png", Texture.class);
+                    Manager.load("Dialogos/TextCivil" + i + ".png", Texture.class);
                 }
+                Manager.load("DialogosEspantaPajaros/TextScarecrow1.png",Texture.class);
+                Manager.load("DialogosEspantaPajaros/TextScarecrow2.png",Texture.class);
 
                 Manager.load("Fondo-Capa1.png",Texture.class);
 
@@ -144,11 +149,15 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
 
     }
 
+    public void actualizarHuesos(int huesos){
+        this.huesos = huesos;
+    }
+
     private void actualizar() {
         if(this.Manager.update()) {
             switch (pantallaCargar) {
                 case 0://PantallaJuego
-                    this.principal.setScreen(new PantallaJuego(this.principal,this.Manager));
+                    this.principal.setScreen(new PantallaJuego(this.principal,this.Manager,this.huesos));
                     //this.principal.setScreen(new PantallaCastillo(this.principal,this.Manager));
                     break;
                 case 1://NivelUno

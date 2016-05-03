@@ -30,10 +30,9 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
     Fondo fondo;
     Personaje jugador;
-    Texture TexturaJugador;
+
 
     Personaje enemigo;
-    Texture TexturaEnemigo;
 
     private Boton btnDer;
     private Texture texturaBtnDer;
@@ -55,25 +54,18 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     private Texture[] texturaMovIzq;
     private Texture[] texturaOzDer;
     private Texture[] texturaOzIzq;
-    private int conJ = 0;
-    int MovJ = 0;
-    private int conE = 0;
-    int MovE = 0;
 
-    private int conWeJ= 0;
-    private int conWeE= 0;
     private Texture[] texturaPunchDer;
     private Texture[] texturaPunchIzq;
-    private int conPuJ = 0;
-    private int conPuE = 0;
+
     private Texture[] texturaEneMovDer;
     private Texture[] texturaEneMovIzq;
     private Texture[] texturaEnePunchDer;
     private Texture[] texturaEnePunchIzq;
 
-    private Componente vidaJ;
+    public Componente vidaJ;
     private Texture[] texturaVidaJ;
-    private Componente vidaE;
+    public Componente vidaE;
     private Texture[] texturaVidaE;
     private int indexVidaJ = 6;
     // 1= ejecucion, 0=pausa, 3 perdio, 4 gano, 5 cargando
@@ -88,10 +80,9 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     private Texture texturaQuitPausa;
     private Boton BtnResumePausa;
     private Texture texturaResumePausa;
-    private boolean eneAtacoPu = false;
-    private boolean juAtacoPu = false;
+
     private int indexVidaE = 6;
-    private boolean juAtacoWe = false;
+
     private Boton BtnRestartGame;
     private Texture TexturaBtnRestartGame;
     private Componente win;
@@ -100,6 +91,8 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     private Texture texturaLose;
     int  movPointerDer,movPointerIzq, brincoPointer;
     private String banderaMoviendo;
+    private boolean banderaIzquierdaApre;
+    private boolean banderaDerechaApre;
 
 
     public NivelUno(Principal principal) {
@@ -157,22 +150,45 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                     camara.unproject(coordenadas);  //traduce las coordenadas
                     float x1 = coordenadas.x;
                     float y1 = coordenadas.y;
-
+                    if(estado == 1 ){
 
                     if (verificarBoton(x1, y1, btnIzq) && movPointerIzq == pointer) {
                         jugador.setEstadoMov(Personaje.EstadoMov.QUIETO);
+                        banderaIzquierdaApre = false;
 
                     } else if (verificarBoton(x1, y1, btnDer) && movPointerDer == pointer) {
                         jugador.setEstadoMov(Personaje.EstadoMov.QUIETO);
+                        banderaDerechaApre = false;
                     }
                     if (verificarBoton(x, y, btnPunch)) {
                         //Sonidos.golpearSound();
-                        jugador.setAtacandoPu(true);
-                        juAtacoPu = true;
+                        jugador.setEstadoAca(Personaje.EstadoAtacando.NORMAL);
+
                     }
                     if (verificarBoton(x, y, btnWeapon)) {
                         //Sonidos.cuchilloSound();
                         jugador.setEstadoAca(Personaje.EstadoAtacando.NORMAL);
+                    }}else if(estado == 3 || estado == 4 ){
+                        if(verificarBoton(x1,y1,BtnQuitPausa)){
+                            Sonidos.reproducirBoton();
+                            estado = 100;
+                            dispose();
+                            principal.setScreen(new PantallaMenu(principal));
+                        }
+                    }else if( estado == 0){
+                        if(verificarBoton(x1,y1,BtnQuitPausa)){
+                            Sonidos.reproducirBoton();
+                            estado = 100;
+                            principal.setScreen(new PantallaMenu(principal));
+
+                            //Preferencias música
+                            Preferences pref = Gdx.app.getPreferences("Preferencias");
+                            pref.getBoolean("musica", true);
+                            pref.flush();
+                            if (pref.getBoolean("musica")) {
+                                Sonidos.reproducirMusicaFondo();
+                            }
+                        }
                     }
 
                     return true;
@@ -181,16 +197,27 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                 @Override
                 public boolean touchDragged(int x, int y, int pointer) {
                     // if(leftPointer == pointer){
+                    Vector3 coordenadas = new Vector3();
+                    coordenadas.set(x, y, 0);
+                    camara.unproject(coordenadas);  //traduce las coordenadas
+                    float x1 = coordenadas.x;
+                    float y1 = coordenadas.y;
+                    if(estado==1) {
+                        if (!verificarBoton(x1, y1, btnIzq) && !verificarBoton(x1, y1, btnDer)) {
+                            jugador.setEstadoMov(Personaje.EstadoMov.QUIETO);
+                        }
+                        if (verificarBoton(x1, y1, btnIzq) && !verificarBoton(x1, y1, btnDer)) {
+                            jugador.movimiento("izq");
 
-
-                    if (verificarBoton(x, y, btnIzq) ) {
-                        jugador.movimiento("izq");
-                    } else if (verificarBoton(x, y, btnDer)
-                            ) {
-                        jugador.movimiento("der");
+                            movPointerIzq = pointer;
+                            banderaMoviendo = "izq";
+                        } else if (!verificarBoton(x1, y1, btnIzq) && verificarBoton(x1, y1, btnDer)) {
+                            jugador.movimiento("der");
+                            movPointerDer = pointer;
+                            banderaMoviendo = "der";
+                        }
                     }
 
-                    // }
                     return true;
                 }
 
@@ -210,12 +237,14 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
                             movPointerIzq = pointer;
                             banderaMoviendo = "izq";
+                            banderaIzquierdaApre = true;
 
                         } else if (verificarBoton(x1, y1, btnDer) && pointer == 0
                                 )  {
                             jugador.movimiento("der");
                             movPointerDer = pointer;
                             banderaMoviendo = "der";
+                            banderaDerechaApre = true;
 
                         }
                         if (verificarBoton(x1, y1, btnBrin) && pointer != 0 && movPointerDer == 0 && banderaMoviendo.equals("der") ) {
@@ -244,8 +273,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                         }
                         if (verificarBoton(x1, y1, btnPunch)) {
                             //Sonidos.golpearSound();
-                            jugador.setAtacandoPu(true);
-                            juAtacoPu = true;
+                            jugador.ataquePuno();
                         }
                         if (verificarBoton(x1, y1, btnWeapon)) {
                             //Sonidos.cuchilloSound();
@@ -262,30 +290,14 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                             Sonidos.reproducirBoton();
                             resumirJuego();
                         }
-                        if(verificarBoton(x1,y1,BtnQuitPausa)){
-                            Sonidos.reproducirBoton();
-                            estado = 100;
-                            principal.setScreen(new PantallaMenu(principal));
 
-                            //Preferencias música
-                            Preferences pref = Gdx.app.getPreferences("Preferencias");
-                            pref.getBoolean("musica", true);
-                            pref.flush();
-                            if (pref.getBoolean("musica")) {
-                                Sonidos.reproducirMusicaFondo();
-                            }
-                        }
                     }else if(estado == 3 || estado == 4 ){
                         if(verificarBoton(x1, y1, BtnRestartGame)){
                             Sonidos.reproducirBoton();
                             estado = 100;
-                            principal.setScreen(new PantallaCargando(principal,0));
+                            principal.setScreen(new NivelUno(principal));
                         }
-                        if(verificarBoton(x1,y1,BtnQuitPausa)){
-                            Sonidos.reproducirBoton();
-                            estado = 100;
-                            principal.setScreen(new PantallaMenu(principal));
-                        }
+
                     }
                     return true;
                 }
@@ -295,6 +307,25 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
     private void pausarJuego() {
         this.estado = 0;
+    }
+
+    public void actualizarVida(int cuan,char player){
+
+        if(player == 'j'){
+            float x = vidaE.getSprite().getX();
+            float y = vidaE.getSprite().getY();
+            indexVidaE-=cuan;
+            if(indexVidaE<0)indexVidaE=0;
+            vidaE.setSprite(texturaVidaE[indexVidaE]);
+            vidaE.getSprite().setPosition(x,y);
+        }else{
+            float x = vidaJ.getSprite().getX();
+            float y = vidaJ.getSprite().getY();
+            indexVidaJ-=cuan;
+            if(indexVidaJ<0)indexVidaJ=0;
+            vidaJ.setSprite(texturaVidaE[indexVidaJ]);
+            vidaJ.getSprite().setPosition(x,y);
+        }
     }
 
     @Override
@@ -331,6 +362,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         texturaPunchDer[2] = new Texture(Gdx.files.internal("SkullPunchDer3.png"));
         texturaPunchDer[3] = new Texture(Gdx.files.internal("SkullCam1der.png"));
 
+
         texturaPunchIzq = new Texture[4];
         texturaPunchIzq[0] = new Texture(Gdx.files.internal("SkullPunchIzq1.png"));
         texturaPunchIzq[1] = new Texture(Gdx.files.internal("SkullPunchIzq2.png"));
@@ -347,15 +379,17 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         texturaEneMovIzq[1]=new Texture(Gdx.files.internal("Enemigo2Izq.png"));
         texturaEneMovIzq[2]=new Texture(Gdx.files.internal("Enemigo3Izq.png"));
 
-        texturaEnePunchDer = new Texture[3];
+        texturaEnePunchDer = new Texture[4];
         texturaEnePunchDer[0] = new Texture(Gdx.files.internal("EnemigoPun1Der.png"));
         texturaEnePunchDer[1] = new Texture(Gdx.files.internal("EnemigoPun2Der.png"));
         texturaEnePunchDer[2] = new Texture(Gdx.files.internal("Enemigo1Der.png"));
+        texturaEnePunchDer[3] =new Texture(Gdx.files.internal("Enemigo1Der.png"));
 
-        texturaEnePunchIzq= new Texture[3];
+        texturaEnePunchIzq= new Texture[4];
         texturaEnePunchIzq[0] = new Texture(Gdx.files.internal("EnemigoPun1Izq.png"));
         texturaEnePunchIzq[1] = new Texture(Gdx.files.internal("EnemigoPun2Izq.png"));
         texturaEnePunchIzq[2] = new Texture(Gdx.files.internal("Enemigo1Izq.png"));
+        texturaEnePunchIzq[3]=new Texture(Gdx.files.internal("Enemigo3Izq.png"));
 
         texturaWin = new Texture(Gdx.files.internal("YouWin.png"));
         texturaLose = new Texture(Gdx.files.internal("YouLose.png"));
@@ -429,7 +463,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         batch.begin();
         fondo.render(batch);
         jugador.render(batch);
-        jugador.actualizar();
+
        // System.out.println(jugador.getEstadoMov());
         enemigo.render(batch);
         vidaJ.render(batch);
@@ -445,8 +479,10 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         if(this.estado == 1) {
              // Revisar eventos
             // Mover la cámara para que siga al personaje
-
+            jugador.actualizar();
+            enemigo.actualizar();
             movimientoEnemigo();
+            revisarVida();
 
 
 
@@ -475,6 +511,14 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         batch.end();
     }
 
+    private void revisarVida() {
+        if(indexVidaJ==0){
+            perdioJuego();
+        }else if(indexVidaE == 0){
+            ganoJuego();
+        }
+    }
+
 
     public boolean verificarBordes(Personaje player){
 
@@ -483,6 +527,11 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         }
 
         return false;
+    }
+
+    private void ganoJuego() {
+                this.estado = 4;
+
     }
 
     private void perdioJuego() {
@@ -499,8 +548,17 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         }else if(jugador.getSprite().getX()+100<enemigo.getSprite().getX()-100){
             if(numero.nextInt(15)<3) {
                 enemigo.movimiento("izq");
+
             }
         }
+        int nazar = numero.nextInt(40);
+
+        if(enemigo.getEstadoAca() == Personaje.EstadoAtacando.NORMAL){
+        if(nazar<1 && nazar>0){
+            enemigo.ataquePuno();
+        }else if(nazar>=3 && nazar<=4){
+            enemigo.ataqueArma();
+        }}
     }
 
 

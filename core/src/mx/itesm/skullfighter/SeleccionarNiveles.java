@@ -39,7 +39,7 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
 
     private Boton nivel3;
     private Texture TextureNivel3;
-
+    private int huesos;
 
 
     public SeleccionarNiveles (Principal principal) {
@@ -195,7 +195,7 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
                     Sonidos.reproducirBoton();
                 }
                 Sonidos.pausarMusicaFondo();
-                principal.setScreen(new PantallaCargando(principal,0));
+                principal.setScreen(new PantallaCargando(principal,0,huesos));
             }
         }
 
