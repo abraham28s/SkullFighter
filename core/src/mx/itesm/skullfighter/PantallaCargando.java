@@ -1,6 +1,7 @@
 package mx.itesm.skullfighter;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
@@ -42,6 +43,7 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
     private int pantallaCargar;
     private float variableTexuta;
     private int nivel;
+    Preferences pref = Gdx.app.getPreferences("Preferencias");
 
     public PantallaCargando(Principal principal,int pantalla,int huesos){
         this.principal = principal;
@@ -85,8 +87,8 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
             case 0://PantallaJuego
                 Manager.load("Fondo-Capa2.png",Texture.class);
                 for (int i = 1; i <= 3; i++) {
-                    Manager.load("SkullCam"+i+"der.png",Texture.class);
-                    Manager.load("SkullCam"+i+"izq.png",Texture.class);
+                    Manager.load("Personaje/"+pref.getInteger("ropa")+"/SkullCam"+i+"der.png",Texture.class);
+                    Manager.load("Personaje/"+pref.getInteger("ropa")+"/SkullCam"+i+"izq.png",Texture.class);
                     Manager.load("Civil2/Civil2-" + i + ".png", Texture.class);
                     Manager.load("Dialogos/TextCivil" + i + ".png", Texture.class);
                 }
@@ -130,10 +132,10 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
 
 
                 for (int i = 1; i <=3 ; i++) {
-                    Manager.load(nivel + "/SkullCam"+i+"der.png", Texture.class);
-                    Manager.load(nivel + "/SkullCam"+i+"izq.png", Texture.class);
-                    Manager.load(nivel + "/SkullPunchDer"+i+".png", Texture.class);
-                    Manager.load(nivel + "/SkullPunchIzq"+i+".png", Texture.class);
+                    Manager.load("Personaje/"+pref.getInteger("ropa")+"/SkullCam"+i+"der.png", Texture.class);
+                    Manager.load("Personaje/"+pref.getInteger("ropa")+"/SkullCam"+i+"izq.png", Texture.class);
+                    Manager.load("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchDer"+i+".png", Texture.class);
+                    Manager.load("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchIzq"+i+".png", Texture.class);
                     Manager.load(nivel + "/Enemigo"+i+"Der.png",Texture.class);
                     Manager.load(nivel + "/Enemigo"+i+"Izq.png",Texture.class);
                 }
@@ -146,13 +148,13 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
                 }
 
                 for (int i = 1; i <=4 ; i++) {
-                    Manager.load(nivel + "/Oz"+i+"Der.png",Texture.class);
+                    Manager.load("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz"+i+"Der.png",Texture.class);
 
-                    Manager.load(nivel + "/Oz"+i+"Izq.png",Texture.class);
+                    Manager.load("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz"+i+"Izq.png",Texture.class);
                 }
 
                 for (int i = 0; i<7;i++) {
-                    Manager.load(nivel + "/VidaSkull" + i + ".png",Texture.class);
+                    Manager.load("Personaje/VidaSkull" + i + ".png",Texture.class);
                     Manager.load(nivel + "/VidaSkullE" + i + ".png",Texture.class);
                 }
 

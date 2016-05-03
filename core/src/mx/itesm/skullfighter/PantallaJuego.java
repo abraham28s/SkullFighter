@@ -81,6 +81,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     private int ConAle=0;
     private int huesos;
     private Texture texturaBtnEspanta1;
+    Preferences pref = Gdx.app.getPreferences("Preferencias");
 
     public PantallaJuego(Principal principal, AssetManager assetManager,int huesos) {
         this.principal = principal;
@@ -383,8 +384,8 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         texturasCivil2 = new Texture[3];
 
         for (int i = 1; i <= 3; i++) {
-            texturaMovDer[i-1] = AssManager.get("SkullCam"+i+"der.png",Texture.class);
-            texturaMovIzq[i-1] = AssManager.get("SkullCam"+i+"izq.png",Texture.class);
+            texturaMovDer[i-1] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/SkullCam"+i+"der.png",Texture.class);
+            texturaMovIzq[i-1] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/SkullCam"+i+"izq.png",Texture.class);
             texturasCivil2[i-1] = AssManager.get("Civil2/Civil2-" + i + ".png", Texture.class);
         }
 

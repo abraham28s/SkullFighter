@@ -96,6 +96,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     private boolean banderaDerechaApre;
     private int nivel;
     private int huesos;
+    Preferences pref = Gdx.app.getPreferences("Preferencias");
 
 
     public NivelUno(Principal principal,AssetManager ass,int nivel,int huesos) {
@@ -356,41 +357,41 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         texturaFondo = AssManager.get(nivel +"/Entrenamiento.png",Texture.class);
 
         texturaMovDer= new Texture[3];
-        texturaMovDer[0] = AssManager.get(nivel +"/SkullCam1der.png",Texture.class);
-        texturaMovDer[1] = AssManager.get(nivel +"/SkullCam2der.png",Texture.class);
-        texturaMovDer[2] = AssManager.get(nivel +"/SkullCam3der.png",Texture.class);
+        texturaMovDer[0] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/SkullCam1der.png",Texture.class);
+        texturaMovDer[1] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/SkullCam2der.png",Texture.class);
+        texturaMovDer[2] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/SkullCam3der.png",Texture.class);
 
         texturaMovIzq = new Texture[3];
-        texturaMovIzq[0] = AssManager.get(nivel +"/SkullCam1izq.png",Texture.class);
-        texturaMovIzq[1] = AssManager.get(nivel +"/SkullCam2izq.png",Texture.class);
-        texturaMovIzq[2] = AssManager.get(nivel +"/SkullCam3izq.png",Texture.class);
+        texturaMovIzq[0] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/SkullCam1izq.png",Texture.class);
+        texturaMovIzq[1] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/SkullCam2izq.png",Texture.class);
+        texturaMovIzq[2] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/SkullCam3izq.png",Texture.class);
 
         texturaOzDer = new Texture[5];
-        texturaOzDer[0] = AssManager.get(nivel +"/Oz1Der.png",Texture.class);
-        texturaOzDer[1] = AssManager.get(nivel +"/Oz2Der.png",Texture.class);
-        texturaOzDer[2] = AssManager.get(nivel +"/Oz3Der.png",Texture.class);
-        texturaOzDer[3] = AssManager.get(nivel +"/Oz4Der.png",Texture.class);
-        texturaOzDer[4] = AssManager.get(nivel +"/SkullCam1der.png",Texture.class);
+        texturaOzDer[0] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz1Der.png",Texture.class);
+        texturaOzDer[1] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz2Der.png",Texture.class);
+        texturaOzDer[2] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz3Der.png",Texture.class);
+        texturaOzDer[3] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz4Der.png",Texture.class);
+        texturaOzDer[4] = texturaMovDer[0];
 
         texturaOzIzq = new Texture[5];
-        texturaOzIzq[0] = AssManager.get(nivel +"/Oz1Izq.png",Texture.class);
-        texturaOzIzq[1] = AssManager.get(nivel +"/Oz2Izq.png",Texture.class);
-        texturaOzIzq[2] = AssManager.get(nivel +"/Oz3Izq.png",Texture.class);
-        texturaOzIzq[3] = AssManager.get(nivel +"/Oz4Izq.png",Texture.class);
-        texturaOzIzq[4] = AssManager.get(nivel +"/SkullCam1izq.png",Texture.class);
+        texturaOzIzq[0] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz1Izq.png",Texture.class);
+        texturaOzIzq[1] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz2Izq.png",Texture.class);
+        texturaOzIzq[2] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz3Izq.png",Texture.class);
+        texturaOzIzq[3] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz4Izq.png",Texture.class);
+        texturaOzIzq[4] = texturaMovIzq[0];
 
         texturaPunchDer = new Texture[4];
-        texturaPunchDer[0] = AssManager.get(nivel +"/SkullPunchDer1.png",Texture.class);
-        texturaPunchDer[1] = AssManager.get(nivel +"/SkullPunchDer2.png",Texture.class);
-        texturaPunchDer[2] = AssManager.get(nivel +"/SkullPunchDer3.png",Texture.class);
-        texturaPunchDer[3] = AssManager.get(nivel +"/SkullCam1der.png",Texture.class);
+        texturaPunchDer[0] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchDer1.png",Texture.class);
+        texturaPunchDer[1] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchDer2.png",Texture.class);
+        texturaPunchDer[2] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchDer3.png",Texture.class);
+        texturaPunchDer[3] = texturaMovDer[0];
 
 
         texturaPunchIzq = new Texture[4];
-        texturaPunchIzq[0] = AssManager.get(nivel +"/SkullPunchIzq1.png",Texture.class);
-        texturaPunchIzq[1] = AssManager.get(nivel +"/SkullPunchIzq2.png",Texture.class);
-        texturaPunchIzq[2] = AssManager.get(nivel +"/SkullPunchIzq3.png",Texture.class);
-        texturaPunchIzq[3] = AssManager.get(nivel +"/SkullCam1izq.png",Texture.class);
+        texturaPunchIzq[0] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchIzq1.png",Texture.class);
+        texturaPunchIzq[1] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchIzq2.png",Texture.class);
+        texturaPunchIzq[2] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchIzq3.png",Texture.class);
+        texturaPunchIzq[3] = texturaMovIzq[0];
 
         texturaEneMovDer = new Texture[3];
         texturaEneMovDer[0] =AssManager.get(nivel +"/Enemigo1Der.png",Texture.class);
@@ -419,7 +420,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         texturaVidaJ = new Texture[7];
         texturaVidaE = new Texture[7];
         for (int i = 0; i<7;i++){
-            texturaVidaJ[i] = AssManager.get(nivel +"/VidaSkull"+ i+".png",Texture.class);
+            texturaVidaJ[i] = AssManager.get("Personaje/VidaSkull"+ i+".png",Texture.class);
             texturaVidaE[i] = AssManager.get(nivel +"/VidaSkullE"+ i+".png",Texture.class);
         }
 
@@ -555,22 +556,22 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         Random numero = new Random();
         if(jugador.getSprite().getX()+70>enemigo.getSprite().getX()+100 ){
 
-            if(numero.nextInt(15)<3) {
+            if(numero.nextInt(30)<3) {
                 enemigo.movimiento("der");
             }
         }else if(jugador.getSprite().getX()+100<enemigo.getSprite().getX()-100){
-            if(numero.nextInt(15)<3) {
+            if(numero.nextInt(30)<3) {
                 enemigo.movimiento("izq");
 
             }
         }
-        int nazar = numero.nextInt(40);
+        int nazar = numero.nextInt(200);
 
         if(enemigo.getEstadoAca() == Personaje.EstadoAtacando.NORMAL){
         if(nazar<1 && nazar>0){
             enemigo.ataquePuno();
         }else if(nazar>=3 && nazar<=4){
-            enemigo.ataqueArma();
+            //enemigo.ataqueArma();
         }}
     }
 
