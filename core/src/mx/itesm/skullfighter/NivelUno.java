@@ -226,7 +226,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                         if (jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
                             jugador.movimientoBrin();
                             jugador.movimiento("der");
-                            System.out.println("brinco despues de toque");
+                            System.out.println("brinco despues de toque izq");
                         }
                         brincoPointer = pointer;
                     } else if (verificarBoton(x1, y1, btnBrin) && pointer != 0 && movPointerIzq == 0) {
@@ -234,7 +234,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                         if (jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
                             jugador.movimientoBrin();
                             jugador.movimiento("izq");
-                            System.out.println("brinco despues de toque");
+                            System.out.println("brinco despues de toque der");
                         }
                         brincoPointer = pointer;
                     } else if (verificarBoton(x1, y1, btnBrin) && pointer == 0) {
