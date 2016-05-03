@@ -277,13 +277,13 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
                 }
             }
             if(verificarBoton(x,y,botonTexto1)){
-                principal.setScreen(new PantallaCargando(this.principal,2,huesos,0));
+                principal.setScreen(new PantallaCargando(this.principal,1,huesos,0));
             }
             if(verificarBoton(x,y,botonTexto2)){
-                principal.setScreen(new PantallaCargando(this.principal,2,huesos,1));
+                principal.setScreen(new PantallaCargando(this.principal,1,huesos,1));
             }
             if(verificarBoton(x,y,botonTexto3)){
-                principal.setScreen(new PantallaCargando(this.principal, 2, huesos, 2));
+                principal.setScreen(new PantallaCargando(this.principal, 1, huesos, 2));
             }
             if(verificarBoton(x,y,btnIzq)/*&& verificarBoton(x, y, btnBrin) */&& verificarBordes() ){
                 movimientoIzq();actualizarCamara();
