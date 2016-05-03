@@ -98,8 +98,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     private Componente lose;
     private Texture texturaLose;
     int  movPointerDer,movPointerIzq, brincoPointer;
-
-
+    private String banderaMoviendo;
 
 
     public NivelUno(Principal principal) {
@@ -200,61 +199,91 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                     camara.unproject(coordenadas);  //traduce las coordenadas
                     float x1 = coordenadas.x;
                     float y1 = coordenadas.y;
-                    if(pointer == 1) {
-                        System.out.println( pointer != 0);
-                        System.out.println(verificarBoton(x1, y1, btnBrin) );
-                        System.out.println(verificarBoton(x1, y1, btnBrin) && pointer != 0);
-                    }
-                    if (verificarBoton(x1, y1, btnBrin) && pointer == 0) {
-                        //Sonidos.saltarSound();
 
-                        brincoPointer = pointer;
-                    }
+                    if(estado == 1){
 
-                    if (verificarBoton(x1, y1, btnIzq) && pointer == 0) {
-                        jugador.movimiento("izq");
 
-                        movPointerIzq = pointer;
-
-                    } else if (verificarBoton(x1, y1, btnDer) && pointer == 0) {
-                        jugador.movimiento("der");
-                        movPointerDer = pointer;
-
-                    }
-                    if (verificarBoton(x1, y1, btnBrin) && pointer != 0 && movPointerDer == 0) {
-                        //Sonidos.saltarSound();
-                        if (jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
-                            jugador.movimientoBrin();
-                            jugador.movimiento("der");
-                            System.out.println("brinco despues de toque izq");
-                        }
-                        brincoPointer = pointer;
-                    } else if (verificarBoton(x1, y1, btnBrin) && pointer != 0 && movPointerIzq == 0) {
-                        //Sonidos.saltarSound();
-                        if (jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
-                            jugador.movimientoBrin();
+                        if (verificarBoton(x1, y1, btnIzq) && pointer == 0) {
                             jugador.movimiento("izq");
-                            System.out.println("brinco despues de toque der");
-                        }
-                        brincoPointer = pointer;
-                    } else if (verificarBoton(x1, y1, btnBrin) && pointer == 0) {
-                        if (jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
-                            jugador.movimientoBrin();
+
+                            movPointerIzq = pointer;
+                            banderaMoviendo = "izq";
+
+                        } else if (verificarBoton(x1, y1, btnDer) && pointer == 0) {
+                            jugador.movimiento("der");
+                            movPointerDer = pointer;
+                            banderaMoviendo = "der";
 
                         }
-                        brincoPointer = pointer;
-                    }
-                    if (verificarBoton(x1, y1, btnPunch)) {
-                        //Sonidos.golpearSound();
-                        jugador.setAtacandoPu(true);
-                        juAtacoPu = true;
-                    }
-                    if (verificarBoton(x1, y1, btnWeapon)) {
-                        //Sonidos.cuchilloSound();
-                        jugador.setAtacandoWe(true);
-                    }
+                        if (verificarBoton(x1, y1, btnBrin) && pointer != 0 && movPointerDer == 0 && banderaMoviendo.equals("der")) {
+                            //Sonidos.saltarSound();
+                            if (jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
+                                jugador.movimientoBrin();
+                                jugador.movimiento("der");
 
+                            }
+                            brincoPointer = pointer;
+                        }
+                        if (verificarBoton(x1, y1, btnBrin) && pointer != 0 && movPointerIzq == 0 && banderaMoviendo.equals("izq")) {
+                            //Sonidos.saltarSound();
+                            if (jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
+                                jugador.movimientoBrin();
+                                jugador.movimiento("izq");
 
+                            }
+                            brincoPointer = pointer;
+                        } else if (verificarBoton(x1, y1, btnBrin) && pointer == 0) {
+                            if (jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
+                                jugador.movimientoBrin();
+
+                            }
+                            brincoPointer = pointer;
+                        }
+                        if (verificarBoton(x1, y1, btnPunch)) {
+                            //Sonidos.golpearSound();
+                            jugador.setAtacandoPu(true);
+                            juAtacoPu = true;
+                        }
+                        if (verificarBoton(x1, y1, btnWeapon)) {
+                            //Sonidos.cuchilloSound();
+                            jugador.setAtacandoWe(true);
+                        }
+
+                        if(verificarBoton(x1,y1, btnPausa)){
+                            //cambiar a pantalla de jugar
+                            //Sonidos.reproducirBoton();
+                            pausarJuego();
+                        }
+                    }else if(estado == 0){
+                        if(verificarBoton(x1, y1, BtnResumePausa)){
+                            Sonidos.reproducirBoton();
+                            resumirJuego();
+                        }
+                        if(verificarBoton(x1,y1,BtnQuitPausa)){
+                            Sonidos.reproducirBoton();
+                            estado = 100;
+                            principal.setScreen(new PantallaMenu(principal));
+
+                            //Preferencias música
+                            Preferences pref = Gdx.app.getPreferences("Preferencias");
+                            pref.getBoolean("musica", true);
+                            pref.flush();
+                            if (pref.getBoolean("musica")) {
+                                Sonidos.reproducirMusicaFondo();
+                            }
+                        }
+                    }else if(estado == 3 || estado == 4 ){
+                        if(verificarBoton(x1, y1, BtnRestartGame)){
+                            Sonidos.reproducirBoton();
+                            estado = 100;
+                            principal.setScreen(new PantallaCargando(principal,0));
+                        }
+                        if(verificarBoton(x1,y1,BtnQuitPausa)){
+                            Sonidos.reproducirBoton();
+                            estado = 100;
+                            principal.setScreen(new PantallaMenu(principal));
+                        }
+                    }
                     return true;
                 }
             });
@@ -460,7 +489,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(camara.combined);
-
+        System.out.println(estado);
         // DIBUJA
         batch.begin();
         fondo.render(batch);
@@ -477,9 +506,9 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         btnPausa.render(batch);
         btnWeapon.render(batch);
         btnPunch.render(batch);
-
+        leerEntrada();
         if(this.estado == 1) {
-            leerEntrada(); // Revisar eventos
+             // Revisar eventos
             // Mover la cámara para que siga al personaje
 
             movimientoEnemigo();
@@ -491,21 +520,21 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
 
         }else if(this.estado ==0){
-            leerEntradaPausa();
+
             fondoPausa.render(batch);
             MenuPausa.render(batch);
             BtnQuitPausa.render(batch);
             BtnResumePausa.render(batch);
 
         }else if(this.estado == 3){
-            leerEntradaFin();
+
             fondoPausa.render(batch);
             lose.render(batch);
             BtnRestartGame.render(batch);
             BtnQuitPausa.render(batch);
 
         }else if(this.estado == 4){
-            leerEntradaFin();
+
             fondoPausa.render(batch);
             win.render(batch);
             BtnRestartGame.render(batch);
