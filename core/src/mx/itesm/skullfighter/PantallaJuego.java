@@ -288,14 +288,15 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
             }
             if(verificarBoton(x,y, btnBack)){
-
+                Preferences pref = Gdx.app.getPreferences("Preferencias");
                 //cambiar a pantalla de jugar
-
-                Sonidos.reproducirBoton();
+                if (pref.getBoolean("boton") == true) {
+                    Sonidos.reproducirBoton();
+                }
                 principal.setScreen(new PantallaMenu(principal));
 
                 //Preferencias música
-                Preferences pref = Gdx.app.getPreferences("Preferencias");
+
                 pref.getBoolean("musica", true);
                 pref.flush();
                 if (pref.getBoolean("musica")) {
@@ -304,7 +305,11 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
             }
             if(verificarBoton(x,y,skip)){
-                Sonidos.reproducirBoton();
+                Preferences pref = Gdx.app.getPreferences("Preferencias");
+                if (pref.getBoolean("boton") == true) {
+                    Sonidos.reproducirBoton();
+                }
+                pref.putInteger("nivel",2);
                 this.principal.setScreen(new NivelUno(this.principal));
             }
 
