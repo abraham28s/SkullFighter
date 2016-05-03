@@ -117,10 +117,10 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
         fondo = new Fondo(texturaFondo);
 
-        jugador = new Personaje(texturaMovDer,texturaMovIzq,"jugador",this);
+        jugador = new Personaje(texturaMovDer,texturaMovIzq,texturaOzDer,texturaOzIzq,texturaPunchDer,texturaPunchIzq,"jugador",this);
         jugador.setPosicion(-15, -30);
 
-        enemigo = new Personaje(texturaEneMovDer,texturaEneMovIzq,"enemigo",this);
+        enemigo = new Personaje(texturaEneMovDer,texturaEneMovIzq,texturaOzDer,texturaOzIzq,texturaEnePunchDer,texturaEnePunchIzq,"enemigo",this);
         enemigo.setPosicion(1050, 30);
 
         vidaJ = new Componente(texturaVidaJ[6]);
@@ -172,7 +172,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                     }
                     if (verificarBoton(x, y, btnWeapon)) {
                         //Sonidos.cuchilloSound();
-                        jugador.setAtacandoWe(true);
+                        jugador.setEstadoAca(Personaje.EstadoAtacando.NORMAL);
                     }
 
                     return true;
@@ -249,7 +249,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                         }
                         if (verificarBoton(x1, y1, btnWeapon)) {
                             //Sonidos.cuchilloSound();
-                            jugador.setAtacandoWe(true);
+                            jugador.ataqueArma();
                         }
 
                         if(verificarBoton(x1,y1, btnPausa)){
@@ -416,17 +416,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         vista = new StretchViewport(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO, camara);
     }
 
-    public boolean verificarBordes() {
-        //System.out.println(jugador.getSprite().getX());
-        if(jugador.getSprite().getX()<-135 ){
-            jugador.getSprite().setX(-130);
-            return false;
-        }else if(jugador.getSprite().getX()>1045 ){
-            jugador.getSprite().setX(1035);
-            return false;
-        }
-        return true;
-    }
+
 
     @Override
     public void render(float delta) {
@@ -486,12 +476,12 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     }
 
 
-    public boolean verificarBordes(Personaje player,Personaje otro){
-        System.out.println(player.getSprite().getX());
-        System.out.println(player.getSprite().getX()-(player.getSprite().getWidth()/2));
+    public boolean verificarBordes(Personaje player){
+
         if(player.getSprite().getX()-(player.getSprite().getWidth()/2) >= -280 && player.getSprite().getX()+player.getSprite().getWidth()/2 +10 <= 1220){
             return true;
         }
+
         return false;
     }
 

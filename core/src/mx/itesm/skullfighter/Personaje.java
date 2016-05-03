@@ -22,15 +22,29 @@ public class Personaje {
     private String vista = "der";
     private boolean atacandoWe = false;
     private boolean atacandoPu = false;
+
     private Texture[] texturaMovDer;
     private Texture[] texturaMovIzq;
+    private Texture[] texturaArmaDer;
+    private Texture[] texturaArmaIzq;
+    private Texture[] texturaGolpeDer;
+    private Texture[] texturaGolpeIzq;
+
     private int variableMovimiento = 0;
     private NivelUno pantalla;
+    private int variableWeapon = 1;
 
 
-    public Personaje(Texture[] texturaMovDer,Texture[] texturaMovIzq,String tipo,NivelUno pantalla){
+    public Personaje(Texture[] texturaMovDer,Texture[] texturaMovIzq,Texture[] texturaArmaDer,Texture[] texturaArmaIzq,
+                     Texture[] texturaGolpeDer,Texture[] texturaGolpeIzq,String tipo,NivelUno pantalla){
         this.texturaMovDer = texturaMovDer;
         this.texturaMovIzq = texturaMovIzq;
+        this.texturaArmaDer = texturaArmaDer;
+        this.texturaArmaIzq = texturaArmaIzq;
+        this.texturaGolpeDer = texturaGolpeDer;
+        this.texturaGolpeIzq = texturaGolpeIzq;
+
+
         this.pantalla = pantalla;
         if(tipo.equals("jugador"))sprite = new Sprite(texturaMovDer[0]);
         else if (tipo.equals("enemigo"))sprite = new Sprite(texturaMovIzq[0]);
@@ -92,33 +106,15 @@ public class Personaje {
 
         switch (estadoMov){
             case DERECHA:
-                if(this.equals(pantalla.jugador)){
-                    if(this.pantalla.verificarBordes(this,pantalla.enemigo)){
-                        movimiento("der");
-                        vista = "der";
-                    }
-                }else{
-                    if(this.pantalla.verificarBordes(this,pantalla.jugador)){
-                        movimiento("der");
-                        vista = "der";
-                    }
-
-                }
+                if(this.pantalla.verificarBordes(this)){
+                movimiento("der");
+                vista = "der";}
                 //System.out.println("movder");
                 break;
             case IZQUIERDA:
-                if(this.equals(pantalla.jugador)){
-                    if(this.pantalla.verificarBordes(this,pantalla.enemigo)){
-                        movimiento("izq");
-                        vista = "izq";
-                    }
-                }
-                else{
-                    if(this.pantalla.verificarBordes(this,pantalla.jugador)) {
-                        movimiento("izq");
-                        vista = "izq";
-                    }
-                }
+                if(this.pantalla.verificarBordes(this)){
+                movimiento("izq");
+                vista = "izq";}
                 //System.out.println("movizq");
                 break;
             case QUIETO:
@@ -128,7 +124,7 @@ public class Personaje {
             case NORMAL:
                 break;
             case WEAPON:
-                ataqueArma(vista);
+                ataqueArma();
                 break;
             case PUNO:
                 break;
@@ -140,15 +136,33 @@ public class Personaje {
 
     }
 
-    private void ataqueArma(String vista) {
+    public void ataqueArma() {
+
         float x = this.getSprite().getX();
         float y = this.getSprite().getY();
         if(vista.equals("der")){
             this.estadoAca = EstadoAtacando.WEAPON;
-
+            if(variableWeapon %5==0){
+                System.out.println(variableWeapon/5);
+                this.setSprite(texturaArmaDer[variableWeapon%5]);
+                if(variableWeapon == 30){
+                    this.estadoAca = EstadoAtacando.TERMINOWEAPON;
+                    variableWeapon = 1;
+                }
+            }
         }else if(vista.equals("izq")){
-
+            this.estadoAca = EstadoAtacando.WEAPON;
+            if(variableWeapon %5==0){
+                this.setSprite(texturaArmaIzq[variableWeapon%5]);
+                if(variableWeapon == 30){
+                    this.estadoAca = EstadoAtacando.TERMINOWEAPON;
+                    variableWeapon = 1;
+                }
+            }
         }
+        this.getSprite().setX(x);
+        this.getSprite().setY(y);
+        variableWeapon++;
     }
 
     public void movimiento(String direccion) {
@@ -215,6 +229,10 @@ public class Personaje {
 
     public EstadoMov getEstadoMov() {
         return estadoMov;
+    }
+
+    public void setEstadoAca(EstadoAtacando estadoAca) {
+        this.estadoAca = estadoAca;
     }
 
 
