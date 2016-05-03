@@ -176,7 +176,9 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
 
                 if (pref.getInteger("nivel") == 1 || pref.getInteger("nivel") == 2){
                     principal.setScreen(new SeleccionarNiveles(principal));
-                    //Sonidos.reproducirBoton();
+                    if (pref.getBoolean("boton") == true) {
+                        Sonidos.reproducirBoton();
+                    }
                     //Sonidos.cargarEfectos();
                 }
 
@@ -184,18 +186,25 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
                     principal.setScreen(new Comic1(principal));
                     pref.putInteger("nivel", 1);
                     pref.flush();
-                    //Sonidos.reproducirBoton();
+                    if(pref.getBoolean("boton") == true){
+                        Sonidos.reproducirBoton();
+                    }
+
                     //Sonidos.pausarMusicaFondo();
                     //Sonidos.cargarEfectos();
                 }
 
             }  else if (verificarBoton(x, y, btnCustom)) {
                 Gdx.app.log("leerEntrada", "Tap sobre el boton custom");
-                Sonidos.reproducirBoton();
+                if (pref.getBoolean("boton") == true ){
+                    Sonidos.reproducirBoton();
+                }
                 principal.setScreen(new Costumize(principal));
             } else if (verificarBoton(x, y, btnSettings)) {
                 principal.setScreen(new Sett(principal));
-                Sonidos.reproducirBoton();
+                if (pref.getBoolean("boton") == true ) {
+                    Sonidos.reproducirBoton();
+                }
                 Gdx.app.log("leerEntrada", "Tap sobre el boton sett");
 
             }

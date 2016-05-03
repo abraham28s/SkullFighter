@@ -1,6 +1,7 @@
 package mx.itesm.skullfighter;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -85,8 +86,11 @@ public class AcercaDe extends PantallaAbstracta implements Screen {
             float y = coordenadas.y;
             if(verificarBoton(x,y,btnBack)==true){
                 Gdx.app.log("leerEntrada","TAp sobre el boton");
+                Preferences prefe = Gdx.app.getPreferences("Preferencias");
                 //cambiar a pantalla de jugar
-                Sonidos.reproducirBoton();
+                if(prefe.getBoolean("boton") == true) {
+                    Sonidos.reproducirBoton();
+                }
                 Principal.setScreen(new Sett(Principal));
             }
         }

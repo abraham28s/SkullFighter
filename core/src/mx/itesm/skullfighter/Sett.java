@@ -61,7 +61,10 @@ public class Sett extends PantallaAbstracta implements Screen{
             float x = coordenadas.x;
             float y = coordenadas.y;
             if (verificarBoton(x, y, btnAD)) {
-                Sonidos.reproducirBoton();;
+                Preferences pref = Gdx.app.getPreferences("Preferencias");
+                if (pref.getBoolean("boton") == true ) {
+                    Sonidos.reproducirBoton();
+                }
                 principal.setScreen(new AcercaDe(principal));
             }
         }
@@ -76,18 +79,24 @@ public class Sett extends PantallaAbstracta implements Screen{
             if (verificarBoton(x, y, musicAD)) {
                 Preferences pref = Gdx.app.getPreferences("Preferencias");
                 if (Sonidos.musicaFondo.isPlaying()){
-                    Sonidos.reproducirBoton();
+                    if (pref.getBoolean("boton") == true ) {
+                        Sonidos.reproducirBoton();
+                    }
                     Sonidos.pausarMusicaFondo();
                     musicAD.setTextura(TextureMusic2);
                     musicAD.setPosicion(900, 267);
                     pref.putBoolean("musica", false);
+                    pref.putBoolean("boton", false);
                     pref.flush();
                 }
                 else { Sonidos.reproducirMusicaFondo();
-                    Sonidos.reproducirBoton();
+                    if (pref.getBoolean("boton") == true ) {
+                        Sonidos.reproducirBoton();
+                    }
                     musicAD.setTextura(TextureMusic);
                     musicAD.setPosicion(900, 270);
                     pref.putBoolean("musica", true);
+                    pref.putBoolean("boton", true);
                     pref.flush();
                 }
                 }
@@ -102,7 +111,10 @@ public class Sett extends PantallaAbstracta implements Screen{
             float x = coordenadas.x;
             float y = coordenadas.y;
             if (verificarBoton(x, y, returnAD)) {
-                Sonidos.reproducirBoton();
+                Preferences prefe = Gdx.app.getPreferences("Preferencias");
+                if (prefe.getBoolean("boton") == true) {
+                    Sonidos.reproducirBoton();
+                }
                 principal.setScreen(new PantallaMenu(principal));
             }
         }

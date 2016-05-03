@@ -177,7 +177,9 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
             float x = coordenadas.x;
             float y = coordenadas.y;
             if (verificarBoton(x, y, returnAD)) {
-                Sonidos.reproducirBoton();
+                if (pref.getBoolean("boton") == true ) {
+                    Sonidos.reproducirBoton();
+                }
                 principal.setScreen(new PantallaMenu(principal));
             }
         }
@@ -189,7 +191,9 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
             float x = coordenadas.x;
             float y = coordenadas.y;
             if (verificarBoton(x, y, introAD)) {
-                Sonidos.reproducirBoton();
+                if (pref.getBoolean("boton") == true ) {
+                    Sonidos.reproducirBoton();
+                }
                 Sonidos.pausarMusicaFondo();
                 principal.setScreen(new PantallaCargando(principal,0));
             }
@@ -203,7 +207,9 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
                 float x = coordenadas.x;
                 float y = coordenadas.y;
                 if (verificarBoton(x, y, nivel1)) {
-                    Sonidos.reproducirBoton();
+                    if (pref.getBoolean("boton") == true ) {
+                        Sonidos.reproducirBoton();
+                    }
                     Sonidos.pausarMusicaFondo();
                     principal.setScreen(new NivelUno(principal));
                 }
