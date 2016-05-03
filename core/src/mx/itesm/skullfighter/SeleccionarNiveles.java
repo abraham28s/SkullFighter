@@ -52,29 +52,38 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
         setYUpgradeCamara();
 
         cargarTexturas();
+        Preferences pref = Gdx.app.getPreferences("Preferencias");
         fondo = new Fondo(texturaFondo);
         fondo1 = new Fondo(texturaFondo2);
         fondo1.getSprite().setX(fondo.getSprite().getWidth());
         returnAD = new Boton(TextureReturn);
-        returnAD.setPosicion(30, 30);
+        returnAD.setPosicion(1100, 30);
         introAD = new Boton (TextureIntro);
-        nivel1 = new Boton(TextureNivel1);
-        nivel1.setPosicion(360, 30);
 
-        nivel2 =  new Boton(TextureNivel2);
-        nivel2.setPosicion(670, 30);
-        nivel3 =  new Boton(TextureNivel3);
-        nivel3.setPosicion(985, 30);
-        Preferences pref = Gdx.app.getPreferences("Preferencias");
+        if(pref.getInteger("nivel") == 2){
+            nivel1 = new Boton(TextureNivel1);
+            nivel1.setPosicion(360, 30);
+        }
+
+        if(pref.getInteger("nivel") == 3) {
+            nivel2 = new Boton(TextureNivel2);
+            nivel2.setPosicion(670, 30);
+        }
+
+        if(pref.getInteger("nivel") == 4) {
+            nivel3 = new Boton(TextureNivel3);
+            nivel3.setPosicion(985, 30);
+        }
+
 
         //if (pref.getInteger("nivel") == 1 || pref.getInteger("nivel") == 2){
-        if (pref.getInteger("nivel") == 1 ){
-            introAD.setPosicion(30,30);
-        }
-        if (pref.getInteger("nivel") == 2){
-            nivel1 = new Boton (TextureNivel1);
-            nivel1.setPosicion(360,30);
-        }
+
+        introAD.setPosicion(30,30);
+
+
+        nivel1 = new Boton (TextureNivel1);
+        nivel1.setPosicion(360, 30);
+
 
         crearYPosBotones();
 
@@ -96,16 +105,22 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
         batch.begin();
         fondo.render(batch);
         fondo1.render(batch);
-        nivel1.render(batch);
-        nivel2.render(batch);
-        nivel3.render(batch);
+
 
         //if (pref.getInteger("nivel") == 1 || pref.getInteger("nivel") == 2) {
-            if (pref.getInteger("nivel") == 1) {
+        if (pref.getInteger("nivel") == 1) {
             introAD.render(batch);
         }
-        if (pref.getInteger("nivel") == 2){
+        if(pref.getInteger("nivel") == 2) {
             nivel1.render(batch);
+        }
+
+        if(pref.getInteger("nivel") == 3) {
+            nivel2.render(batch);
+        }
+
+        if(pref.getInteger("nivel") == 4) {
+            nivel3.render(batch);
         }
 
         returnAD.render(batch);
@@ -180,7 +195,7 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
             }
         }
 
-        if (pref.getInteger("nivel") == 1) {
+
             if (Gdx.input.justTouched()) {
                 Vector3 coordenadas = new Vector3();
                 coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -192,7 +207,7 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
                     Sonidos.pausarMusicaFondo();
                     principal.setScreen(new NivelUno(principal));
                 }
-            }
+
         }
 
         /*      if(Gdx.input.justTouched()){
