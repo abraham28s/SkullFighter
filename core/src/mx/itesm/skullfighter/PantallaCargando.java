@@ -158,8 +158,6 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
                     Manager.load(nivel + "/VidaSkullE" + i + ".png",Texture.class);
                 }
 
-
-
                 break;
 
 
