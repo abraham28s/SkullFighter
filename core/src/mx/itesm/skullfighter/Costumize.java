@@ -230,9 +230,6 @@ public class Costumize implements Screen {
                 army.setTextura(Mazo);
                 army.setPosicion(412, 236);
             }
-
-
-
                 if (verificarBoton(x, y, armaS)) {
                     Gdx.app.log("leerEntrada", "Tap sobre OZ");
                     Sonidos.reproducirBoton();
@@ -267,7 +264,6 @@ public class Costumize implements Screen {
                     customs.setTextura(Verde);
                     customs.setPosicion(185, 100);
                 }
-
         }
     }
 
@@ -285,21 +281,17 @@ public class Costumize implements Screen {
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override
     public void dispose() {
-
     }
 }

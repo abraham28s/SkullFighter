@@ -16,7 +16,7 @@ import java.util.Random;
 
 /** * Created by abrahamsoto on 17/02/16. */
 
-public class PantallaJuego extends PantallaAbstracta implements Screen {
+public class PantallaCastillo extends PantallaAbstracta implements Screen {
 
     public static final float ANCHO_MAPA = 4000;   // Como se creó en Tiled
 
@@ -78,7 +78,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     private int ConCiv = 0;
     private int ConAle=0;
 
-    public PantallaJuego(Principal principal, AssetManager assetManager) {
+    public PantallaCastillo(Principal principal, AssetManager assetManager) {
         this.principal = principal;
         this.AssManager = assetManager;
     }
@@ -103,7 +103,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         Civil1.setPosicion(3750,30);
 
         Civil3 = new Componente(texturaCivil3);
-        Civil3.setPosicion(800,30);
+        Civil3.setPosicion(590,30);
 
         Espantapajaros = new Componente(texturaCivil1);
         Espantapajaros.setPosicion(2620,30);
@@ -166,14 +166,14 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         Civil2.render(batch);
         tip.render(batch);
         Civil1.render(batch);
-        TextoCivil1.render(batch);
+
         Civil3.render(batch);
         Espantapajaros.render(batch);
         jugador.render(batch);
         jugador.actualizar();
 
         fondo2.render(batch);
-
+        TextoCivil1.render(batch);
 
         batch.end();
 
@@ -371,7 +371,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     public void cargarTexturas() {
         //texturaFondo = new Texture(Gdx.files.internal("Escenario1Cortado.png"));
 
-        texturaFondo = AssManager.get("Fondo-Capa2.png",Texture.class);
+        texturaFondo = AssManager.get("Castillo2.png",Texture.class);
         texturaEspantapajaro = AssManager.get("Espantapajaros3.png", Texture.class);
         texturaCivil3 = AssManager.get("CivilMalo3.png", Texture.class);
 
@@ -387,7 +387,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
             texturasCivil2[i-1] = AssManager.get("Civil2/Civil2-" + i + ".png", Texture.class);
         }
 
-        texturaFondo2 = AssManager.get("Fondo-Capa1.png",Texture.class);
+        texturaFondo2 = AssManager.get("Castillo1.png",Texture.class);
         texturaTip = AssManager.get("Civil2/Tip.png", Texture.class);
 
         texturaCivil1 = AssManager.get("CivilFrente1.png", Texture.class);

@@ -34,6 +34,14 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
     private Boton nivel1;
     private Texture TextureNivel1;
 
+    private Boton nivel2;
+    private Texture TextureNivel2;
+
+    private Boton nivel3;
+    private Texture TextureNivel3;
+
+
+
     public SeleccionarNiveles (Principal principal) {
         this.principal = principal;
     }
@@ -50,13 +58,22 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
         returnAD = new Boton(TextureReturn);
         returnAD.setPosicion(30, 30);
         introAD = new Boton (TextureIntro);
+        nivel1 = new Boton(TextureNivel1);
+        nivel1.setPosicion(360, 30);
+
+        nivel2 =  new Boton(TextureNivel2);
+        nivel2.setPosicion(670, 30);
+        nivel3 =  new Boton(TextureNivel3);
+        nivel3.setPosicion(985, 30);
         Preferences pref = Gdx.app.getPreferences("Preferencias");
-        if (pref.getInteger("nivel") == 1 || pref.getInteger("nivel") == 2){
-            introAD.setPosicion(95,300);
+
+        //if (pref.getInteger("nivel") == 1 || pref.getInteger("nivel") == 2){
+        if (pref.getInteger("nivel") == 1 ){
+            introAD.setPosicion(30,30);
         }
         if (pref.getInteger("nivel") == 2){
             nivel1 = new Boton (TextureNivel1);
-            nivel1.setPosicion(300,300);
+            nivel1.setPosicion(360,30);
         }
 
         crearYPosBotones();
@@ -79,13 +96,19 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
         batch.begin();
         fondo.render(batch);
         fondo1.render(batch);
-        returnAD.render(batch);
-        if (pref.getInteger("nivel") == 1 || pref.getInteger("nivel") == 2) {
+        nivel1.render(batch);
+        nivel2.render(batch);
+        nivel3.render(batch);
+
+        //if (pref.getInteger("nivel") == 1 || pref.getInteger("nivel") == 2) {
+            if (pref.getInteger("nivel") == 1) {
             introAD.render(batch);
         }
         if (pref.getInteger("nivel") == 2){
             nivel1.render(batch);
         }
+
+        returnAD.render(batch);
         batch.end();
         actualizarFondo();
 
@@ -157,8 +180,7 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
             }
         }
 
-
-        if (pref.getInteger("nivel") == 2) {
+        if (pref.getInteger("nivel") == 1) {
             if (Gdx.input.justTouched()) {
                 Vector3 coordenadas = new Vector3();
                 coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -173,6 +195,21 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
             }
         }
 
+        /*      if(Gdx.input.justTouched()){
+            Vector3 coordenadas = new Vector3();
+            coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            camara.unproject(coordenadas);  //traduce las coordenadas
+            float x = coordenadas.x;
+            float y = coordenadas.y;
+            if (verificarBoton(x, y, nivel2)) {
+                Sonidos.reproducirBoton();
+                Sonidos.pausarMusicaFondo();
+                principal.setScreen(new PantallaCargando(principal,0));//Pantalla castigo
+            }
+        }*/
+
+
+
     }
 
     @Override
@@ -181,8 +218,10 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
         texturaFondo = new Texture(Gdx.files.internal("PantallaVacia.png"));
         texturaFondo2 = new Texture(Gdx.files.internal("PantallaVacia.png"));
         TextureReturn = new Texture(Gdx.files.internal("BackGame.png"));
-        TextureIntro = new Texture (Gdx.files.internal("Intro.png"));
-        TextureNivel1 = new Texture (Gdx.files.internal("nivel1.png"));
+        TextureIntro = new Texture (Gdx.files.internal("Boton_Tutorial.png"));
+        TextureNivel1 = new Texture (Gdx.files.internal("Boton_Nivel1.png"));
+        TextureNivel2 = new Texture (Gdx.files.internal("Boton_Nivel2.png"));
+        TextureNivel3 = new Texture (Gdx.files.internal("Boton_Nivel3.png"));
 
 
     }
