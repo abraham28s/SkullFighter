@@ -19,6 +19,7 @@ public class Sonidos {
         efectoBoton = Gdx.audio.newSound(Gdx.files.internal("botonSound.mp3"));
         musicaFondo = Gdx.audio.newMusic(Gdx.files.internal("WarDrum.mp3"));
         musicaFondo.setLooping(true);
+        cargarEfectos();
     }
 
     public static void reproducirMusicaFondo(){
