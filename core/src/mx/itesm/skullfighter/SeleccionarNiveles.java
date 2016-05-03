@@ -58,14 +58,19 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
         fondo1.getSprite().setX(fondo.getSprite().getWidth());
         returnAD = new Boton(TextureReturn);
         returnAD.setPosicion(1100, 30);
-        introAD = new Boton (TextureIntro);
 
-        if(pref.getInteger("nivel") == 2){
+
+        if (pref.getInteger("nivel") == 1 || pref.getInteger("nivel") == 2 || pref.getInteger("nivel") == 3 || pref.getInteger("nivel") == 4){
+            introAD = new Boton (TextureIntro);
+            introAD.setPosicion(30,30);
+        }
+
+        if(pref.getInteger("nivel") == 2 || pref.getInteger("nivel") == 3 || pref.getInteger("nivel") == 4){
             nivel1 = new Boton(TextureNivel1);
             nivel1.setPosicion(360, 30);
         }
 
-        if(pref.getInteger("nivel") == 3) {
+        if(pref.getInteger("nivel") == 3 || pref.getInteger("nivel") == 4) {
             nivel2 = new Boton(TextureNivel2);
             nivel2.setPosicion(670, 30);
         }
@@ -78,11 +83,6 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
 
         //if (pref.getInteger("nivel") == 1 || pref.getInteger("nivel") == 2){
 
-        introAD.setPosicion(30,30);
-
-
-        nivel1 = new Boton (TextureNivel1);
-        nivel1.setPosicion(360, 30);
 
 
         crearYPosBotones();
@@ -108,14 +108,14 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
 
 
         //if (pref.getInteger("nivel") == 1 || pref.getInteger("nivel") == 2) {
-        if (pref.getInteger("nivel") == 1) {
+        if (pref.getInteger("nivel") == 1 || pref.getInteger("nivel") == 2 || pref.getInteger("nivel") == 3 || pref.getInteger("nivel") == 4) {
             introAD.render(batch);
         }
-        if(pref.getInteger("nivel") == 2) {
+        if(pref.getInteger("nivel") == 2 || pref.getInteger("nivel") == 3 || pref.getInteger("nivel") == 4) {
             nivel1.render(batch);
         }
 
-        if(pref.getInteger("nivel") == 3) {
+        if(pref.getInteger("nivel") == 3 || pref.getInteger("nivel") == 4) {
             nivel2.render(batch);
         }
 
