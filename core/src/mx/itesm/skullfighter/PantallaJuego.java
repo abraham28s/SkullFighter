@@ -277,7 +277,10 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
                 }
             }
             if(verificarBoton(x,y,botonTexto1)){
+                Preferences prefe = Gdx.app.getPreferences("Preferencias");
                 principal.setScreen(new PantallaCargando(this.principal,1,huesos,0));
+                prefe.putInteger("nivel",2);
+                prefe.flush();
             }
             if(verificarBoton(x,y,botonTexto2)){
                 principal.setScreen(new PantallaCargando(this.principal,1,huesos,1));
