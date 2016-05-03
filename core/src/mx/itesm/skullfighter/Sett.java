@@ -125,6 +125,21 @@ public class Sett extends PantallaAbstracta implements Screen{
             camara.unproject(coordenadas);  //traduce las coordenadas
             float x = coordenadas.x;
             float y = coordenadas.y;
+            if (verificarBoton(x, y, comic)) {
+                Preferences prefe = Gdx.app.getPreferences("Preferencias");
+                if (prefe.getBoolean("boton") == true) {
+                    Sonidos.reproducirBoton();
+                }
+                principal.setScreen(new Comic1(principal));
+            }
+        }
+
+        if(Gdx.input.justTouched()) {
+            Vector3 coordenadas = new Vector3();
+            coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            camara.unproject(coordenadas);  //traduce las coordenadas
+            float x = coordenadas.x;
+            float y = coordenadas.y;
             if (verificarBoton(x, y, restartAD)) {
                 Preferences pref = Gdx.app.getPreferences("Preferencias");
                 pref.putBoolean("guardar", false);
@@ -133,7 +148,7 @@ public class Sett extends PantallaAbstracta implements Screen{
                 if (prefe.getBoolean("boton") == true) {
                     Sonidos.reproducirBoton();
                 }
-                Gdx.app.exit();
+                principal.setScreen(new P2(this.principal));
             }
         }
 

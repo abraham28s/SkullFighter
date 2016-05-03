@@ -46,6 +46,13 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
     public Comic1(Principal principal,int huesos) {
         this.principal = principal;
         this.huesos = huesos;
+
+    }
+
+    public Comic1(Principal principal) {
+        this.principal = principal;
+
+
     }
 
     @Override
