@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,17 +12,14 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import org.lwjgl.Sys;
-
 import java.util.Random;
 
 /**
  * Created by abrahamsoto on 30/03/16.
  */
-public class NivelUno extends PantallaAbstracta implements Screen {
+public class NivelTutorial extends PantallaAbstracta implements Screen {
 
     private final Principal principal;
-    private AssetManager AssManager;
     private OrthographicCamera camara;
     private Viewport vista;
 
@@ -94,15 +90,10 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     private String banderaMoviendo;
     private boolean banderaIzquierdaApre;
     private boolean banderaDerechaApre;
-    private int nivel;
-    private int huesos;
 
 
-    public NivelUno(Principal principal,AssetManager ass,int nivel,int huesos) {
+    public NivelTutorial(Principal principal) {
         this.principal = principal;
-        this.nivel = nivel;
-        this.AssManager = ass;
-        this.huesos = huesos;
     }
 
 
@@ -179,13 +170,13 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                             Sonidos.reproducirBoton();
                             estado = 100;
                             dispose();
-                            principal.setScreen(new PantallaMenu(principal,huesos));
+                            principal.setScreen(new PantallaMenu(principal));
                         }
                     }else if( estado == 0){
                         if(verificarBoton(x1,y1,BtnQuitPausa)){
                             Sonidos.reproducirBoton();
                             estado = 100;
-                            principal.setScreen(new PantallaMenu(principal,huesos));
+                            principal.setScreen(new PantallaMenu(principal));
 
                             //Preferencias música
                             Preferences pref = Gdx.app.getPreferences("Preferencias");
@@ -301,7 +292,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                         if(verificarBoton(x1, y1, BtnRestartGame)){
                             Sonidos.reproducirBoton();
                             estado = 100;
-                            principal.setScreen(new NivelUno(principal,AssManager,nivel,huesos));
+                            principal.setScreen(new NivelTutorial(principal));
                         }
 
                     }
@@ -337,95 +328,88 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     @Override
     void cargarTexturas() {
 
-        texturaWin = AssManager.get("YouWin.png",Texture.class);
-        texturaLose = AssManager.get("YouLose.png",Texture.class);
-        TexturaBtnRestartGame = AssManager.get("Restart.png",Texture.class);
-
-        texturaMenuPausa = AssManager.get("Pausemenu.png",Texture.class);
-        texturaQuitPausa = AssManager.get("Quit.png",Texture.class);
-        texturaResumePausa = AssManager.get("Resume.png",Texture.class);
-        texturaFonPausa =AssManager.get("negro.png",Texture.class);
-
-        texturaBtnDer = AssManager.get("Boton_Derecha.png",Texture.class);
-        texturaBtnIzq = AssManager.get("Boton_Izquierda.png",Texture.class);
-        texturaBtnBrin = AssManager.get("BotonJump.png",Texture.class);
-        texturaPausa = AssManager.get("PauseBotton.png",Texture.class);
-        texturaBtnPunch = AssManager.get("BotonPunch.png",Texture.class);
-        texturaBtnWeapon = AssManager.get("BotonWeapon.png",Texture.class);
-
-        texturaFondo = AssManager.get(nivel +"/Entrenamiento.png",Texture.class);
-
+        texturaFondo = new Texture(Gdx.files.internal("Entrenamiento.png"));
         texturaMovDer= new Texture[3];
-        texturaMovDer[0] = AssManager.get(nivel +"/SkullCam1der.png",Texture.class);
-        texturaMovDer[1] = AssManager.get(nivel +"/SkullCam2der.png",Texture.class);
-        texturaMovDer[2] = AssManager.get(nivel +"/SkullCam3der.png",Texture.class);
+        texturaMovDer[0] = new Texture(Gdx.files.internal("SkullCam1der.png"));
+        texturaMovDer[1] = new Texture(Gdx.files.internal("SkullCam2der.png"));
+        texturaMovDer[2] = new Texture(Gdx.files.internal("SkullCam3der.png"));
 
         texturaMovIzq = new Texture[3];
-        texturaMovIzq[0] = AssManager.get(nivel +"/SkullCam1izq.png",Texture.class);
-        texturaMovIzq[1] = AssManager.get(nivel +"/SkullCam2izq.png",Texture.class);
-        texturaMovIzq[2] = AssManager.get(nivel +"/SkullCam3izq.png",Texture.class);
+        texturaMovIzq[0] = new Texture(Gdx.files.internal("SkullCam1izq.png"));
+        texturaMovIzq[1] = new Texture(Gdx.files.internal("SkullCam2izq.png"));
+        texturaMovIzq[2] = new Texture(Gdx.files.internal("SkullCam3izq.png"));
 
         texturaOzDer = new Texture[5];
-        texturaOzDer[0] = AssManager.get(nivel +"/Oz1Der.png",Texture.class);
-        texturaOzDer[1] = AssManager.get(nivel +"/Oz2Der.png",Texture.class);
-        texturaOzDer[2] = AssManager.get(nivel +"/Oz3Der.png",Texture.class);
-        texturaOzDer[3] = AssManager.get(nivel +"/Oz4Der.png",Texture.class);
-        texturaOzDer[4] = AssManager.get(nivel +"/SkullCam1der.png",Texture.class);
+        texturaOzDer[0] = new Texture(Gdx.files.internal("Oz1Der.png"));
+        texturaOzDer[1] = new Texture(Gdx.files.internal("Oz2Der.png"));
+        texturaOzDer[2] = new Texture(Gdx.files.internal("Oz3Der.png"));
+        texturaOzDer[3] = new Texture(Gdx.files.internal("Oz4Der.png"));
+        texturaOzDer[4] = new Texture(Gdx.files.internal("SkullCam1der.png"));
 
         texturaOzIzq = new Texture[5];
-        texturaOzIzq[0] = AssManager.get(nivel +"/Oz1Izq.png",Texture.class);
-        texturaOzIzq[1] = AssManager.get(nivel +"/Oz2Izq.png",Texture.class);
-        texturaOzIzq[2] = AssManager.get(nivel +"/Oz3Izq.png",Texture.class);
-        texturaOzIzq[3] = AssManager.get(nivel +"/Oz4Izq.png",Texture.class);
-        texturaOzIzq[4] = AssManager.get(nivel +"/SkullCam1izq.png",Texture.class);
+        texturaOzIzq[0] = new Texture(Gdx.files.internal("Oz1Izq.png"));
+        texturaOzIzq[1] = new Texture(Gdx.files.internal("Oz2Izq.png"));
+        texturaOzIzq[2] = new Texture(Gdx.files.internal("Oz3Izq.png"));
+        texturaOzIzq[3] = new Texture(Gdx.files.internal("Oz4Izq.png"));
+        texturaOzIzq[4] = new Texture(Gdx.files.internal("SkullCam1izq.png"));
 
         texturaPunchDer = new Texture[4];
-        texturaPunchDer[0] = AssManager.get(nivel +"/SkullPunchDer1.png",Texture.class);
-        texturaPunchDer[1] = AssManager.get(nivel +"/SkullPunchDer2.png",Texture.class);
-        texturaPunchDer[2] = AssManager.get(nivel +"/SkullPunchDer3.png",Texture.class);
-        texturaPunchDer[3] = AssManager.get(nivel +"/SkullCam1der.png",Texture.class);
+        texturaPunchDer[0] = new Texture(Gdx.files.internal("SkullPunchDer1.png"));
+        texturaPunchDer[1] = new Texture(Gdx.files.internal("SkullPunchDer2.png"));
+        texturaPunchDer[2] = new Texture(Gdx.files.internal("SkullPunchDer3.png"));
+        texturaPunchDer[3] = new Texture(Gdx.files.internal("SkullCam1der.png"));
 
 
         texturaPunchIzq = new Texture[4];
-        texturaPunchIzq[0] = AssManager.get(nivel +"/SkullPunchIzq1.png",Texture.class);
-        texturaPunchIzq[1] = AssManager.get(nivel +"/SkullPunchIzq2.png",Texture.class);
-        texturaPunchIzq[2] = AssManager.get(nivel +"/SkullPunchIzq3.png",Texture.class);
-        texturaPunchIzq[3] = AssManager.get(nivel +"/SkullCam1izq.png",Texture.class);
+        texturaPunchIzq[0] = new Texture(Gdx.files.internal("SkullPunchIzq1.png"));
+        texturaPunchIzq[1] = new Texture(Gdx.files.internal("SkullPunchIzq2.png"));
+        texturaPunchIzq[2] = new Texture(Gdx.files.internal("SkullPunchIzq3.png"));
+        texturaPunchIzq[3] = new Texture(Gdx.files.internal("SkullCam1izq.png"));
 
         texturaEneMovDer = new Texture[3];
-        texturaEneMovDer[0] =AssManager.get(nivel +"/Enemigo1Der.png",Texture.class);
-        texturaEneMovDer[1]=AssManager.get(nivel +"/Enemigo2Der.png",Texture.class);
-        texturaEneMovDer[2]=AssManager.get(nivel +"/Enemigo3Der.png",Texture.class);
+        texturaEneMovDer[0] =new Texture(Gdx.files.internal("Enemigo1Der.png"));
+        texturaEneMovDer[1]=new Texture(Gdx.files.internal("Enemigo2Der.png"));
+        texturaEneMovDer[2]=new Texture(Gdx.files.internal("Enemigo3Der.png"));
 
         texturaEneMovIzq = new Texture[3];
-        texturaEneMovIzq[0] =AssManager.get(nivel +"/Enemigo1Izq.png",Texture.class);
-        texturaEneMovIzq[1]=AssManager.get(nivel +"/Enemigo2Izq.png",Texture.class);
-        texturaEneMovIzq[2]=AssManager.get(nivel +"/Enemigo3Izq.png",Texture.class);
+        texturaEneMovIzq[0] =new Texture(Gdx.files.internal("Enemigo1Izq.png"));
+        texturaEneMovIzq[1]=new Texture(Gdx.files.internal("Enemigo2Izq.png"));
+        texturaEneMovIzq[2]=new Texture(Gdx.files.internal("Enemigo3Izq.png"));
 
         texturaEnePunchDer = new Texture[4];
-        texturaEnePunchDer[0] = AssManager.get(nivel +"/EnemigoPun1Der.png",Texture.class);
-        texturaEnePunchDer[1] = AssManager.get(nivel +"/EnemigoPun2Der.png",Texture.class);
-        texturaEnePunchDer[2] = AssManager.get(nivel +"/Enemigo1Der.png",Texture.class);
-        texturaEnePunchDer[3] =AssManager.get(nivel +"/Enemigo1Der.png",Texture.class);
+        texturaEnePunchDer[0] = new Texture(Gdx.files.internal("EnemigoPun1Der.png"));
+        texturaEnePunchDer[1] = new Texture(Gdx.files.internal("EnemigoPun2Der.png"));
+        texturaEnePunchDer[2] = new Texture(Gdx.files.internal("Enemigo1Der.png"));
+        texturaEnePunchDer[3] =new Texture(Gdx.files.internal("Enemigo1Der.png"));
 
         texturaEnePunchIzq= new Texture[4];
-        texturaEnePunchIzq[0] = AssManager.get(nivel +"/EnemigoPun1Izq.png",Texture.class);
-        texturaEnePunchIzq[1] = AssManager.get(nivel +"/EnemigoPun2Izq.png",Texture.class);
-        texturaEnePunchIzq[2] = AssManager.get(nivel +"/Enemigo1Izq.png",Texture.class);
-        texturaEnePunchIzq[3]=AssManager.get(nivel +"/Enemigo3Izq.png",Texture.class);
+        texturaEnePunchIzq[0] = new Texture(Gdx.files.internal("EnemigoPun1Izq.png"));
+        texturaEnePunchIzq[1] = new Texture(Gdx.files.internal("EnemigoPun2Izq.png"));
+        texturaEnePunchIzq[2] = new Texture(Gdx.files.internal("Enemigo1Izq.png"));
+        texturaEnePunchIzq[3]=new Texture(Gdx.files.internal("Enemigo3Izq.png"));
 
-
+        texturaWin = new Texture(Gdx.files.internal("YouWin.png"));
+        texturaLose = new Texture(Gdx.files.internal("YouLose.png"));
+        TexturaBtnRestartGame = new Texture(Gdx.files.internal("Restart.png"));
 
         texturaVidaJ = new Texture[7];
         texturaVidaE = new Texture[7];
         for (int i = 0; i<7;i++){
-            texturaVidaJ[i] = AssManager.get(nivel +"/VidaSkull"+ i+".png",Texture.class);
-            texturaVidaE[i] = AssManager.get(nivel +"/VidaSkullE"+ i+".png",Texture.class);
+            texturaVidaJ[i] = new Texture(Gdx.files.internal("VidaSkull"+ i+".png"));
+            texturaVidaE[i] = new Texture(Gdx.files.internal("VidaSkullE"+ i+".png"));
         }
 
+        texturaMenuPausa = new Texture(Gdx.files.internal("Pausemenu.png"));
+        texturaQuitPausa = new Texture(Gdx.files.internal("Quit.png"));
+        texturaResumePausa = new Texture(Gdx.files.internal("Resume.png"));
+        texturaFonPausa =new Texture(Gdx.files.internal("negro.png"));
 
-
-
+        texturaBtnDer = new Texture(Gdx.files.internal("Boton_Derecha.png"));
+        texturaBtnIzq = new Texture(Gdx.files.internal("Boton_Izquierda.png"));
+        texturaBtnBrin = new Texture(Gdx.files.internal("BotonJump.png"));
+        texturaPausa = new Texture(Gdx.files.internal("PauseBotton.png"));
+        texturaBtnPunch = new Texture(Gdx.files.internal("BotonPunch.png"));
+        texturaBtnWeapon = new Texture(Gdx.files.internal("BotonWeapon.png"));
     }
 
     @Override

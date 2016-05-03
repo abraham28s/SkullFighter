@@ -51,10 +51,16 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
     private Texture textStory;
     private Boton   titSettings;
     private Texture textSettings;
+    private int huesos;
 
 
+    public PantallaMenu(Principal principal,int huesos) {
+        this.principal = principal;
+        this.huesos = huesos;
+    }
     public PantallaMenu(Principal principal) {
         this.principal = principal;
+
     }
 
     @Override
@@ -188,7 +194,7 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
                 }
 
                 if (pref.getInteger("nivel") == 0) {
-                    principal.setScreen(new Comic1(principal));
+                    principal.setScreen(new Comic1(principal,huesos));
                     pref.putInteger("nivel", 1);
                     pref.flush();
                     if(pref.getBoolean("boton") == true){

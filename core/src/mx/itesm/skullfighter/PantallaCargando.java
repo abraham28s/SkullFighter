@@ -41,11 +41,18 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
 
     private int pantallaCargar;
     private float variableTexuta;
+    private int nivel;
 
     public PantallaCargando(Principal principal,int pantalla,int huesos){
         this.principal = principal;
         this.pantallaCargar = pantalla;
         this.huesos = huesos;
+    }
+    public PantallaCargando(Principal principal,int pantalla,int huesos,int nivel){
+        this.principal = principal;
+        this.pantallaCargar = pantalla;
+        this.huesos = huesos;
+        this.nivel = nivel;
     }
 
 
@@ -103,8 +110,58 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
 
                 break;
             case 1://NivelUno
+                Manager.load("YouWin.png",Texture.class);
+                Manager.load("YouLose.png", Texture.class);
+                Manager.load("Restart.png",Texture.class);
+
+                Manager.load("Pausemenu.png",Texture.class);
+                Manager.load("Quit.png",Texture.class);
+                Manager.load("Resume.png",Texture.class);
+                Manager.load("negro.png",Texture.class);
+
+                Manager.load("Boton_Derecha.png",Texture.class);
+                Manager.load("Boton_Izquierda.png",Texture.class);
+                Manager.load("BotonJump.png",Texture.class);
+                Manager.load("PauseBotton.png",Texture.class);
+                Manager.load("BotonPunch.png",Texture.class);
+                Manager.load("BotonWeapon.png",Texture.class);
+
+                Manager.load(nivel + "/Entrenamiento.png",Texture.class);
+
+
+                for (int i = 1; i <=3 ; i++) {
+                    Manager.load(nivel + "/SkullCam"+i+"der.png", Texture.class);
+                    Manager.load(nivel + "/SkullCam"+i+"izq.png", Texture.class);
+                    Manager.load(nivel + "/SkullPunchDer"+i+".png", Texture.class);
+                    Manager.load(nivel + "/SkullPunchIzq"+i+".png", Texture.class);
+                    Manager.load(nivel + "/Enemigo"+i+"Der.png",Texture.class);
+                    Manager.load(nivel + "/Enemigo"+i+"Izq.png",Texture.class);
+                }
+
+
+                for (int i = 1; i <=2 ; i++) {
+                    Manager.load(nivel + "/EnemigoPun"+i+"Der.png",Texture.class);
+
+                    Manager.load(nivel + "/EnemigoPun"+i+"Izq.png",Texture.class);
+                }
+
+                for (int i = 1; i <=4 ; i++) {
+                    Manager.load(nivel + "/Oz"+i+"Der.png",Texture.class);
+
+                    Manager.load(nivel + "/Oz"+i+"Izq.png",Texture.class);
+                }
+
+                for (int i = 0; i<7;i++) {
+                    Manager.load(nivel + "/VidaSkull" + i + ".png",Texture.class);
+                    Manager.load(nivel + "/VidaSkullE" + i + ".png",Texture.class);
+                }
+
+
 
                 break;
+
+
+
             case 2: //Castillo
                 Manager.load("Castillo2.png",Texture.class);
                 Manager.load("Espantapajaros3.png", Texture.class);
@@ -161,7 +218,7 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
                     //this.principal.setScreen(new PantallaCastillo(this.principal,this.Manager));
                     break;
                 case 1://NivelUno
-                    this.principal.setScreen(new PantallaCastillo(this.principal,this.Manager));
+                    this.principal.setScreen(new NivelUno(this.principal,this.Manager,nivel,huesos));
                     break;
 
                 case 2:

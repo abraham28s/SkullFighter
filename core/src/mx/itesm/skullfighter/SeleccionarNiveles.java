@@ -213,7 +213,7 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
                         Sonidos.reproducirBoton();
                     }
                     Sonidos.pausarMusicaFondo();
-                    principal.setScreen(new NivelUno(principal));
+                    principal.setScreen(new PantallaCargando(principal,1,huesos,0));
                 }
 
         }

@@ -164,7 +164,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if(huesos>=15){
-            btnEspanta.setTextura(texturaBtnEspanta1);
+            TextoCivil1.setTextura(texturaBtnEspanta1);
         }
 
         leerEntrada(); // Revisar eventos
@@ -216,38 +216,13 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
             if (verificarBoton(x, y, TextoCivil1) && verificarBordes()&& huesos>15) {
                 pref.putInteger("nivel",2);
                 pref.flush();
-                this.principal.setScreen(new NivelUno(this.principal));
+                this.principal.setScreen(new PantallaCargando(this.principal,2,huesos));
             }
         }
 
     }
 
-    private void animacionCiviles(Componente civil) {
-        int tiempos[] = {13,14,15,16};
-        Random numero = new Random();
 
-        if(ConAle%tiempos[numero.nextInt(4)]==0){
-
-
-            float x = civil.getSprite().getX();
-            float y = civil.getSprite().getY();
-
-            if(ConCiv % (5) == 0){
-                if(civil.equals(Civil2)) {
-                    civil.setSprite(texturasCivil2[ConCiv % 3]);
-                }else{
-                    civil.setSprite(texturasCivil2[ConCiv % 3]);
-                }
-            }
-            if(ConCiv>500){
-                ConCiv = 0;
-            }
-            ConCiv++;
-            civil.setPosicion(x,y);
-        }
-        ConAle++;
-
-    }
 
     private void actualizarCamara() {
         float posX = jugador.getSprite().getX();
@@ -288,13 +263,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
 
         }
-       /* if(Gdx.input.justTouched()) {
-            if(verificarBoton(x, y, btnBrin)){
-                if(jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
-                    jugador.movimientoBrin();
-                }
-            }
-        }*/
+
         if(Gdx.input.justTouched() &&Gdx.input.isTouched()){
             if(verificarBoton(x,y,btnDer) /*&& verificarBoton(x, y, btnBrin)*/ && verificarBordes()){
                 movimientoDer();
@@ -302,10 +271,19 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
             }
             if(huesos>=15) {
-                if (verificarBoton(x, y, btnEspanta)) {
+                if (verificarBoton(x, y, TextoCivil1)) {
                     huesos-=15;
                     principal.setScreen(new PantallaCargando(this.principal,2,huesos));
                 }
+            }
+            if(verificarBoton(x,y,botonTexto1)){
+                principal.setScreen(new PantallaCargando(this.principal,2,huesos,0));
+            }
+            if(verificarBoton(x,y,botonTexto2)){
+                principal.setScreen(new PantallaCargando(this.principal,2,huesos,1));
+            }
+            if(verificarBoton(x,y,botonTexto3)){
+                principal.setScreen(new PantallaCargando(this.principal, 2, huesos, 2));
             }
             if(verificarBoton(x,y,btnIzq)/*&& verificarBoton(x, y, btnBrin) */&& verificarBordes() ){
                 movimientoIzq();actualizarCamara();
@@ -317,7 +295,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
                 if (pref.getBoolean("boton") == true) {
                     Sonidos.reproducirBoton();
                 }
-                principal.setScreen(new PantallaMenu(principal));
+                principal.setScreen(new PantallaMenu(principal, huesos));
 
                 //Preferencias música
 
@@ -328,15 +306,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
                 }
 
             }
-            if(verificarBoton(x,y,skip)){
-                Preferences pref = Gdx.app.getPreferences("Preferencias");
-                if (pref.getBoolean("boton") == true) {
-                    Sonidos.reproducirBoton();
-                }
-                pref.putInteger("nivel",2);
-                pref.flush();
-                this.principal.setScreen(new NivelUno(this.principal));
-            }
+
 
         }
 

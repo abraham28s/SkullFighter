@@ -181,7 +181,7 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
         batch.begin();
         btnIzq.render(batch);
         btnDer.render(batch);
-        skip.render(batch);
+
         //btnBrin.render(batch);
         btnBack.render(batch);
         batch.end();
@@ -199,7 +199,7 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
             if (verificarBoton(x, y, TextoCivil1) && verificarBordes()) {
                 pref.putInteger("nivel",2);
                 pref.flush();
-                this.principal.setScreen(new NivelUno(this.principal));
+
             }
         }
 
@@ -303,10 +303,7 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
                 }
 
             }
-            if(verificarBoton(x,y,skip)){
-                Sonidos.reproducirBoton();
-                this.principal.setScreen(new NivelUno(this.principal));
-            }
+
 
         }
 

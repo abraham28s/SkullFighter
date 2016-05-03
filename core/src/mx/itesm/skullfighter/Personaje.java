@@ -10,6 +10,7 @@ import org.lwjgl.Sys;
  * Created by abrahamsoto on 18/02/16.
  */
 public class Personaje {
+    private NivelTutorial pantallat;
     private Sprite sprite;
 
     private float alturaActual;
@@ -47,6 +48,28 @@ public class Personaje {
 
 
         this.pantalla = pantalla;
+        if(tipo.equals("jugador"))sprite = new Sprite(texturaMovDer[0]);
+        else if (tipo.equals("enemigo"))sprite = new Sprite(texturaMovIzq[0]);
+
+        sprite.setAlpha(1f);
+        this.alturaInicial = sprite.getY();
+        this.alturaMax = this.alturaInicial+270;
+        estado = EstadoBrinco.NORMAL;
+        estadoMov = EstadoMov.QUIETO;
+        estadoAca = EstadoAtacando.NORMAL;
+
+    }
+    public Personaje(Texture[] texturaMovDer,Texture[] texturaMovIzq,Texture[] texturaArmaDer,Texture[] texturaArmaIzq,
+                     Texture[] texturaGolpeDer,Texture[] texturaGolpeIzq,String tipo,NivelTutorial pantalla){
+        this.texturaMovDer = texturaMovDer;
+        this.texturaMovIzq = texturaMovIzq;
+        this.texturaArmaDer = texturaArmaDer;
+        this.texturaArmaIzq = texturaArmaIzq;
+        this.texturaGolpeDer = texturaGolpeDer;
+        this.texturaGolpeIzq = texturaGolpeIzq;
+
+
+        this.pantallat = pantalla;
         if(tipo.equals("jugador"))sprite = new Sprite(texturaMovDer[0]);
         else if (tipo.equals("enemigo"))sprite = new Sprite(texturaMovIzq[0]);
 
@@ -159,7 +182,7 @@ public class Personaje {
                     if(this.equals(pantalla.jugador)){
                         pantalla.actualizarVida(2,'j');
                     }else if(this.equals(pantalla.enemigo)){
-                        pantalla.actualizarVida(2,'e');
+                        pantalla.actualizarVida(2, 'e');
 
                     }
                 }

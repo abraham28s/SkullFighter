@@ -41,9 +41,11 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
 
     private Texture texturaComic2;
     private Texture texturaComic3;
+    private int huesos;
 
-    public Comic1(Principal principal) {
+    public Comic1(Principal principal,int huesos) {
         this.principal = principal;
+        this.huesos = huesos;
     }
 
     @Override
@@ -143,7 +145,7 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
                 contador--;
                 //System.out.println("Contador-: " + contador);
                 if(contador<=0){
-                principal.setScreen(new PantallaMenu(principal));
+                principal.setScreen(new PantallaMenu(principal,huesos));
                 }
             }
 
@@ -153,7 +155,7 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
                     Sonidos.reproducirBoton();
                 }
 
-                this.principal.setScreen(new PantallaCargando(principal,0));
+                this.principal.setScreen(new PantallaCargando(principal,0,huesos));
             }
 
         }
