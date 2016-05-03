@@ -147,93 +147,118 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     }
 
     void leerEntrada() {
-        Gdx.input.setInputProcessor(new InputAdapter() {
-            public boolean touchUp(int x, int y, int pointer, int button) {
-                Vector3 coordenadas = new Vector3();
-                coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-                camara.unproject(coordenadas);  //traduce las coordenadas
-                float x1 = coordenadas.x;
-                float y1 = coordenadas.y;
 
-                if(verificarBoton(x1,y1,btnIzq)&& movPointerIzq == pointer){
-                    jugador.setEstadoMov(Personaje.EstadoMov.QUIETO);
 
-                }else if(verificarBoton(x1, y1, btnDer) &&movPointerDer == pointer) {
-                    jugador.setEstadoMov(Personaje.EstadoMov.QUIETO);
+
+            Gdx.input.setInputProcessor(new InputAdapter() {
+                public boolean touchUp(int x, int y, int pointer, int button) {
+                    Vector3 coordenadas = new Vector3();
+                    coordenadas.set(x, y, 0);
+                    camara.unproject(coordenadas);  //traduce las coordenadas
+                    float x1 = coordenadas.x;
+                    float y1 = coordenadas.y;
+
+
+                    if (verificarBoton(x1, y1, btnIzq) && movPointerIzq == pointer) {
+                        jugador.setEstadoMov(Personaje.EstadoMov.QUIETO);
+
+                    } else if (verificarBoton(x1, y1, btnDer) && movPointerDer == pointer) {
+                        jugador.setEstadoMov(Personaje.EstadoMov.QUIETO);
+                    }
+                    if (verificarBoton(x, y, btnPunch)) {
+                        //Sonidos.golpearSound();
+                        jugador.setAtacandoPu(true);
+                        juAtacoPu = true;
+                    }
+                    if (verificarBoton(x, y, btnWeapon)) {
+                        //Sonidos.cuchilloSound();
+                        jugador.setAtacandoWe(true);
+                    }
+
+                    return true;
                 }
-                if(verificarBoton(x,y,btnPunch)){
-                    //Sonidos.golpearSound();
-                    jugador.setAtacandoPu(true);
-                    juAtacoPu = true;
-                }
-                if(verificarBoton(x,y,btnWeapon) ){
-                    //Sonidos.cuchilloSound();
-                    jugador.setAtacandoWe(true);
-                }
 
-                return true;
-            }
-
-            @Override
-            public boolean touchDragged(int x, int y, int pointer) {
-               // if(leftPointer == pointer){
+                @Override
+                public boolean touchDragged(int x, int y, int pointer) {
+                    // if(leftPointer == pointer){
 
 
-                        if(verificarBoton(x,y,btnIzq)){
-                            jugador.movimiento("izq");
-                        }else if(verificarBoton(x, y, btnDer)){
-                            jugador.movimiento("der");
-                        }
-
-               // }
-                return true;
-            }
-
-            public boolean touchDown(int x, int y, int pointer, int button) {
-                Vector3 coordenadas = new Vector3();
-                coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-                camara.unproject(coordenadas);  //traduce las coordenadas
-                float x1 = coordenadas.x;
-                float y1 = coordenadas.y;
-
-                if(verificarBoton(x1,y1,btnIzq)&& pointer == 0){
-                    jugador.movimiento("izq");
-                    System.out.println("down izq");
-                    movPointerIzq = pointer;
-
-                }else if(verificarBoton(x1, y1, btnDer) && pointer == 0){
-                    jugador.movimiento("der");
-                    movPointerDer = pointer;
-
-                }
-                if(verificarBoton(x1, y1, btnBrin) && pointer !=0){
-                    //Sonidos.saltarSound();
-                    if(jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
-                        jugador.movimientoBrin();
+                    if (verificarBoton(x, y, btnIzq)) {
+                        jugador.movimiento("izq");
+                    } else if (verificarBoton(x, y, btnDer)) {
                         jugador.movimiento("der");
                     }
-                    brincoPointer = pointer;
-                }else if(verificarBoton(x1, y1, btnBrin) && pointer ==0){
-                    if(jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
-                        jugador.movimientoBrin();
+
+                    // }
+                    return true;
+                }
+
+                public boolean touchDown(int x, int y, int pointer, int button) {
+
+                    Vector3 coordenadas = new Vector3();
+                    coordenadas.set(x,y, 0);
+                    camara.unproject(coordenadas);  //traduce las coordenadas
+                    float x1 = coordenadas.x;
+                    float y1 = coordenadas.y;
+                    if(pointer == 1) {
+                        System.out.println( pointer != 0);
+                        System.out.println(verificarBoton(x1, y1, btnBrin) );
+                        System.out.println(verificarBoton(x1, y1, btnBrin) && pointer != 0);
+                    }
+                    if (verificarBoton(x1, y1, btnBrin) && pointer == 0) {
+                        //Sonidos.saltarSound();
+
+                        brincoPointer = pointer;
+                    }
+
+                    if (verificarBoton(x1, y1, btnIzq) && pointer == 0) {
+                        jugador.movimiento("izq");
+
+                        movPointerIzq = pointer;
+
+                    } else if (verificarBoton(x1, y1, btnDer) && pointer == 0) {
+                        jugador.movimiento("der");
+                        movPointerDer = pointer;
 
                     }
-                    brincoPointer = pointer;
-                }
-                if(verificarBoton(x1,y1,btnPunch)){
-                    //Sonidos.golpearSound();
-                    jugador.setAtacandoPu(true);
-                    juAtacoPu = true;
-                }
-                if(verificarBoton(x1,y1,btnWeapon) ){
-                    //Sonidos.cuchilloSound();
-                    jugador.setAtacandoWe(true);
-                }
+                    if (verificarBoton(x1, y1, btnBrin) && pointer != 0 && movPointerDer == 0) {
+                        //Sonidos.saltarSound();
+                        if (jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
+                            jugador.movimientoBrin();
+                            jugador.movimiento("der");
+                            System.out.println("brinco despues de toque");
+                        }
+                        brincoPointer = pointer;
+                    } else if (verificarBoton(x1, y1, btnBrin) && pointer != 0 && movPointerIzq == 0) {
+                        //Sonidos.saltarSound();
+                        if (jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
+                            jugador.movimientoBrin();
+                            jugador.movimiento("izq");
+                            System.out.println("brinco despues de toque");
+                        }
+                        brincoPointer = pointer;
+                    } else if (verificarBoton(x1, y1, btnBrin) && pointer == 0) {
+                        if (jugador.getEstado() == Personaje.EstadoBrinco.NORMAL) {
+                            jugador.movimientoBrin();
+
+                        }
+                        brincoPointer = pointer;
+                    }
+                    if (verificarBoton(x1, y1, btnPunch)) {
+                        //Sonidos.golpearSound();
+                        jugador.setAtacandoPu(true);
+                        juAtacoPu = true;
+                    }
+                    if (verificarBoton(x1, y1, btnWeapon)) {
+                        //Sonidos.cuchilloSound();
+                        jugador.setAtacandoWe(true);
+                    }
 
 
-                return true;
-            }
-        });
+                    return true;
+                }
+            });
+
     }
 
 
