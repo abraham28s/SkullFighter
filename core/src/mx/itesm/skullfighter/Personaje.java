@@ -161,7 +161,7 @@ public class Personaje {
                 break;
             case TERMINOPUNO:
 
-                if((xp-(wp/2)-5<= xe + (we/2)+5 && xp>xe) || (xp+(wp/2)+5 >= xe-(xe/2) - 5) && xe>xp) {
+                if((xp-(wp/4)-5<= xe + (we/4)+5 && xp>xe) || (xp+(wp/4)+5 >= xe-(xe/4) - 5) && xe>xp) {
                     if (this.equals(pantalla.jugador)) {
 
 
@@ -178,7 +178,7 @@ public class Personaje {
                 break;
             case TERMINOWEAPON:
 
-                if((xp-(wp/2)<= xe + (we/2) && xp>xe) || (xp+(wp/2) >= xe-(xe/2)) && xe>xp) {
+                if((xp-(wp/4)<= xe + (we/4) && xp>xe) || (xp+(wp/4) >= xe-(xe/4)) && xe>xp) {
                     if(this.equals(pantalla.jugador)){
                         pantalla.actualizarVida(2,'j');
                     }else if(this.equals(pantalla.enemigo)){

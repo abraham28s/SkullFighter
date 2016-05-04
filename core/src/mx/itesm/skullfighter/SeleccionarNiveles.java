@@ -206,7 +206,8 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
                     Sonidos.reproducirBoton();
                 }
                 Sonidos.pausarMusicaFondo();
-                principal.setScreen(new PantallaCargando(principal, 0, huesos));
+                
+                principal.setScreen(new PantallaCargando(principal, 0, huesos, 0));
                 this.dispose();
             }
         }
@@ -223,7 +224,8 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
                         Sonidos.reproducirBoton();
                     }
                     Sonidos.pausarMusicaFondo();
-                    principal.setScreen(new PantallaCargando(principal, 2, huesos));
+                    
+                    principal.setScreen(new PantallaCargando(principal, 2, huesos, 1));
                     this.dispose();
                 }
 

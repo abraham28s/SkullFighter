@@ -24,6 +24,7 @@ import java.util.Random;
 public class NivelUno extends PantallaAbstracta implements Screen {
 
     private final Principal principal;
+
     private AssetManager AssManager;
     private OrthographicCamera camara;
     private Viewport vista;
@@ -32,6 +33,8 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
     Fondo fondo;
     Personaje jugador;
+
+    public int nivelLargo;
 
 
     Personaje enemigo;
@@ -101,16 +104,19 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     Preferences pref = Gdx.app.getPreferences("Preferencias");
     private int huesosGanar;
     private int ese;
+    private int pantallaOri;
 
 
-    public NivelUno(Principal principal,AssetManager ass,int nivel,int huesos,int huesosGanar,int ese) {
+    public NivelUno(Principal principal,AssetManager ass,int nivel,int huesos,int huesosGanar,int ese,int pantallaOri) {
         this.principal = principal;
         this.nivel = nivel;
         this.AssManager = ass;
         this.huesos = huesos;
         this.huesosGanar = huesosGanar;
         this.ese = ese;
+        this.pantallaOri = pantallaOri;
     }
+
 
 
     @Override
@@ -166,6 +172,8 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
 
             Gdx.input.setInputProcessor(new InputAdapter() {
+
+
                 public boolean touchUp(int x, int y, int pointer, int button) {
                     Vector3 coordenadas = new Vector3();
                     coordenadas.set(x, y, 0);
@@ -201,7 +209,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                             Sonidos.reproducirBoton();
                             estado = 100;
                             dispose();
-                            principal.setScreen(new PantallaCargando(principal,0,huesos));
+                            principal.setScreen(new PantallaCargando(principal,0,huesos,pantallaOri));
                         }
                     }else if( estado == 0){
                         if(verificarBoton(x1,y1,BtnQuitPausa)){
@@ -323,7 +331,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                         if(verificarBoton(x1, y1, BtnRestartGame)){
                             Sonidos.reproducirBoton();
                             estado = 100;
-                            principal.setScreen(new NivelUno(principal,AssManager,nivel,huesos,huesosGanar,ese));
+                            principal.setScreen(new NivelUno(principal,AssManager,nivel,huesos,huesosGanar,ese,pantallaOri));
                         }
 
                     }
@@ -351,7 +359,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
             float y = vidaJ.getSprite().getY();
             indexVidaJ-=cuan;
             if(indexVidaJ<0)indexVidaJ=0;
-            vidaJ.setSprite(texturaVidaE[indexVidaJ]);
+            vidaJ.setSprite(texturaVidaJ[indexVidaJ]);
             vidaJ.getSprite().setPosition(x,y);
         }
     }

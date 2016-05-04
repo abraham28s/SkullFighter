@@ -231,29 +231,28 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
             if (verificarBoton(x, y, TextoCivil1) && verificarBordes()&& huesos>15) {
                 pref.putInteger("nivel",2);
                 pref.flush();
-                this.principal.setScreen(new PantallaCargando(this.principal, 2, huesos));
+                this.principal.setScreen(new PantallaCargando(this.principal,2,huesos,1));
                 this.dispose();
             }
             if(huesos>=15) {
                 if (verificarBoton(x, y, TextoCivil1)) {
                     huesos-=15;
-                    principal.setScreen(new PantallaCargando(this.principal,2,huesos));
-                    this.dispose();
+                    principal.setScreen(new PantallaCargando(this.principal,2,huesos,1));
                 }
             }
             if(verificarBoton(x,y,botonTexto1)){
                 Preferences prefe = Gdx.app.getPreferences("Preferencias");
-                principal.setScreen(new PantallaCargando(this.principal,1,huesos,0,5,1));
+                principal.setScreen(new PantallaCargando(this.principal,1,huesos,0,2,1,0));
                 prefe.putInteger("nivel", 2);
                 prefe.flush();
                 this.dispose();
             }
             if(verificarBoton(x,y,botonTexto2)){
-                principal.setScreen(new PantallaCargando(this.principal,1,huesos,0,5,2));
+                principal.setScreen(new PantallaCargando(this.principal,1,huesos,0,3,2,0));
                 this.dispose();
             }
             if(verificarBoton(x,y,botonTexto3)){
-                principal.setScreen(new PantallaCargando(this.principal, 1, huesos, 0,5,3));
+                principal.setScreen(new PantallaCargando(this.principal, 1, huesos, 0,5,3,0));
                 this.dispose();
             }
         }

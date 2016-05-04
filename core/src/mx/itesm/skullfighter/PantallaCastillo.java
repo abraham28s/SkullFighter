@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -63,7 +64,7 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
     private Texture[] texturaMovDer;
     private Texture[] texturaMovIzq;
     private Texture texturaSkip;
-    private Texture[] texturasCivil2;
+    private Texture texturasCivil2;
     private Texture texturaBack;
     private Texture texturaTextoCivil1;
     private Texture texturaCivil1;
@@ -83,10 +84,12 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
     private Texto textoHuesos;
     private Componente cmpHuesos;
     private Boton botonTexto1,botonTexto2,botonTexto3;
+    private int huesos;
 
-    public PantallaCastillo(Principal principal, AssetManager assetManager) {
+    public PantallaCastillo(Principal principal, AssetManager assetManager,int huesos) {
         this.principal = principal;
         this.AssManager = assetManager;
+        this.huesos = huesos;
     }
     @Override
     public void show() {
@@ -105,7 +108,7 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
 
         jugador = new Componente(texturaMovDer[0]);
         jugador.setPosicion(-15, -30);
-        Civil2 = new Componente(texturasCivil2[0]);
+        Civil2 = new Componente(texturasCivil2);
         Civil2.setPosicion(1900, 30);
 
         Civil1 = new Componente(texturaEspantapajaro);
@@ -117,7 +120,7 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
         Espantapajaros = new Componente(texturaCivil1);
         Espantapajaros.setPosicion(2620,30);
 
-        TextoCivil1 = new Boton(texturaTextoCivil1);
+        TextoCivil1 = new Boton(texturaBtnEspanta);
         TextoCivil1.setPosicion(3500,350);
 
         tip = new Componente(texturaTip);
@@ -141,12 +144,12 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
         btnBack = new Boton(texturaBack);
 
         btnBack.setPosicion(1110, 580);
-        botonTexto1 = new Boton(texturaTexto1);
-        botonTexto1.setPosicion(900, 350);
-        botonTexto2 = new Boton(texturaTexto2);
-        botonTexto2.setPosicion(1950,350);
-        botonTexto3 = new Boton(texturaTexto3);
-        botonTexto3.setPosicion(2800, 350);
+        botonTexto1 = new Boton(texturaTextoCivil1);
+        botonTexto1.setPosicion(500, 350);
+        botonTexto2 = new Boton(texturaTextoCivil1);
+        botonTexto2.setPosicion(1800,350);
+        botonTexto3 = new Boton(texturaTextoCivil1);
+        botonTexto3.setPosicion(2550, 350);
         batch = new SpriteBatch();
     }
 
@@ -170,33 +173,45 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
 
         leerEntrada(); // Revisar eventos
         // Mover la cámara para que siga al personaje
-        animacionCiviles(Civil2);
-        leerEntrada2();
 
+        leerEntrada2();
+        if(huesos>=30){
+            Vector2 coor = new Vector2(TextoCivil1.getSprite().getX(),TextoCivil1.getSprite().getY());
+            TextoCivil1.setTextura(texturaBtnEspanta1);
+            TextoCivil1.setPosicion(coor.x,coor.y);
+        }
 
         batch.setProjectionMatrix(camara.combined);
 
         // DIBUJA
+
         batch.begin();
+
         fondo.render(batch);
         Civil2.render(batch);
-        tip.render(batch);
+
         Civil1.render(batch);
 
         Civil3.render(batch);
         Espantapajaros.render(batch);
         jugador.render(batch);
 
+        botonTexto1.render(batch);
+        botonTexto2.render(batch);
+        botonTexto3.render(batch);
+
 
         fondo2.render(batch);
-        TextoCivil1.render(batch);
 
+        TextoCivil1.render(batch);
         batch.end();
 
         batch.setProjectionMatrix(camaraFija.combined);
         batch.begin();
         btnIzq.render(batch);
         btnDer.render(batch);
+        cmpHuesos.render(batch);
+        textoHuesos.mostrarMensaje(batch,""+huesos,120,580);
 
         //btnBrin.render(batch);
         btnBack.render(batch);
@@ -217,36 +232,29 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
                 pref.flush();
 
             }
-        }
 
-    }
-
-    private void animacionCiviles(Componente civil) {
-        int tiempos[] = {13,14,15,16};
-        Random numero = new Random();
-
-        if(ConAle%tiempos[numero.nextInt(4)]==0){
-
-
-            float x = civil.getSprite().getX();
-            float y = civil.getSprite().getY();
-
-            if(ConCiv % (5) == 0){
-                if(civil.equals(Civil2)) {
-                    civil.setSprite(texturasCivil2[ConCiv % 3]);
-                }else{
-                    civil.setSprite(texturasCivil2[ConCiv % 3]);
+            if(huesos>=30) {
+                if (verificarBoton(x, y, TextoCivil1)) {
+                    huesos-=30;
+                    principal.setScreen(new PantallaCargando(this.principal,3,huesos,0));
                 }
             }
-            if(ConCiv>500){
-                ConCiv = 0;
+
+            if(verificarBoton(x,y,botonTexto1)){
+                principal.setScreen(new PantallaCargando(this.principal, 1, huesos, 1, 5, 1,1));
             }
-            ConCiv++;
-            civil.setPosicion(x,y);
+
+            if(verificarBoton(x,y,botonTexto2)){
+                principal.setScreen(new PantallaCargando(this.principal,1,huesos,1,5,2,1));
+            }
+            if(verificarBoton(x,y,botonTexto3)){
+                principal.setScreen(new PantallaCargando(this.principal, 1, huesos, 1, 10, 3,1));
+            }
         }
-        ConAle++;
 
     }
+
+
 
     private void actualizarCamara() {
         float posX = jugador.getSprite().getX();
@@ -357,7 +365,7 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
         if(Mov>500){
             Mov=0;
         }
-        jugador.setPosicion(x - 5, y);
+        jugador.setPosicion(x - 15, y);
     }
 
     private void movimientoDer() {
@@ -374,7 +382,7 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
         if(Mov>500){
             Mov = 0;
         }
-        jugador.setPosicion(x+5,y);
+        jugador.setPosicion(x+15,y);
     }
 
     @Override
@@ -383,20 +391,20 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
 
         texturaFondo = AssManager.get("Castillo2.png",Texture.class);
         texturaEspantapajaro = AssManager.get("Espantapajaros3.png", Texture.class);
-        texturaCivil3 = AssManager.get("CivilMalo3.png", Texture.class);
-        texturaBtnEspanta = AssManager.get("DialogosEspantaPajaros/TextScarecrow1.png",Texture.class);
-        texturaBtnEspanta1 = AssManager.get("DialogosEspantaPajaros/TextScarecrow2.png",Texture.class);
+        texturaCivil3 = AssManager.get("Guardia1.png", Texture.class);
+        texturaBtnEspanta = AssManager.get("DialogosEspantaPajaros/TextScarecrow4.png",Texture.class);
+        texturaBtnEspanta1 = AssManager.get("DialogosEspantaPajaros/TextScarecrow5.png",Texture.class);
 
         texturaMovDer= new Texture[3];
 
         texturaMovIzq = new Texture[3];
 
-        texturasCivil2 = new Texture[3];
+        texturasCivil2 = texturaCivil1 = AssManager.get("Guardia1.png", Texture.class);
 
         for (int i = 1; i <= 3; i++) {
             texturaMovDer[i-1] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/SkullCam"+i+"der.png",Texture.class);
             texturaMovIzq[i-1] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/SkullCam"+i+"izq.png",Texture.class);
-            texturasCivil2[i-1] = AssManager.get("Civil2/Civil2-" + i + ".png", Texture.class);
+
         }
         texturaHuesos = AssManager.get("GoldBone.png",Texture.class);
         texturaTexto1 = AssManager.get("Dialogos/TextCivil1.png", Texture.class);
@@ -406,7 +414,7 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
         texturaFondo2 = AssManager.get("Castillo1.png",Texture.class);
         texturaTip = AssManager.get("Civil2/Tip.png", Texture.class);
 
-        texturaCivil1 = AssManager.get("CivilFrente1.png", Texture.class);
+        texturaCivil1 = AssManager.get("Guardia1.png", Texture.class);
         texturaTextoCivil1 = AssManager.get("FightText.png", Texture.class);
 
 

@@ -153,7 +153,7 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
                 contador--;
                 //System.out.println("Contador-: " + contador);
                 if(contador<=0){
-                principal.setScreen(new PantallaMenu(principal,huesos));
+                principal.setScreen(new PantallaMenu(principal, huesos));
                     this.dispose();
                 }
             }
@@ -164,7 +164,7 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
                     Sonidos.reproducirBoton();
                 }
 
-                this.principal.setScreen(new PantallaCargando(principal,0,huesos));
+                this.principal.setScreen(new PantallaCargando(principal,0,huesos,0));
                 this.dispose();
             }
 
