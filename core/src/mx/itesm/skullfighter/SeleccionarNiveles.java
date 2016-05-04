@@ -55,6 +55,7 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
 
         cargarTexturas();
         Preferences pref = Gdx.app.getPreferences("Preferencias");
+        pref.flush();
         fondo = new Fondo(texturaFondo);
         fondo1 = new Fondo(texturaFondo2);
         fondo1.getSprite().setX(fondo.getSprite().getWidth());
@@ -207,7 +208,7 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
                 }
                 Sonidos.pausarMusicaFondo();
                 
-                principal.setScreen(new PantallaCargando(principal, 0, huesos, 0));
+                principal.setScreen(new /*PantallaCargando(principal, 0, huesos, 0)*/ NivelTutorial(this.principal));
                 this.dispose();
             }
         }

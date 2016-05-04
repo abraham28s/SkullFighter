@@ -46,9 +46,11 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
     private float variableTexuta;
     private int nivel;
     Preferences pref = Gdx.app.getPreferences("Preferencias");
+
     private int huesosGanar;
     private int ese;
     private int enenum;
+    private int dificultad;
 
     public PantallaCargando(Principal principal,int pantalla,int huesos,int pantallaOri){
         this.principal = principal;
@@ -59,7 +61,7 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
 
 
     }
-    public PantallaCargando(Principal principal,int pantalla,int huesos,int nivel,int huesosGanar,int ese,int pantallaOri){
+    public PantallaCargando(Principal principal,int pantalla,int huesos,int nivel,int huesosGanar,int ese,int pantallaOri,int dificultad){
         this.principal = principal;
         this.pantallaCargar = pantalla;
         this.huesos = huesos;
@@ -67,12 +69,14 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
         this.huesosGanar = huesosGanar;
         this.ese = ese;
         this.pantallaOri = pantallaOri;
+        this.dificultad=dificultad;
 
     }
 
 
     @Override
     public void show() {
+        pref.flush();
         setYUpgradeCamara();
         batch = new SpriteBatch();
         Manager = new AssetManager();
@@ -243,12 +247,12 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
                     this.dispose();
                     break;
                 case 1://NivelUno
-                    this.principal.setScreen(new NivelUno(this.principal,this.Manager,nivel,huesos,huesosGanar,ese));
+                    this.principal.setScreen(new NivelUno(this.principal,this.Manager,nivel,huesos,huesosGanar,ese,pantallaOri,dificultad));
                     this.dispose();
                     break;
 
                 case 2:
-                    this.principal.setScreen(new PantallaCastillo(this.principal,this.Manager));
+                    this.principal.setScreen(new PantallaCastillo(this.principal,this.Manager,huesos));
                     this.dispose();
                     break;
 

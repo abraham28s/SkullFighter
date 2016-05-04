@@ -49,6 +49,7 @@ public class P2 implements Screen {
         Sonidos.cargaAudio();
 
         Preferences pref = Gdx.app.getPreferences("Preferencias");
+        pref.flush();
         pref.getBoolean("musica",true);
         pref.getBoolean("boton", true);
         pref.flush();

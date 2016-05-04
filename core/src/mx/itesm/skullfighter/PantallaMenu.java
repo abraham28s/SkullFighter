@@ -67,6 +67,7 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
     @Override
     public void show() {
 
+
         //Crear camara y vista
         setYUpgradeCamara();
 
@@ -175,6 +176,7 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
 
     public void leerEntrada() {
         Preferences pref = Gdx.app.getPreferences("Preferencias");
+        pref.flush();
         if(Gdx.input.justTouched()) {
             Vector3 coordenadas = new Vector3();
             coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);

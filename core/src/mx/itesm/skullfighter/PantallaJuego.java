@@ -95,6 +95,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     }
     @Override
     public void show() {
+        pref.flush();
 
         Gdx.input.setCatchBackKey(true);
         Gdx.input.setCatchMenuKey(true);
@@ -242,17 +243,17 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
             }
             if(verificarBoton(x,y,botonTexto1)){
                 Preferences prefe = Gdx.app.getPreferences("Preferencias");
-                principal.setScreen(new PantallaCargando(this.principal,1,huesos,0,2,1,0));
+                principal.setScreen(new PantallaCargando(this.principal,1,huesos,0,2,1,0,3));
                 prefe.putInteger("nivel", 2);
                 prefe.flush();
                 this.dispose();
             }
             if(verificarBoton(x,y,botonTexto2)){
-                principal.setScreen(new PantallaCargando(this.principal,1,huesos,0,3,2,0));
+                principal.setScreen(new PantallaCargando(this.principal,1,huesos,0,3,2,0,4));
                 this.dispose();
             }
             if(verificarBoton(x,y,botonTexto3)){
-                principal.setScreen(new PantallaCargando(this.principal, 1, huesos, 0,5,3,0));
+                principal.setScreen(new PantallaCargando(this.principal, 1, huesos, 0,5,3,0,6));
                 this.dispose();
             }
         }
@@ -410,9 +411,9 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
             texturasCivil2[i-1] = AssManager.get("Civil2/Civil2-" + i + ".png", Texture.class);
         }
         texturaHuesos = AssManager.get("GoldBone.png",Texture.class);
-        texturaTexto1 = AssManager.get("Dialogos/TextCivil1.png", Texture.class);
+        texturaTexto1 = AssManager.get("Dialogos/TextCivil3.png", Texture.class);
         texturaTexto2 = AssManager.get("Dialogos/TextCivil2.png", Texture.class);
-        texturaTexto3 = AssManager.get("Dialogos/TextCivil3.png", Texture.class);
+        texturaTexto3 = AssManager.get("Dialogos/TextCivil1.png", Texture.class);
 
         texturaFondo2 = AssManager.get("Fondo-Capa1.png",Texture.class);
         texturaTip = AssManager.get("Civil2/Tip.png", Texture.class);

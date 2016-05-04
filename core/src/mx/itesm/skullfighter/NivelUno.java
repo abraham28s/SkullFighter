@@ -105,9 +105,10 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     private int huesosGanar;
     private int ese;
     private int pantallaOri;
+    private int dificultad;
 
 
-    public NivelUno(Principal principal,AssetManager ass,int nivel,int huesos,int huesosGanar,int ese,int pantallaOri) {
+    public NivelUno(Principal principal,AssetManager ass,int nivel,int huesos,int huesosGanar,int ese,int pantallaOri,int dificultad) {
         this.principal = principal;
         this.nivel = nivel;
         this.AssManager = ass;
@@ -115,12 +116,14 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         this.huesosGanar = huesosGanar;
         this.ese = ese;
         this.pantallaOri = pantallaOri;
+        this.dificultad = dificultad;
     }
 
 
 
     @Override
     public void show() {
+        pref.flush();
         setYUpgradeCamara();
 
 
@@ -209,9 +212,15 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                             Sonidos.reproducirBoton();
                             estado = 100;
                             dispose();
-                            principal.setScreen(new PantallaCargando(principal,0,huesos,pantallaOri));
+                            principal.setScreen(new PantallaCargando(principal,pantallaOri,huesos,pantallaOri));
                         }
                     }else if( estado == 0){
+                        if(verificarBoton(x1,y1,BtnBackEnd)){
+                            Sonidos.reproducirBoton();
+                            estado = 100;
+                            dispose();
+                            principal.setScreen(new PantallaCargando(principal,pantallaOri,huesos,pantallaOri));
+                        }
                         if(verificarBoton(x1,y1,BtnQuitPausa)){
                             Sonidos.reproducirBoton();
                             estado = 100;
@@ -219,6 +228,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
                             //Preferencias música
                             Preferences pref = Gdx.app.getPreferences("Preferencias");
+                            pref.flush();
                             pref.getBoolean("musica", true);
                             pref.flush();
                             if (pref.getBoolean("musica")) {
@@ -331,7 +341,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                         if(verificarBoton(x1, y1, BtnRestartGame)){
                             Sonidos.reproducirBoton();
                             estado = 100;
-                            principal.setScreen(new NivelUno(principal,AssManager,nivel,huesos,huesosGanar,ese,pantallaOri));
+                            principal.setScreen(new NivelUno(principal,AssManager,nivel,huesos,huesosGanar,ese,pantallaOri,dificultad));
                         }
 
                     }
@@ -536,7 +546,9 @@ public class NivelUno extends PantallaAbstracta implements Screen {
             fondoPausa.render(batch);
             MenuPausa.render(batch);
             BtnQuitPausa.render(batch);
+            BtnBackEnd.setPosicion(565,280);
             BtnResumePausa.render(batch);
+            BtnBackEnd.render(batch);
 
         }else if(this.estado == 3){
 
@@ -544,6 +556,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
             lose.render(batch);
             BtnRestartGame.render(batch);
             BtnQuitPausa.render(batch);
+            BtnBackEnd.setPosicion(650, 290);
             BtnBackEnd.render(batch);
 
         }else if(this.estado == 4){
@@ -553,6 +566,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
             cmpHuesosGanar.render(batch);
             BtnRestartGame.render(batch);
             BtnQuitPausa.render(batch);
+            BtnBackEnd.setPosicion(650, 290);
             BtnBackEnd.render(batch);
         }
         batch.end();
@@ -587,15 +601,17 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     }
 
     private void movimientoEnemigo() {
+
         Random numero = new Random();
+        int dificultad1 = dificultad * 2;
         if(jugador.getSprite().getX()+70>enemigo.getSprite().getX()+100 ){
 
-            if(numero.nextInt(500)<3) {
+            if(numero.nextInt(500)<3*(dificultad1*6)) {
                 if(enemigo.getEstadoAca() == Personaje.EstadoAtacando.NORMAL)
                 enemigo.movimiento("der");
             }
         }else if(jugador.getSprite().getX()+100<enemigo.getSprite().getX()-100){
-            if(numero.nextInt(500)<3) {
+            if(numero.nextInt(500)<3*(dificultad1*6)) {
                 if(enemigo.getEstadoAca() == Personaje.EstadoAtacando.NORMAL)
                 enemigo.movimiento("izq");
 
@@ -604,7 +620,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         int nazar = numero.nextInt(50);
 
         if(enemigo.getEstadoAca() == Personaje.EstadoAtacando.NORMAL){
-        if(nazar<2 && nazar>0){
+        if(nazar<(1*dificultad1) && nazar>0){
 
             enemigo.ataquePuno();
         }else if(nazar>=3 && nazar<=4){

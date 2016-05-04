@@ -64,6 +64,7 @@ public class Sett extends PantallaAbstracta implements Screen{
             float y = coordenadas.y;
             if (verificarBoton(x, y, btnAD)) {
                 Preferences pref = Gdx.app.getPreferences("Preferencias");
+                pref.flush();
                 if (pref.getBoolean("boton") == true ) {
                     Sonidos.reproducirBoton();
                 }

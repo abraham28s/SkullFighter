@@ -118,6 +118,7 @@ public class Costumize implements Screen {
         batch = new SpriteBatch();
 
         Preferences prefe = Gdx.app.getPreferences("Preferencias");
+        prefe.flush();
 
         if (prefe.getInteger("arma") == 1) {
             army.setTextura(Mazo);
