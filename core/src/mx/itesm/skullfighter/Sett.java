@@ -144,8 +144,8 @@ public class Sett extends PantallaAbstracta implements Screen{
                 Preferences pref = Gdx.app.getPreferences("Preferencias");
                 pref.putBoolean("guardar", false);
                 pref.flush();
-                Preferences prefe = Gdx.app.getPreferences("Preferencias");
-                if (prefe.getBoolean("boton") == true) {
+
+                if (pref.getBoolean("boton") == true) {
                     Sonidos.reproducirBoton();
                 }
                 principal.setScreen(new P2(this.principal));
