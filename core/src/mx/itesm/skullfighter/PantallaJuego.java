@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -76,6 +77,10 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     private Texture texturaEspantapajaro;
     private Texture texturaTexto1, texturaTexto2, texturaTexto3,texturaBtnEspanta;
 
+    private Texture texturaHuesos;
+    private Componente cmpHuesos;
+    private Texto textoHuesos;
+
     private int Mov = 0;
     private int ConCiv = 0;
     private int ConAle=0;
@@ -97,6 +102,8 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
         cargarTexturas();
 
+        textoHuesos = new Texto();
+
         fondo = new Fondo(texturaFondo);
         fondo2 = new Fondo(texturaFondo2);
 
@@ -113,6 +120,9 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
         Espantapajaros = new Componente(texturaCivil1);
         Espantapajaros.setPosicion(2720,30);
+
+        cmpHuesos = new Componente(texturaHuesos);
+        cmpHuesos.setPosicion(100,580);
 
         TextoCivil1 = new Boton(texturaBtnEspanta);
         TextoCivil1.setPosicion(3500, 350);
@@ -165,7 +175,9 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if(huesos>=15){
+            Vector2 coor = new Vector2(TextoCivil1.getSprite().getX(),TextoCivil1.getSprite().getY());
             TextoCivil1.setTextura(texturaBtnEspanta1);
+            TextoCivil1.setPosicion(coor.x,coor.y);
         }
 
         leerEntrada(); // Revisar eventos
@@ -199,6 +211,8 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         batch.begin();
         btnIzq.render(batch);
         btnDer.render(batch);
+        cmpHuesos.render(batch);
+        textoHuesos.mostrarMensaje(batch,""+huesos,120,580);
         //skip.render(batch);
         //btnBrin.render(batch);
         btnBack.render(batch);
@@ -219,7 +233,26 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
                 pref.flush();
                 this.principal.setScreen(new PantallaCargando(this.principal,2,huesos));
             }
+            if(huesos>=15) {
+                if (verificarBoton(x, y, TextoCivil1)) {
+                    huesos-=15;
+                    principal.setScreen(new PantallaCargando(this.principal,2,huesos));
+                }
+            }
+            if(verificarBoton(x,y,botonTexto1)){
+                Preferences prefe = Gdx.app.getPreferences("Preferencias");
+                principal.setScreen(new PantallaCargando(this.principal,1,huesos,0,5));
+                prefe.putInteger("nivel",2);
+                prefe.flush();
+            }
+            if(verificarBoton(x,y,botonTexto2)){
+                principal.setScreen(new PantallaCargando(this.principal,1,huesos,0,5));
+            }
+            if(verificarBoton(x,y,botonTexto3)){
+                principal.setScreen(new PantallaCargando(this.principal, 1, huesos, 0,5));
+            }
         }
+
 
     }
 
@@ -271,24 +304,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
                 actualizarCamara();
 
             }
-            if(huesos>=15) {
-                if (verificarBoton(x, y, TextoCivil1)) {
-                    huesos-=15;
-                    principal.setScreen(new PantallaCargando(this.principal,2,huesos));
-                }
-            }
-            if(verificarBoton(x,y,botonTexto1)){
-                Preferences prefe = Gdx.app.getPreferences("Preferencias");
-                principal.setScreen(new PantallaCargando(this.principal,1,huesos,0));
-                prefe.putInteger("nivel",2);
-                prefe.flush();
-            }
-            if(verificarBoton(x,y,botonTexto2)){
-                principal.setScreen(new PantallaCargando(this.principal,1,huesos,1));
-            }
-            if(verificarBoton(x,y,botonTexto3)){
-                principal.setScreen(new PantallaCargando(this.principal, 1, huesos, 2));
-            }
+
             if(verificarBoton(x,y,btnIzq)/*&& verificarBoton(x, y, btnBrin) */&& verificarBordes() ){
                 movimientoIzq();actualizarCamara();
 
@@ -388,7 +404,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
             texturaMovIzq[i-1] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/SkullCam"+i+"izq.png",Texture.class);
             texturasCivil2[i-1] = AssManager.get("Civil2/Civil2-" + i + ".png", Texture.class);
         }
-
+        texturaHuesos = AssManager.get("GoldBone.png",Texture.class);
         texturaTexto1 = AssManager.get("Dialogos/TextCivil1.png", Texture.class);
         texturaTexto2 = AssManager.get("Dialogos/TextCivil2.png", Texture.class);
         texturaTexto3 = AssManager.get("Dialogos/TextCivil3.png", Texture.class);

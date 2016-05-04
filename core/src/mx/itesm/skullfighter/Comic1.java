@@ -140,7 +140,7 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
                 contador++;
                 System.out.println("Contador+: " + contador);
                 if (contador>=7){
-                principal.setScreen(new SeleccionarNiveles(principal));
+                principal.setScreen(new SeleccionarNiveles(principal,huesos));
                  }
             }
             if (verificarBoton(x, y, back)) {

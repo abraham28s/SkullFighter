@@ -84,8 +84,9 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
     private int indexVidaE = 6;
 
-    private Boton BtnRestartGame;
-    private Texture TexturaBtnRestartGame;
+    private Boton BtnRestartGame,BtnBackLevel;
+    private Texture TexturaBtnRestartGame,TexturaBackLevel;
+
     private Componente win;
     private Texture texturaWin;
     private Componente lose;
@@ -97,13 +98,15 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     private int nivel;
     private int huesos;
     Preferences pref = Gdx.app.getPreferences("Preferencias");
+    private int huesosGanar;
 
 
-    public NivelUno(Principal principal,AssetManager ass,int nivel,int huesos) {
+    public NivelUno(Principal principal,AssetManager ass,int nivel,int huesos,int huesosGanar) {
         this.principal = principal;
         this.nivel = nivel;
         this.AssManager = ass;
         this.huesos = huesos;
+        this.huesosGanar = huesosGanar;
     }
 
 
@@ -142,6 +145,8 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
         BtnRestartGame = new Boton(TexturaBtnRestartGame);
         BtnRestartGame.setPosicion(565,310);
+
+
 
         crearYPosBotones();
     }
@@ -302,7 +307,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                         if(verificarBoton(x1, y1, BtnRestartGame)){
                             Sonidos.reproducirBoton();
                             estado = 100;
-                            principal.setScreen(new NivelUno(principal,AssManager,nivel,huesos));
+                            principal.setScreen(new NivelUno(principal,AssManager,nivel,huesos,huesosGanar));
                         }
 
                     }
@@ -451,7 +456,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         BtnResumePausa.setPosicion(555,430);
 
         BtnQuitPausa = new Boton(texturaQuitPausa);
-        BtnQuitPausa.setPosicion(585,270);
+        BtnQuitPausa.setPosicion(585,200);
 
         batch = new SpriteBatch();
     }
@@ -545,6 +550,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
     private void ganoJuego() {
                 this.estado = 4;
+                this.huesos += huesosGanar;
 
     }
 

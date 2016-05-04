@@ -42,8 +42,9 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
     private int huesos;
 
 
-    public SeleccionarNiveles (Principal principal) {
+    public SeleccionarNiveles (Principal principal,int huesos) {
         this.principal = principal;
+        this.huesos = huesos;
     }
     @Override
     public void show() {
@@ -213,7 +214,7 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
                         Sonidos.reproducirBoton();
                     }
                     Sonidos.pausarMusicaFondo();
-                    principal.setScreen(new PantallaCargando(principal,1,huesos,0));
+                    principal.setScreen(new PantallaCargando(principal,2,huesos));
                 }
 
         }

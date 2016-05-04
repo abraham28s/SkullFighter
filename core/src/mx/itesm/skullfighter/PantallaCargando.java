@@ -44,17 +44,20 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
     private float variableTexuta;
     private int nivel;
     Preferences pref = Gdx.app.getPreferences("Preferencias");
+    private int huesosGanar;
 
     public PantallaCargando(Principal principal,int pantalla,int huesos){
         this.principal = principal;
         this.pantallaCargar = pantalla;
         this.huesos = huesos;
+
     }
-    public PantallaCargando(Principal principal,int pantalla,int huesos,int nivel){
+    public PantallaCargando(Principal principal,int pantalla,int huesos,int nivel,int huesosGanar){
         this.principal = principal;
         this.pantallaCargar = pantalla;
         this.huesos = huesos;
         this.nivel = nivel;
+        this.huesosGanar = huesosGanar;
     }
 
 
@@ -86,6 +89,7 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
         switch (pantallaCargar){
             case 0://PantallaJuego
                 Manager.load("Fondo-Capa2.png",Texture.class);
+                Manager.load("GoldBone.png",Texture.class);
                 for (int i = 1; i <= 3; i++) {
                     Manager.load("Personaje/"+pref.getInteger("ropa")+"/SkullCam"+i+"der.png",Texture.class);
                     Manager.load("Personaje/"+pref.getInteger("ropa")+"/SkullCam"+i+"izq.png",Texture.class);
@@ -164,19 +168,22 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
 
             case 2: //Castillo
                 Manager.load("Castillo2.png",Texture.class);
+                Manager.load("GoldBone.png",Texture.class);
+                for (int i = 1; i <= 3; i++) {
+                    Manager.load("Personaje/"+pref.getInteger("ropa")+"/SkullCam"+i+"der.png",Texture.class);
+                    Manager.load("Personaje/"+pref.getInteger("ropa")+"/SkullCam"+i+"izq.png",Texture.class);
+                    Manager.load("Civil2/Civil2-" + i + ".png", Texture.class);
+                    Manager.load("Dialogos/TextCivil" + i + ".png", Texture.class);
+                }
+                Manager.load("DialogosEspantaPajaros/TextScarecrow1.png",Texture.class);
+                Manager.load("DialogosEspantaPajaros/TextScarecrow2.png",Texture.class);
+
+                Manager.load("Castillo1.png",Texture.class);
+
+                Manager.load("Civil2/Tip.png", Texture.class);
+                Manager.load("CivilFrente1.png", Texture.class);
                 Manager.load("Espantapajaros3.png", Texture.class);
                 Manager.load("CivilMalo3.png", Texture.class);
-
-
-                for (int i = 1; i <= 3; i++) {
-                    Manager.load("SkullCam"+i+"der.png",Texture.class);
-                    Manager.load("SkullCam"+i+"izq.png",Texture.class);
-                    Manager.load("Civil2/Civil2-" + i + ".png", Texture.class);
-                }
-
-                Manager.load("Castillo1.png", Texture.class);
-                Manager.load("Civil2/Tip.png", Texture.class);
-
                 Manager.load("CivilFrente1.png", Texture.class);
                 Manager.load("FightText.png", Texture.class);
                 Manager.load("Boton_Derecha.png", Texture.class);
@@ -184,7 +191,6 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
                 Manager.load("BotonJump.png", Texture.class);
                 Manager.load("BackGame.png", Texture.class);
                 Manager.load("skip.png", Texture.class);
-
                 break;
 
         }
@@ -218,7 +224,7 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
                     //this.principal.setScreen(new PantallaCastillo(this.principal,this.Manager));
                     break;
                 case 1://NivelUno
-                    this.principal.setScreen(new NivelUno(this.principal,this.Manager,nivel,huesos));
+                    this.principal.setScreen(new NivelUno(this.principal,this.Manager,nivel,huesos,huesosGanar));
                     break;
 
                 case 2:
