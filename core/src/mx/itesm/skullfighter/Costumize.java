@@ -266,6 +266,7 @@ public class Costumize implements Screen {
 
                     prefe.putInteger("ropa", 1);
                     //cambiar textura
+                    prefe.flush();
                     customs.setTextura(Negro);
                     customs.setPosicion(185, 100);
                 }
@@ -275,7 +276,7 @@ public class Costumize implements Screen {
                         Sonidos.reproducirBoton();
                     }
                     prefe.putInteger("ropa",2);
-
+                    prefe.flush();
                     customs.setTextura(Verde);
                     customs.setPosicion(185, 100);
                 }
