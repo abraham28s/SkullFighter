@@ -78,6 +78,7 @@ public class P2 implements Screen {
             if (pref.getBoolean("guardar") == false) {
                 pref.putInteger("nivel", 0);
             }
+            this.dispose();
         }
     }
 

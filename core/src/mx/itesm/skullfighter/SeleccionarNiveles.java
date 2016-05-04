@@ -3,6 +3,7 @@ package mx.itesm.skullfighter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -166,7 +167,13 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
 
     @Override
     public void dispose() {
-
+        texturaFondo.dispose();
+        texturaFondo2.dispose();
+        TextureReturn.dispose();
+        TextureIntro.dispose();
+        TextureNivel1.dispose();
+        TextureNivel2.dispose();
+        TextureNivel3.dispose();
     }
 
     @Override
@@ -184,6 +191,7 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
                     Sonidos.reproducirBoton();
                 }
                 principal.setScreen(new PantallaMenu(principal));
+                this.dispose();
             }
         }
 
@@ -198,7 +206,8 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
                     Sonidos.reproducirBoton();
                 }
                 Sonidos.pausarMusicaFondo();
-                principal.setScreen(new PantallaCargando(principal,0,huesos));
+                principal.setScreen(new PantallaCargando(principal, 0, huesos));
+                this.dispose();
             }
         }
 
@@ -214,7 +223,8 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
                         Sonidos.reproducirBoton();
                     }
                     Sonidos.pausarMusicaFondo();
-                    principal.setScreen(new PantallaCargando(principal,2,huesos));
+                    principal.setScreen(new PantallaCargando(principal, 2, huesos));
+                    this.dispose();
                 }
 
         }
@@ -231,9 +241,6 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
                 principal.setScreen(new PantallaCargando(principal,0));//Pantalla castigo
             }
         }*/
-
-
-
     }
 
     @Override

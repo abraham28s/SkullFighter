@@ -68,6 +68,7 @@ public class Sett extends PantallaAbstracta implements Screen{
                     Sonidos.reproducirBoton();
                 }
                 principal.setScreen(new AcercaDe(principal));
+                this.dispose();
             }
         }
 
@@ -116,6 +117,7 @@ public class Sett extends PantallaAbstracta implements Screen{
                     Sonidos.reproducirBoton();
                 }
                 principal.setScreen(new PantallaMenu(principal));
+                this.dispose();
             }
         }
 
@@ -131,6 +133,7 @@ public class Sett extends PantallaAbstracta implements Screen{
                     Sonidos.reproducirBoton();
                 }
                 principal.setScreen(new Comic1(principal));
+                this.dispose();
             }
         }
 
@@ -149,8 +152,9 @@ public class Sett extends PantallaAbstracta implements Screen{
                     Sonidos.reproducirBoton();
                 }
                 principal.setScreen(new P2(this.principal));
+                this.dispose();
             }
-        }
+        }//fjdsklfjasdlkjflksdajflkadsjkflsjdlkf
 
 
     }
@@ -280,6 +284,14 @@ public class Sett extends PantallaAbstracta implements Screen{
 
     @Override
     public void dispose() {
-
+        texturaFondo.dispose();
+        texturaFondo2.dispose();
+        texturaTitulo.dispose();
+        texturaAD.dispose();
+        TextureReturn.dispose();
+        TextureRestart.dispose();
+        texturaComic.dispose();
+        //TextureMusic.dispose();
+        //TextureMusic2.dispose();
     }
 }

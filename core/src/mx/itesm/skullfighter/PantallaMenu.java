@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -191,32 +192,35 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
                         Sonidos.reproducirBoton();
                     }
                     //Sonidos.cargarEfectos();
+                    this.dispose();
                 }
 
                 if (pref.getInteger("nivel") == 0) {
-                    principal.setScreen(new Comic1(principal,huesos));
+                    principal.setScreen(new Comic1(principal, huesos));
                     pref.putInteger("nivel", 1);
                     pref.flush();
                     if(pref.getBoolean("boton") == true){
                         Sonidos.reproducirBoton();
                     }
+                    this.dispose();
 
                     Sonidos.pausarMusicaFondo();
                     //Sonidos.cargarEfectos();
                 }
 
             }  else if (verificarBoton(x, y, btnCustom)) {
-                Gdx.app.log("leerEntrada", "Tap sobre el boton custom");
                 if (pref.getBoolean("boton") == true ){
                     Sonidos.reproducirBoton();
                 }
                 principal.setScreen(new Costumize(principal));
+                this.dispose();
             } else if (verificarBoton(x, y, btnSettings)) {
                 principal.setScreen(new Sett(principal));
                 if (pref.getBoolean("boton") == true ) {
                     Sonidos.reproducirBoton();
                 }
-                Gdx.app.log("leerEntrada", "Tap sobre el boton sett");
+                this.dispose();
+
 
             }
         }
@@ -245,6 +249,18 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
     @Override
     public void dispose() {
 
+        texturaFondo.dispose();
+        texturaFondo2.dispose();
 
+        //Botones
+        texturaBtnStory.dispose();
+        texturaBtnCustom.dispose();
+        texturaBtnSettings.dispose();
+
+        //Titulos
+        texturabtnMMenu.dispose();
+        textCustomize.dispose();
+        textStory.dispose();
+        textSettings.dispose();
     }
 }

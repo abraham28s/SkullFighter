@@ -92,6 +92,7 @@ public class AcercaDe extends PantallaAbstracta implements Screen {
                     Sonidos.reproducirBoton();
                 }
                 Principal.setScreen(new Sett(Principal));
+                this.dispose();
             }
         }
     }
@@ -115,5 +116,8 @@ public class AcercaDe extends PantallaAbstracta implements Screen {
 
     @Override
     public void dispose() {
+
+        texturaFondo.dispose();
+        texturaBtnBack.dispose();
     }
 }

@@ -52,6 +52,7 @@ public class P1 implements Screen {
 
         if(cont>150){
             principal.setScreen(new P2(principal));
+            this.dispose();
         }
     }
 

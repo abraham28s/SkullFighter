@@ -309,6 +309,7 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
 
                 Sonidos.reproducirBoton();
                 principal.setScreen(new PantallaMenu(principal));
+                this.dispose();
 
                 //Preferencias música
                 Preferences pref = Gdx.app.getPreferences("Preferencias");
@@ -439,6 +440,29 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
 
     @Override
     public void dispose() {
+        AssManager.dispose();
 
+        texturaFondo.dispose();
+        texturaEspantapajaro.dispose();
+        texturaCivil3.dispose();
+        texturaBtnEspanta.dispose();
+        texturaBtnEspanta1.dispose();
+
+        texturaHuesos.dispose();
+        texturaTexto1.dispose();
+        texturaTexto2.dispose();
+        texturaTexto3.dispose();
+
+        texturaFondo2.dispose();
+        texturaTip.dispose();
+
+        texturaCivil1.dispose();
+        texturaTextoCivil1.dispose();
+
+        texturaBtnDer.dispose();
+        texturaBtnIzq.dispose();
+        texturaBtnBrin.dispose();
+        texturaBack.dispose();
+        texturaSkip.dispose();
     }
 }

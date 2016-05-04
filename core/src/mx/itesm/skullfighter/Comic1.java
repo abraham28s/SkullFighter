@@ -132,7 +132,7 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
             float x = coordenadas.x;
             float y = coordenadas.y;
             if (verificarBoton(x, y, next)) {
-                Gdx.app.log("leerEntrada", "Tap sobre NEXT");
+
                 //cambiar a pantalla
                 Sonidos.reproducirBoton();
                 fondo.setTextura(comic[contador + 1]);
@@ -141,10 +141,11 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
                 System.out.println("Contador+: " + contador);
                 if (contador>=7){
                 principal.setScreen(new SeleccionarNiveles(principal,huesos));
+                    this.dispose();
                  }
             }
             if (verificarBoton(x, y, back)) {
-                Gdx.app.log("leerEntrada", "Tap sobre BACK");
+
                 //cambiar a pantalla
                 Sonidos.reproducirBoton();
                 fondo.setTextura(comic[contador - 1]);
@@ -153,6 +154,7 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
                 //System.out.println("Contador-: " + contador);
                 if(contador<=0){
                 principal.setScreen(new PantallaMenu(principal,huesos));
+                    this.dispose();
                 }
             }
 
@@ -163,6 +165,7 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
                 }
 
                 this.principal.setScreen(new PantallaCargando(principal,0,huesos));
+                this.dispose();
             }
 
         }
@@ -186,5 +189,10 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
 
     @Override
     public void dispose() {
+        texturaFondo.dispose();
+        texturaSkip.dispose();
+        texturaBack.dispose();
+        texturaNext.dispose();
+
     }
 }

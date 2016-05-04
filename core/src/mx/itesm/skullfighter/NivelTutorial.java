@@ -27,8 +27,6 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
 
     Fondo fondo;
     Personaje jugador;
-
-
     Personaje enemigo;
 
     private Boton btnDer;
@@ -91,17 +89,13 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
     private boolean banderaIzquierdaApre;
     private boolean banderaDerechaApre;
 
-
     public NivelTutorial(Principal principal) {
         this.principal = principal;
     }
 
-
     @Override
     public void show() {
         setYUpgradeCamara();
-
-
 
         cargarTexturas();
 
@@ -137,9 +131,6 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
     }
 
     void leerEntrada() {
-
-
-
             Gdx.input.setInputProcessor(new InputAdapter() {
                 public boolean touchUp(int x, int y, int pointer, int button) {
                     Vector3 coordenadas = new Vector3();
@@ -227,8 +218,6 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
                     float y1 = coordenadas.y;
 
                     if(estado == 1){
-
-
                         if (verificarBoton(x1, y1, btnIzq) && pointer == 0) {
                             jugador.movimiento("izq");
 
@@ -293,6 +282,7 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
                             Sonidos.reproducirBoton();
                             estado = 100;
                             principal.setScreen(new NivelTutorial(principal));
+
                         }
 
                     }
@@ -557,11 +547,6 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
             enemigo.ataqueArma();
         }}
     }
-
-
-
-
-
     @Override
     public void resize(int width, int height) {
     }
@@ -587,5 +572,21 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
     @Override
     public void dispose() {
 
+        texturaFondo.dispose();
+        texturaWin.dispose();
+        texturaLose.dispose();
+        TexturaBtnRestartGame.dispose();
+
+        texturaMenuPausa.dispose();
+        texturaQuitPausa.dispose();
+        texturaResumePausa.dispose();
+        texturaFonPausa.dispose();
+
+        texturaBtnDer.dispose();
+        texturaBtnIzq.dispose();
+        texturaBtnBrin.dispose();
+        texturaPausa.dispose();
+        texturaBtnPunch.dispose();
+        texturaBtnWeapon.dispose();
     }
 }

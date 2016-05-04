@@ -3,6 +3,7 @@ package mx.itesm.skullfighter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -211,19 +212,19 @@ public class Costumize implements Screen {
             float y = coordenadas.y;
             if (verificarBoton(x, y, btnBack)) {
                 Preferences prefe = Gdx.app.getPreferences("Preferencias");
-                Gdx.app.log("leerEntrada", "TAp sobre BACK");
                 //cambiar a pantalla
                 Principal.setScreen(new PantallaMenu(Principal));
                 if (prefe.getBoolean("boton") == true) {
                     Sonidos.reproducirBoton();
                 }
+                this.dispose();
             }
 
             Preferences prefe = Gdx.app.getPreferences("Preferencias");
 
 
             if (verificarBoton(x, y, weapons)) {
-                Gdx.app.log("leerEntrada", "TAp sobre MAZO");
+
                 if (prefe.getBoolean("boton") == true ) {
                     Sonidos.reproducirBoton();
                 }
@@ -236,7 +237,7 @@ public class Costumize implements Screen {
                 army.setPosicion(412, 236);
             }
                 if (verificarBoton(x, y, armaS)) {
-                    Gdx.app.log("leerEntrada", "Tap sobre OZ");
+
                     if (prefe.getBoolean("boton") == true ) {
                         Sonidos.reproducirBoton();
                     }
@@ -261,7 +262,7 @@ public class Costumize implements Screen {
                     if (prefe.getBoolean("boton") == true ) {
                         Sonidos.reproducirBoton();
                     }
-                    Gdx.app.log("leerEntrada", "TAp sobre NEGRO");
+
                     prefe.putInteger("ropa", 1);
                     //cambiar textura
                     customs.setTextura(Negro);
@@ -273,7 +274,7 @@ public class Costumize implements Screen {
                         Sonidos.reproducirBoton();
                     }
                     prefe.putInteger("ropa",2);
-                    Gdx.app.log("leerEntrada", "Tap sobre VERDE");
+
                     customs.setTextura(Verde);
                     customs.setPosicion(185, 100);
                 }
@@ -306,5 +307,27 @@ public class Costumize implements Screen {
 
     @Override
     public void dispose() {
+
+        texturaFondo.dispose();
+        texturaFondo2.dispose();
+        texturabtnTitulo.dispose();
+        texturaBack.dispose();
+        texturaLabelC.dispose();
+        texturaLabelW.dispose();
+
+        texturaCustom.dispose();
+
+        //Armas
+        texturaWeapon.dispose();
+        texturaArma.dispose();
+        texturaArmy.dispose();
+        Mazo.dispose();
+        Oz.dispose();
+
+        //Ropa
+        texturaCloth.dispose();
+        texturaRopas.dispose();
+        Negro.dispose();
+        Verde.dispose();
     }
 }

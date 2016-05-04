@@ -610,5 +610,20 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     @Override
     public void dispose() {
 
+        AssManager.dispose();
+        texturaWin.dispose();
+        texturaLose.dispose();
+        TexturaBtnRestartGame.dispose();
+        texturaMenuPausa.dispose();
+        texturaQuitPausa.dispose();
+        texturaResumePausa.dispose();
+        texturaFonPausa.dispose();
+        texturaBtnDer.dispose();
+        texturaBtnIzq.dispose();
+        texturaBtnBrin.dispose();
+        texturaPausa.dispose();
+        texturaBtnPunch.dispose();
+        texturaBtnWeapon.dispose();
+        texturaFondo.dispose();
     }
 }

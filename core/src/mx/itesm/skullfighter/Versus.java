@@ -94,6 +94,7 @@ public class Versus extends PantallaAbstracta implements Screen {
                 Gdx.app.log("leerEntrada","TAp sobre back");
                 //cambiar a pantalla de jugar
                 Principal.setScreen(new PantallaMenu(Principal));
+                this.dispose();
             }
         }
     }
@@ -127,6 +128,8 @@ public class Versus extends PantallaAbstracta implements Screen {
 
     @Override
     public void dispose() {
+        texturaFondo.dispose();
+        texturaBack.dispose();
 
     }
 }
