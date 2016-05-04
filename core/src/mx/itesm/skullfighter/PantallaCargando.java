@@ -221,17 +221,14 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
             switch (pantallaCargar) {
                 case 0://PantallaJuego
                     this.principal.setScreen(new PantallaJuego(this.principal,this.Manager,this.huesos));
-                    this.dispose();
                     //this.principal.setScreen(new PantallaCastillo(this.principal,this.Manager));
                     break;
                 case 1://NivelUno
                     this.principal.setScreen(new NivelUno(this.principal,this.Manager,nivel,huesos,huesosGanar));
-                    this.dispose();
                     break;
 
                 case 2:
                     this.principal.setScreen(new PantallaCastillo(this.principal,this.Manager));
-                    this.dispose();
                     break;
 
             }
@@ -276,10 +273,6 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
 
     @Override
     public void dispose() {
-
-
-        texturaTexto.dispose();
-        texturaFondoCargando.dispose();
 
     }
 

@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.AtlasTmxMapLoader;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -73,12 +74,12 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     private int estado = 1;
 
     //Pausa
-    private Componente fondoPausa;
-    private Texture texturaFonPausa;
+    private Componente fondoPausa,cmpHuesosGanar;
+    private Texture texturaFonPausa,texturaHuesosGanar;
     private Componente MenuPausa;
     private Texture texturaMenuPausa;
-    private Boton BtnQuitPausa;
-    private Texture texturaQuitPausa;
+    private Boton BtnQuitPausa,BtnBackEnd;
+    private Texture texturaQuitPausa,texturaBackEnd;
     private Boton BtnResumePausa;
     private Texture texturaResumePausa;
 
@@ -99,14 +100,16 @@ public class NivelUno extends PantallaAbstracta implements Screen {
     private int huesos;
     Preferences pref = Gdx.app.getPreferences("Preferencias");
     private int huesosGanar;
+    private int ese;
 
 
-    public NivelUno(Principal principal,AssetManager ass,int nivel,int huesos,int huesosGanar) {
+    public NivelUno(Principal principal,AssetManager ass,int nivel,int huesos,int huesosGanar,int ese) {
         this.principal = principal;
         this.nivel = nivel;
         this.AssManager = ass;
         this.huesos = huesos;
         this.huesosGanar = huesosGanar;
+        this.ese = ese;
     }
 
 
@@ -140,11 +143,18 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         win = new Componente(texturaWin);
         win.setPosicion(210,450);
 
+        cmpHuesosGanar = new Componente(texturaHuesosGanar);
+        cmpHuesosGanar.setPosicion(810,300);
+
+
         lose = new Componente(texturaLose);
         lose.setPosicion(250,450);
 
         BtnRestartGame = new Boton(TexturaBtnRestartGame);
-        BtnRestartGame.setPosicion(565,310);
+        BtnRestartGame.setPosicion(480,290);
+
+        BtnBackEnd = new Boton(texturaBackEnd);
+        BtnBackEnd.setPosicion(650,290);
 
 
 
@@ -186,6 +196,12 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                             estado = 100;
                             dispose();
                             principal.setScreen(new PantallaMenu(principal,huesos));
+                        }
+                        if(verificarBoton(x1,y1,BtnBackEnd)){
+                            Sonidos.reproducirBoton();
+                            estado = 100;
+                            dispose();
+                            principal.setScreen(new PantallaCargando(principal,0,huesos));
                         }
                     }else if( estado == 0){
                         if(verificarBoton(x1,y1,BtnQuitPausa)){
@@ -307,7 +323,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                         if(verificarBoton(x1, y1, BtnRestartGame)){
                             Sonidos.reproducirBoton();
                             estado = 100;
-                            principal.setScreen(new NivelUno(principal,AssManager,nivel,huesos,huesosGanar));
+                            principal.setScreen(new NivelUno(principal,AssManager,nivel,huesos,huesosGanar,ese));
                         }
 
                     }
@@ -359,7 +375,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         texturaBtnPunch = AssManager.get("BotonPunch.png",Texture.class);
         texturaBtnWeapon = AssManager.get("BotonWeapon.png",Texture.class);
 
-        texturaFondo = AssManager.get(nivel +"/Entrenamiento.png",Texture.class);
+        texturaFondo = AssManager.get(nivel +"/Entrenamiento"+ese+".png",Texture.class);
 
         texturaMovDer= new Texture[3];
         texturaMovDer[0] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/SkullCam1der.png",Texture.class);
@@ -419,7 +435,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         texturaEnePunchIzq[1] = AssManager.get(nivel +"/EnemigoPun2Izq.png",Texture.class);
         texturaEnePunchIzq[2] = AssManager.get(nivel +"/Enemigo1Izq.png",Texture.class);
         texturaEnePunchIzq[3]=AssManager.get(nivel +"/Enemigo3Izq.png",Texture.class);
-
+        texturaBackEnd = AssManager.get("BackGame.png",Texture.class);
 
 
         texturaVidaJ = new Texture[7];
@@ -429,6 +445,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
             texturaVidaE[i] = AssManager.get(nivel +"/VidaSkullE"+ i+".png",Texture.class);
         }
 
+        texturaHuesosGanar = AssManager.get("+" + huesosGanar + ".png",Texture.class);
 
 
 
@@ -519,13 +536,16 @@ public class NivelUno extends PantallaAbstracta implements Screen {
             lose.render(batch);
             BtnRestartGame.render(batch);
             BtnQuitPausa.render(batch);
+            BtnBackEnd.render(batch);
 
         }else if(this.estado == 4){
 
             fondoPausa.render(batch);
             win.render(batch);
+            cmpHuesosGanar.render(batch);
             BtnRestartGame.render(batch);
             BtnQuitPausa.render(batch);
+            BtnBackEnd.render(batch);
         }
         batch.end();
     }
@@ -562,19 +582,22 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         Random numero = new Random();
         if(jugador.getSprite().getX()+70>enemigo.getSprite().getX()+100 ){
 
-            if(numero.nextInt(30)<3) {
+            if(numero.nextInt(500)<3) {
+                if(enemigo.getEstadoAca() == Personaje.EstadoAtacando.NORMAL)
                 enemigo.movimiento("der");
             }
         }else if(jugador.getSprite().getX()+100<enemigo.getSprite().getX()-100){
-            if(numero.nextInt(30)<3) {
+            if(numero.nextInt(500)<3) {
+                if(enemigo.getEstadoAca() == Personaje.EstadoAtacando.NORMAL)
                 enemigo.movimiento("izq");
 
             }
         }
-        int nazar = numero.nextInt(200);
+        int nazar = numero.nextInt(50);
 
         if(enemigo.getEstadoAca() == Personaje.EstadoAtacando.NORMAL){
-        if(nazar<1 && nazar>0){
+        if(nazar<2 && nazar>0){
+
             enemigo.ataquePuno();
         }else if(nazar>=3 && nazar<=4){
             //enemigo.ataqueArma();
