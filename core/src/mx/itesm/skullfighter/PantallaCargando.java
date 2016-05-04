@@ -45,6 +45,7 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
     private int nivel;
     Preferences pref = Gdx.app.getPreferences("Preferencias");
     private int huesosGanar;
+    private int ese;
 
     public PantallaCargando(Principal principal,int pantalla,int huesos){
         this.principal = principal;
@@ -52,12 +53,13 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
         this.huesos = huesos;
 
     }
-    public PantallaCargando(Principal principal,int pantalla,int huesos,int nivel,int huesosGanar){
+    public PantallaCargando(Principal principal,int pantalla,int huesos,int nivel,int huesosGanar,int ese){
         this.principal = principal;
         this.pantallaCargar = pantalla;
         this.huesos = huesos;
         this.nivel = nivel;
         this.huesosGanar = huesosGanar;
+        this.ese = ese;
     }
 
 
@@ -132,9 +134,9 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
                 Manager.load("BotonPunch.png",Texture.class);
                 Manager.load("BotonWeapon.png",Texture.class);
 
-                Manager.load(nivel + "/Entrenamiento.png",Texture.class);
+                Manager.load(nivel + "/Entrenamiento"+ese+".png",Texture.class);
 
-
+                Manager.load("BackGame.png", Texture.class);
                 for (int i = 1; i <=3 ; i++) {
                     Manager.load("Personaje/"+pref.getInteger("ropa")+"/SkullCam"+i+"der.png", Texture.class);
                     Manager.load("Personaje/"+pref.getInteger("ropa")+"/SkullCam"+i+"izq.png", Texture.class);
@@ -161,7 +163,7 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
                     Manager.load("Personaje/VidaSkull" + i + ".png",Texture.class);
                     Manager.load(nivel + "/VidaSkullE" + i + ".png",Texture.class);
                 }
-
+                Manager.load("+"+huesosGanar+".png",Texture.class);
                 break;
 
 
@@ -222,13 +224,16 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
                 case 0://PantallaJuego
                     this.principal.setScreen(new PantallaJuego(this.principal,this.Manager,this.huesos));
                     //this.principal.setScreen(new PantallaCastillo(this.principal,this.Manager));
+                    this.dispose();
                     break;
                 case 1://NivelUno
-                    this.principal.setScreen(new NivelUno(this.principal,this.Manager,nivel,huesos,huesosGanar));
+                    this.principal.setScreen(new NivelUno(this.principal,this.Manager,nivel,huesos,huesosGanar,ese));
+                    this.dispose();
                     break;
 
                 case 2:
                     this.principal.setScreen(new PantallaCastillo(this.principal,this.Manager));
+                    this.dispose();
                     break;
 
             }
@@ -274,6 +279,8 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
     @Override
     public void dispose() {
 
+        texturaTexto.dispose();
+        texturaFondoCargando.dispose();
     }
 
     @Override

@@ -231,25 +231,30 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
             if (verificarBoton(x, y, TextoCivil1) && verificarBordes()&& huesos>15) {
                 pref.putInteger("nivel",2);
                 pref.flush();
-                this.principal.setScreen(new PantallaCargando(this.principal,2,huesos));
+                this.principal.setScreen(new PantallaCargando(this.principal, 2, huesos));
+                this.dispose();
             }
             if(huesos>=15) {
                 if (verificarBoton(x, y, TextoCivil1)) {
                     huesos-=15;
                     principal.setScreen(new PantallaCargando(this.principal,2,huesos));
+                    this.dispose();
                 }
             }
             if(verificarBoton(x,y,botonTexto1)){
                 Preferences prefe = Gdx.app.getPreferences("Preferencias");
-                principal.setScreen(new PantallaCargando(this.principal,1,huesos,0,5));
-                prefe.putInteger("nivel",2);
+                principal.setScreen(new PantallaCargando(this.principal,1,huesos,0,5,1));
+                prefe.putInteger("nivel", 2);
                 prefe.flush();
+                this.dispose();
             }
             if(verificarBoton(x,y,botonTexto2)){
-                principal.setScreen(new PantallaCargando(this.principal,1,huesos,0,5));
+                principal.setScreen(new PantallaCargando(this.principal,1,huesos,0,5,2));
+                this.dispose();
             }
             if(verificarBoton(x,y,botonTexto3)){
-                principal.setScreen(new PantallaCargando(this.principal, 1, huesos, 0,5));
+                principal.setScreen(new PantallaCargando(this.principal, 1, huesos, 0,5,3));
+                this.dispose();
             }
         }
 
@@ -316,6 +321,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
                     Sonidos.reproducirBoton();
                 }
                 principal.setScreen(new PantallaMenu(principal, huesos));
+                this.dispose();
 
                 //Preferencias música
 
@@ -363,7 +369,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         if(Mov>500){
             Mov=0;
         }
-        jugador.setPosicion(x - 5, y);
+        jugador.setPosicion(x - 15, y);
     }
 
     private void movimientoDer() {
@@ -380,7 +386,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         if(Mov>500){
             Mov = 0;
         }
-        jugador.setPosicion(x+5,y);
+        jugador.setPosicion(x+15,y);
     }
 
     @Override
@@ -446,6 +452,29 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
     @Override
     public void dispose() {
+        AssManager.dispose();
+        texturaFondo.dispose();
+        texturaEspantapajaro.dispose();
+        texturaCivil3.dispose();
+        texturaBtnEspanta.dispose();
+        texturaBtnEspanta1.dispose();
+
+        texturaHuesos.dispose();
+        texturaTexto1.dispose();
+        texturaTexto2.dispose();
+        texturaTexto3.dispose();
+
+        texturaFondo2.dispose();
+        texturaTip.dispose();
+
+        texturaCivil1.dispose();
+        texturaTextoCivil1.dispose();
+
+        texturaBtnDer.dispose();
+        texturaBtnIzq.dispose();
+        texturaBtnBrin.dispose();
+        texturaBack.dispose();
+        texturaSkip.dispose();
 
     }
 }
