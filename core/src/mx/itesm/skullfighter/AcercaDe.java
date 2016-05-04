@@ -89,7 +89,7 @@ public class AcercaDe extends PantallaAbstracta implements Screen {
                 Preferences prefe = Gdx.app.getPreferences("Preferencias");
                 prefe.flush();
                 //cambiar a pantalla de jugar
-                if(prefe.getBoolean("boton") == true) {
+                if(prefe.getBoolean("boton",true) == true) {
                     Sonidos.reproducirBoton();
                 }
                 Principal.setScreen(new Sett(Principal));

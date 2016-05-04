@@ -171,7 +171,7 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
                             Preferences pref = Gdx.app.getPreferences("Preferencias");
                             pref.getBoolean("musica", true);
                             pref.flush();
-                            if (pref.getBoolean("musica")) {
+                            if (pref.getBoolean("musica",true)) {
                                 Sonidos.reproducirMusicaFondo();
                             }
                         }
@@ -318,20 +318,20 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
 
         texturaFondo = new Texture(Gdx.files.internal("Tutorial/Entrenamiento.png"));
         texturaMovDer= new Texture[3];
-        texturaMovDer[0] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/SkullCam1der.png"));
-        texturaMovDer[1] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/SkullCam2der.png"));
-        texturaMovDer[2] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/SkullCam3der.png"));
+        texturaMovDer[0] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/SkullCam1der.png"));
+        texturaMovDer[1] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/SkullCam2der.png"));
+        texturaMovDer[2] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/SkullCam3der.png"));
 
         texturaMovIzq = new Texture[3];
-        texturaMovIzq[0] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/SkullCam1izq.png"));
-        texturaMovIzq[1] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/SkullCam2izq.png"));
-        texturaMovIzq[2] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/SkullCam3izq.png"));
+        texturaMovIzq[0] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/SkullCam1izq.png"));
+        texturaMovIzq[1] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/SkullCam2izq.png"));
+        texturaMovIzq[2] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/SkullCam3izq.png"));
 
         texturaOzDer = new Texture[5];
-        texturaOzDer[0] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz1Der.png"));
-        texturaOzDer[1] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz2Der.png"));
-        texturaOzDer[2] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz3Der.png"));
-        texturaOzDer[3] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz4Der.png"));
+        texturaOzDer[0] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/"+pref.getInteger("arma",1)+"/Oz1Der.png"));
+        texturaOzDer[1] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/"+pref.getInteger("arma",1)+"/Oz2Der.png"));
+        texturaOzDer[2] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/"+pref.getInteger("arma",1)+"/Oz3Der.png"));
+        texturaOzDer[3] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/"+pref.getInteger("arma",1)+"/Oz4Der.png"));
         texturaOzDer[4] =texturaMovDer[2];
 
         texturaOzIzq = new Texture[5];

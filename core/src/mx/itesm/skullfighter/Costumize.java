@@ -120,22 +120,22 @@ public class Costumize implements Screen {
         Preferences prefe = Gdx.app.getPreferences("Preferencias");
         prefe.flush();
 
-        if (prefe.getInteger("arma") == 1) {
+        if (prefe.getInteger("arma",1) == 1) {
             army.setTextura(Mazo);
             army.setPosicion(412, 236);
         }
 
-        if (prefe.getInteger("arma") == 2) {
+        if (prefe.getInteger("arma",1) == 2) {
             army.setTextura(Oz);
             army.setPosicion(432, 136);
         }
 
-        if (prefe.getInteger("ropa") == 1){
+        if (prefe.getInteger("ropa",1) == 1){
             customs.setTextura(Negro);
             customs.setPosicion(185, 100);
         }
 
-        if (prefe.getInteger("ropa") == 2){
+        if (prefe.getInteger("ropa",1) == 2){
             customs.setTextura(Verde);
             customs.setPosicion(185, 100);
         }
@@ -215,7 +215,7 @@ public class Costumize implements Screen {
                 Preferences prefe = Gdx.app.getPreferences("Preferencias");
                 //cambiar a pantalla
                 Principal.setScreen(new PantallaMenu(Principal));
-                if (prefe.getBoolean("boton") == true) {
+                if (prefe.getBoolean("boton",true) == true) {
                     Sonidos.reproducirBoton();
                 }
                 this.dispose();
@@ -226,7 +226,7 @@ public class Costumize implements Screen {
 
             if (verificarBoton(x, y, weapons)) {
 
-                if (prefe.getBoolean("boton") == true ) {
+                if (prefe.getBoolean("boton",true) == true ) {
                     Sonidos.reproducirBoton();
                 }
                 //Preferencias
@@ -239,7 +239,7 @@ public class Costumize implements Screen {
             }
                 if (verificarBoton(x, y, armaS)) {
 
-                    if (prefe.getBoolean("boton") == true ) {
+                    if (prefe.getBoolean("boton",true) == true ) {
                         Sonidos.reproducirBoton();
                     }
 
@@ -252,7 +252,7 @@ public class Costumize implements Screen {
                 }
 
                 if (verificarBoton(x, y, labelWeapon)) {
-                    if (prefe.getBoolean("boton") == true ) {
+                    if (prefe.getBoolean("boton",true) == true ) {
                         Sonidos.reproducirBoton();
                     }
                     //Limpiar
@@ -260,7 +260,7 @@ public class Costumize implements Screen {
                 }
 
                 if (verificarBoton(x, y, clothes)) {
-                    if (prefe.getBoolean("boton") == true ) {
+                    if (prefe.getBoolean("boton",true) == true ) {
                         Sonidos.reproducirBoton();
                     }
 
@@ -272,7 +272,7 @@ public class Costumize implements Screen {
                 }
 
                 if (verificarBoton(x, y, ropas)) {
-                    if (prefe.getBoolean("boton") == true ) {
+                    if (prefe.getBoolean("boton",true) == true ) {
                         Sonidos.reproducirBoton();
                     }
                     prefe.putInteger("ropa",2);

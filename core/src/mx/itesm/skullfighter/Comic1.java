@@ -161,7 +161,7 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
             if(verificarBoton(x,y,skip)){
                 Preferences pref = Gdx.app.getPreferences("Preferencias");
                 pref.flush();
-                if (pref.getBoolean("boton") == true) {
+                if (pref.getBoolean("boton",true) == true) {
                     Sonidos.reproducirBoton();
                 }
 
