@@ -241,15 +241,15 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
             }
             if(verificarBoton(x,y,botonTexto1)){
                 Preferences prefe = Gdx.app.getPreferences("Preferencias");
-                principal.setScreen(new PantallaCargando(this.principal,1,huesos,0,5));
+                principal.setScreen(new PantallaCargando(this.principal,1,huesos,0,5,1));
                 prefe.putInteger("nivel",2);
                 prefe.flush();
             }
             if(verificarBoton(x,y,botonTexto2)){
-                principal.setScreen(new PantallaCargando(this.principal,1,huesos,0,5));
+                principal.setScreen(new PantallaCargando(this.principal,1,huesos,0,5,2));
             }
             if(verificarBoton(x,y,botonTexto3)){
-                principal.setScreen(new PantallaCargando(this.principal, 1, huesos, 0,5));
+                principal.setScreen(new PantallaCargando(this.principal, 1, huesos, 0,5,3));
             }
         }
 
@@ -363,7 +363,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         if(Mov>500){
             Mov=0;
         }
-        jugador.setPosicion(x - 5, y);
+        jugador.setPosicion(x - 15, y);
     }
 
     private void movimientoDer() {
@@ -380,7 +380,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         if(Mov>500){
             Mov = 0;
         }
-        jugador.setPosicion(x+5,y);
+        jugador.setPosicion(x+15,y);
     }
 
     @Override
