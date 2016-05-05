@@ -44,6 +44,7 @@ public class P2 implements Screen {
         pref.putInteger("arma", pref.getInteger("arma", 1));
         pref.putInteger("a", pref.getInteger("a",1));
         pref.putInteger("huesos", pref.getInteger("huesos",0));
+        pref.putInteger("nivel",pref.getInteger("nivel",0));
         pref.flush();
     }
 
