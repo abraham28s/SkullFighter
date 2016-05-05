@@ -394,10 +394,10 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
         texturaOzDer[4] =texturaMovDer[2];
 
         texturaOzIzq = new Texture[5];
-        texturaOzIzq[0] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz1Izq.png"));
-        texturaOzIzq[1] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz2Izq.png"));
-        texturaOzIzq[2] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz3Izq.png"));
-        texturaOzIzq[3] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz4Izq.png"));
+        texturaOzIzq[0] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/"+pref.getInteger("arma",1)+"/Oz1Izq.png"));
+        texturaOzIzq[1] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/"+pref.getInteger("arma",1)+"/Oz2Izq.png"));
+        texturaOzIzq[2] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/"+pref.getInteger("arma",1)+"/Oz3Izq.png"));
+        texturaOzIzq[3] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/"+pref.getInteger("arma",1)+"/Oz4Izq.png"));
         texturaOzIzq[4] = texturaMovIzq[0];
 
         texturaPunchDer = new Texture[4];

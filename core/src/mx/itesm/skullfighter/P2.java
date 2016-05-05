@@ -40,6 +40,9 @@ public class P2 implements Screen {
         setYUpgradeCamara();
         Gdx.input.setCatchBackKey(true);
         Gdx.input.setCatchMenuKey(true);
+        pref.putInteger("ropa" , pref.getInteger("ropa",1));
+        pref.putInteger("arma" , pref.getInteger("arma",1));
+        pref.flush();
     }
 
     public void setYUpgradeCamara() {
