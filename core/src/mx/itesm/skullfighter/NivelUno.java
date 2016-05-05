@@ -406,7 +406,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         texturaBtnPunch = AssManager.get("BotonPunch.png",Texture.class);
         texturaBtnWeapon = AssManager.get("BotonWeapon.png",Texture.class);
 
-        texturaFondo = AssManager.get(nivel +"/Entrenamiento"+ese+".png",Texture.class);
+        texturaFondo = AssManager.get(nivel +"/Entrenamiento2.png",Texture.class);
 
         texturaMovDer= new Texture[3];
         texturaMovDer[0] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/SkullCam1der.png",Texture.class);
