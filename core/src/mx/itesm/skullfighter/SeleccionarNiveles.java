@@ -185,7 +185,7 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
         if(Gdx.input.justTouched()) {
             Vector3 coordenadas = new Vector3();
             coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camara.unproject(coordenadas);  //traduce las coordenadas
+            camara.unproject(coordenadas,vista.getScreenX(),vista.getScreenY(),vista.getScreenWidth(),vista.getScreenHeight());  //traduce las coordenadas
             float x = coordenadas.x;
             float y = coordenadas.y;
             if (verificarBoton(x, y, returnAD)) {
@@ -200,7 +200,7 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
         if(Gdx.input.justTouched()){
             Vector3 coordenadas = new Vector3();
             coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camara.unproject(coordenadas);  //traduce las coordenadas
+            camara.unproject(coordenadas,vista.getScreenX(),vista.getScreenY(),vista.getScreenWidth(),vista.getScreenHeight());  //traduce las coordenadas
             float x = coordenadas.x;
             float y = coordenadas.y;
             if (verificarBoton(x, y, introAD)) {
@@ -218,7 +218,7 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
             if (Gdx.input.justTouched()) {
                 Vector3 coordenadas = new Vector3();
                 coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-                camara.unproject(coordenadas);  //traduce las coordenadas
+                camara.unproject(coordenadas,vista.getScreenX(),vista.getScreenY(),vista.getScreenWidth(),vista.getScreenHeight());  //traduce las coordenadas
                 float x = coordenadas.x;
                 float y = coordenadas.y;
                 if (verificarBoton(x, y, nivel1)) {

@@ -181,7 +181,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                 public boolean touchUp(int x, int y, int pointer, int button) {
                     Vector3 coordenadas = new Vector3();
                     coordenadas.set(x, y, 0);
-                    camara.unproject(coordenadas);  //traduce las coordenadas
+                    camara.unproject(coordenadas,vista.getScreenX(),vista.getScreenY(),vista.getScreenWidth(),vista.getScreenHeight());  //traduce las coordenadas
                     float x1 = coordenadas.x;
                     float y1 = coordenadas.y;
                     if(estado == 1 ){
@@ -246,7 +246,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                     // if(leftPointer == pointer){
                     Vector3 coordenadas = new Vector3();
                     coordenadas.set(x, y, 0);
-                    camara.unproject(coordenadas);  //traduce las coordenadas
+                    camara.unproject(coordenadas,vista.getScreenX(),vista.getScreenY(),vista.getScreenWidth(),vista.getScreenHeight());  //traduce las coordenadas
                     float x1 = coordenadas.x;
                     float y1 = coordenadas.y;
                     if(estado==1) {
@@ -272,7 +272,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
                     Vector3 coordenadas = new Vector3();
                     coordenadas.set(x,y, 0);
-                    camara.unproject(coordenadas);  //traduce las coordenadas
+                    camara.unproject(coordenadas,vista.getScreenX(),vista.getScreenY(),vista.getScreenWidth(),vista.getScreenHeight());  //traduce las coordenadas
                     float x1 = coordenadas.x;
                     float y1 = coordenadas.y;
 
@@ -607,20 +607,21 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         int dificultad1 = dificultad * 2;
         if(jugador.getSprite().getX()+70>enemigo.getSprite().getX()+100 ){
 
-            if(numero.nextInt(500)<3*(dificultad1*6)) {
+            if(numero.nextInt(200)<3*(dificultad1*6)) {
                 if(enemigo.getEstadoAca() == Personaje.EstadoAtacando.NORMAL)
                 enemigo.movimiento("der");
             }
         }else if(jugador.getSprite().getX()+100<enemigo.getSprite().getX()-100){
-            if(numero.nextInt(500)<3*(dificultad1*6)) {
+            if(numero.nextInt(200)<3*(dificultad1*6)) {
                 if(enemigo.getEstadoAca() == Personaje.EstadoAtacando.NORMAL)
                 enemigo.movimiento("izq");
 
             }
         }
-        int nazar = numero.nextInt(50);
+        int nazar = numero.nextInt(400);
 
-        if(enemigo.getEstadoAca() == Personaje.EstadoAtacando.NORMAL){
+        if(enemigo.getEstadoAca() == Personaje.EstadoAtacando.NORMAL ){
+            enemigo.setEstadoMov(Personaje.EstadoMov.QUIETO);
         if(nazar<(1*dificultad1) && nazar>0){
 
             enemigo.ataquePuno();

@@ -134,7 +134,7 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
                 public boolean touchUp(int x, int y, int pointer, int button) {
                     Vector3 coordenadas = new Vector3();
                     coordenadas.set(x, y, 0);
-                    camara.unproject(coordenadas);  //traduce las coordenadas
+                    camara.unproject(coordenadas,vista.getScreenX(),vista.getScreenY(),vista.getScreenWidth(),vista.getScreenHeight());  //traduce las coordenadas
                     float x1 = coordenadas.x;
                     float y1 = coordenadas.y;
                     if(estado == 1 ){
