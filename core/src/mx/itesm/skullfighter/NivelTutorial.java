@@ -375,7 +375,7 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
     void cargarTexturas() {
 
         texturaFondo = new Texture(Gdx.files.internal("Tutorial/Entrenamiento.png"));
-        texturaParton = new Texture(Gdx.files.internal("Tutorial/Parton_dialogo.png"));
+        texturaParton = new Texture(Gdx.files.internal("Tutorial/Parton_Dialogo.png"));
         texturaMovDer= new Texture[3];
         texturaMovDer[0] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/SkullCam1der.png"));
         texturaMovDer[1] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/SkullCam2der.png"));
