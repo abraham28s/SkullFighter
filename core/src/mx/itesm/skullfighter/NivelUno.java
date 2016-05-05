@@ -113,7 +113,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         this.principal = principal;
         this.nivel = nivel;
         this.AssManager = ass;
-        this.huesos = huesos;
+        this.huesos = pref.getInteger("huesos");
         this.huesosGanar = huesosGanar;
         this.ese = ese;
         this.pantallaOri = pantallaOri;
@@ -605,7 +605,9 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
     private void ganoJuego() {
                 this.estado = 4;
-                this.huesos += huesosGanar;
+                pref.putInteger("huesos",huesos);
+                huesos += huesosGanar;
+                pref.putInteger("huesos",huesos);
 
     }
 

@@ -81,18 +81,19 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     private Texture texturaHuesos;
     private Componente cmpHuesos;
     private Texto textoHuesos;
-
+    Preferences pref = Gdx.app.getPreferences("Preferencias");
     private int Mov = 0;
     private int ConCiv = 0;
     private int ConAle=0;
     private int huesos;
     private Texture texturaBtnEspanta1;
-    Preferences pref = Gdx.app.getPreferences("Preferencias");
+
+
 
     public PantallaJuego(Principal principal, AssetManager assetManager,int huesos) {
         this.principal = principal;
         this.AssManager = assetManager;
-        this.huesos = huesos;
+        this.huesos = pref.getInteger("huesos");
     }
     @Override
     public void show() {
@@ -176,11 +177,21 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if(huesos>=15){
-            Vector2 coor = new Vector2(TextoCivil1.getSprite().getX(),TextoCivil1.getSprite().getY());
+        if (pref.getInteger("a") == 1){
+        if(huesos>=15) {
+            Vector2 coor = new Vector2(TextoCivil1.getSprite().getX(), TextoCivil1.getSprite().getY());
             TextoCivil1.setTextura(texturaBtnEspanta1);
-            TextoCivil1.setPosicion(coor.x,coor.y);
+            TextoCivil1.setPosicion(coor.x, coor.y);
         }
+        }
+
+        if (pref.getInteger("a") == 2){
+            Vector2 coor = new Vector2(TextoCivil1.getSprite().getX(), TextoCivil1.getSprite().getY());
+            TextoCivil1.setTextura(texturaBtnEspanta1);
+            TextoCivil1.setPosicion(coor.x, coor.y);
+        }
+
+
 
         leerEntrada(); // Revisar eventos
         // Mover la cámara para que siga al personaje
@@ -191,6 +202,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         batch.setProjectionMatrix(camara.combined);
 
         // DIBUJA
+
         batch.begin();
         fondo.render(batch);
         Civil2.render(batch);
@@ -229,32 +241,41 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         float y = coordenadas.y;
 
         if(Gdx.input.justTouched()) {
-            Preferences pref = Gdx.app.getPreferences("Preferencias");
-            if (verificarBoton(x, y, TextoCivil1) && verificarBordes()&& huesos>15) {
-                pref.putInteger("nivel",2);
-                pref.flush();
-                this.principal.setScreen(new PantallaCargando(this.principal,2,huesos,1));
-                this.dispose();
+            pref.getInteger("a", 1);
+            if (pref.getInteger("a") == 2){
+                if (verificarBoton(x, y, TextoCivil1) && verificarBordes() && huesos > 0) {
+                    this.principal.setScreen(new PantallaCargando(this.principal, 2, huesos, 1));
+                    this.dispose();
+                }
             }
-            if(huesos>=15) {
-                if (verificarBoton(x, y, TextoCivil1)) {
-                    huesos-=15;
-                    principal.setScreen(new PantallaCargando(this.principal,2,huesos,1));
+            if (pref.getInteger("a") == 1) {
+                if (verificarBoton(x, y, TextoCivil1) && verificarBordes() && huesos >= 15) {
+                    Preferences prefe = Gdx.app.getPreferences("Preferencias");
+                    prefe.putInteger("nivel", 3);
+                    pref.putInteger("a",2);
+                    prefe.flush();
+                    this.principal.setScreen(new PantallaCargando(this.principal, 2, huesos, 1));
+                    this.dispose();
+                }
+                if (huesos >= 15) {
+                    if (verificarBoton(x, y, TextoCivil1)) {
+                        pref.putInteger("huesos", huesos);
+                        huesos -= 15;
+                        pref.putInteger("huesos", huesos);
+                        principal.setScreen(new PantallaCargando(this.principal, 2, huesos, 1));
+                    }
                 }
             }
             if(verificarBoton(x,y,botonTexto1)){
-                Preferences prefe = Gdx.app.getPreferences("Preferencias");
-                principal.setScreen(new PantallaCargando(this.principal,1,huesos,0,2,1,0,3));
-                prefe.putInteger("nivel", 2);
-                prefe.flush();
+                principal.setScreen(new PantallaCargando(this.principal, 1, huesos, 0, 2, 1, 0, 3));
                 this.dispose();
             }
             if(verificarBoton(x,y,botonTexto2)){
                 principal.setScreen(new PantallaCargando(this.principal,1,huesos,0,3,2,0,4));
                 this.dispose();
             }
-            if(verificarBoton(x,y,botonTexto3)){
-                principal.setScreen(new PantallaCargando(this.principal, 1, huesos, 0,5,3,0,6));
+            if(verificarBoton(x, y, botonTexto3)){
+                principal.setScreen(new PantallaCargando(this.principal, 1, huesos, 0, 5, 3, 0, 6));
                 this.dispose();
             }
         }

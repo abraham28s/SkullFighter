@@ -104,7 +104,6 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
     private void cargarAssets() {
         switch (pantallaCargar){
             case 0://PantallaJuego
-
                         Manager.load("Fondo-Capa2.png",Texture.class);
                         Manager.load("GoldBone.png",Texture.class);
                         for (int i = 1; i <= 3; i++) {

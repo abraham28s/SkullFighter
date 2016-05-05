@@ -131,6 +131,8 @@ public class Sett extends PantallaAbstracta implements Screen{
             float y = coordenadas.y;
             if (verificarBoton(x, y, comic)) {
                 Preferences prefe = Gdx.app.getPreferences("Preferencias");
+                prefe.putInteger("comic",2);
+                prefe.flush();
                 if (prefe.getBoolean("boton") == true) {
                     Sonidos.reproducirBoton();
                 }
@@ -149,6 +151,11 @@ public class Sett extends PantallaAbstracta implements Screen{
                 Preferences pref = Gdx.app.getPreferences("Preferencias");
                 pref.putBoolean("guardar", false);
                 pref.flush();
+
+                pref.putInteger("huesos",0);
+                pref.putInteger("ropa",1);
+                pref.putInteger("arma",2);
+                pref.putInteger("a",1);
 
                 if (pref.getBoolean("boton") == true) {
                     Sonidos.reproducirBoton();

@@ -24,7 +24,7 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
     private SpriteBatch batch;
 
     //fondo
-
+    Preferences pref = Gdx.app.getPreferences("Preferencias");
     private Fondo fondo1;
     private Texture texturaFondo2;
     private Fondo fondo;
@@ -225,13 +225,37 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
                     if (pref.getBoolean("boton") == true ) {
                         Sonidos.reproducirBoton();
                     }
+
                     Sonidos.pausarMusicaFondo();
                     
-                    principal.setScreen(new PantallaCargando(principal, 2, huesos, 1));
+                    principal.setScreen(new PantallaCargando(principal, 0, huesos, 0));
                     this.dispose();
                 }
 
         }
+
+        if (pref.getInteger("nivel") == 3) {
+            if (Gdx.input.justTouched()) {
+                Vector3 coordenadas = new Vector3();
+                coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+                camara.unproject(coordenadas);  //traduce las coordenadas
+                float x = coordenadas.x;
+                float y = coordenadas.y;
+                if (verificarBoton(x, y, nivel2)) {
+                    if (pref.getBoolean("boton") == true) {
+                        Sonidos.reproducirBoton();
+                    }
+
+                    Sonidos.pausarMusicaFondo();
+
+                    principal.setScreen(new PantallaCargando(this.principal, 2, huesos, 1));
+                    this.dispose();
+                }
+
+            }
+
+        }
+
 
         /*      if(Gdx.input.justTouched()){
             Vector3 coordenadas = new Vector3();

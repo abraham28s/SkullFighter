@@ -393,6 +393,7 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
     public void cargarTexturas() {
         //texturaFondo = new Texture(Gdx.files.internal("Escenario1Cortado.png"));
 
+
         texturaFondo = AssManager.get("Castillo2.png",Texture.class);
         texturaEspantapajaro = AssManager.get("Espantapajaros3.png", Texture.class);
         texturaCivil3 = AssManager.get("Guardia1.png", Texture.class);

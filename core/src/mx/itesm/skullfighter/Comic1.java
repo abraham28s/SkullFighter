@@ -142,36 +142,63 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
                 }
                 contador++;
                 System.out.println("Contador+: " + contador);
-                if (contador>=7){
-                principal.setScreen(new SeleccionarNiveles(principal,huesos));
-                    this.dispose();
-                 }
+                if (pref.getInteger("comic") == 2) {
+                    if (contador >= 7) {
+                        principal.setScreen(new Sett(principal));
+                    }
+                }
+                if (pref.getInteger("comic") == 1) {
+                    if (contador == 2){
+                        pref.putInteger("nivel", 1);
+                        pref.flush();
+                    }
+                    if (contador >= 7) {
+                        principal.setScreen(new NivelTutorial(principal));
+                        this.dispose();
+                    }
+                }
             }
             if (verificarBoton(x, y, back)) {
 
                 //cambiar a pantalla
                 Preferences pref = Gdx.app.getPreferences("Preferencias");
                 fondo.setTextura(comic[contador - 1]);
+                if (contador > 0){
                 if (pref.getBoolean("boton") == true ) {
                     Sonidos.hojaSound();
                 }
+                }
                 contador--;
                 //System.out.println("Contador-: " + contador);
-                if(contador<=0){
-                principal.setScreen(new PantallaMenu(principal, huesos));
+                if(contador <= 0){
+                    if(pref.getInteger("comic") == 1) {
+                        principal.setScreen(new PantallaMenu(principal, huesos));
+                    }
+                    if (pref.getInteger("comic") == 2){
+                        principal.setScreen(new Sett(principal));
+                    }
                     this.dispose();
+                    if (pref.getBoolean("musica")) {
+                        Sonidos.reproducirMusicaFondo();
+                    }
                 }
             }
 
             if(verificarBoton(x,y,skip)){
                 Preferences pref = Gdx.app.getPreferences("Preferencias");
-                pref.flush();
+
                 if (pref.getBoolean("boton",true) == true) {
                     Sonidos.reproducirBoton();
                 }
-
-                this.principal.setScreen(new PantallaCargando(principal,0,huesos,0));
-                this.dispose();
+                if (pref.getInteger("comic") == 2){
+                    principal.setScreen(new Sett(principal));
+                }
+                if (pref.getInteger("comic") == 1) {
+                    pref.putInteger("nivel", 1);
+                    pref.flush();
+                    this.principal.setScreen(new NivelTutorial(principal));
+                    this.dispose();
+                }
             }
 
         }

@@ -166,6 +166,7 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
                         }
                     }else if( estado == 0){
                         if(verificarBoton(x1,y1,BtnQuitPausa)){
+
                             if (pref.getBoolean("boton") == true ) {
                                 Sonidos.reproducirBoton();
                             }

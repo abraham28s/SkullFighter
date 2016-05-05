@@ -200,7 +200,7 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
 
                 if (pref.getInteger("nivel") == 0) {
                     principal.setScreen(new Comic1(principal, huesos));
-                    pref.putInteger("nivel", 1);
+                    pref.putInteger("comic",1);
                     pref.flush();
                     if(pref.getBoolean("boton") == true){
                         Sonidos.reproducirBoton();
@@ -219,6 +219,10 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
                 this.dispose();
             } else if (verificarBoton(x, y, btnSettings)) {
                 principal.setScreen(new Sett(principal));
+                if (pref.getInteger("nivel") != 3) {
+                    pref.putInteger("nivel", 2);
+                    pref.flush();
+                }
                 if (pref.getBoolean("boton") == true ) {
                     Sonidos.reproducirBoton();
                 }
