@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -61,34 +62,27 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
         fondo1 = new Fondo(texturaFondo2);
         fondo1.getSprite().setX(fondo.getSprite().getWidth());
         returnAD = new Boton(TextureReturn);
-        returnAD.setPosicion(1100, 30);
+        returnAD.setPosicion(555, 20);
 
-        if (pref.getInteger("nivel") == 1 || pref.getInteger("nivel") == 2 || pref.getInteger("nivel") == 3 || pref.getInteger("nivel") == 4){
             introAD = new Boton(TextureIntro);
-            introAD.setPosicion(30,30);
-        }
+            introAD.setPosicion(30,150);
 
-        if(pref.getInteger("nivel") == 2 || pref.getInteger("nivel") == 3 || pref.getInteger("nivel") == 4){
             nivel1 = new Boton(TextureNivel1);
-            nivel1.setPosicion(360, 30);
-        }
+            nivel1.setPosicion(360, 150);
 
-        if(pref.getInteger("nivel") == 3 || pref.getInteger("nivel") == 4) {
             nivel2 = new Boton(TextureNivel2);
-            nivel2.setPosicion(670, 30);
-        }
+            nivel2.setPosicion(670, 150);
 
-        if(pref.getInteger("nivel") == 4) {
             nivel3 = new Boton(TextureNivel3);
-            nivel3.setPosicion(985, 30);
-        }
+            nivel3.setPosicion(985, 150);
+
 
 
         //if (pref.getInteger("nivel") == 1 || pref.getInteger("nivel") == 2){
 
 
-        nivel1 = new Boton (TextureNivel1);
-        nivel1.setPosicion(360, 30);
+
+
 
 
         crearYPosBotones();
@@ -112,22 +106,30 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
         fondo.render(batch);
         fondo1.render(batch);
 
+        nivel1.getSprite().setColor(Color.GRAY);
+        nivel2.getSprite().setColor(Color.GRAY);
+        nivel3.getSprite().setColor(Color.GRAY);
+
+
 
         //if (pref.getInteger("nivel") == 1 || pref.getInteger("nivel") == 2) {
         if (pref.getInteger("nivel") == 1 || pref.getInteger("nivel") == 2 || pref.getInteger("nivel") == 3 || pref.getInteger("nivel") == 4) {
             introAD.render(batch);
         }
         if(pref.getInteger("nivel") == 2 || pref.getInteger("nivel") == 3 || pref.getInteger("nivel") == 4) {
-            nivel1.render(batch);
+            nivel1.getSprite().setColor(Color.WHITE);
         }
 
         if(pref.getInteger("nivel") == 3 || pref.getInteger("nivel") == 4) {
-            nivel2.render(batch);
+            nivel2.getSprite().setColor(Color.WHITE);
         }
 
         if(pref.getInteger("nivel") == 4) {
-            nivel3.render(batch);
+            nivel3.getSprite().setColor(Color.WHITE);
         }
+        nivel3.render(batch);
+        nivel2.render(batch);
+        nivel1.render(batch);
 
         returnAD.render(batch);
         batch.end();
