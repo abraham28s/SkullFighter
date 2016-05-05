@@ -53,7 +53,8 @@ public class P2 implements Screen {
         pref.getBoolean("musica",true);
         pref.getBoolean("boton", true);
         pref.flush();
-        if (pref.getBoolean("musica")) {
+
+        if (pref.getBoolean("musica") ) {
             Sonidos.reproducirMusicaFondo();
         }
 
