@@ -195,52 +195,31 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
                 principal.setScreen(new PantallaMenu(principal));
                 this.dispose();
             }
-        }
+            if (pref.getInteger("nivel") == 1 || pref.getInteger("nivel") == 2 || pref.getInteger("nivel") == 3 || pref.getInteger("nivel") == 4) {
+                if (verificarBoton(x, y, introAD)) {
+                    if (pref.getBoolean("boton") == true ) {
+                        Sonidos.reproducirBoton();
+                    }
+                    Sonidos.pausarMusicaFondo();
 
-        if(Gdx.input.justTouched()){
-            Vector3 coordenadas = new Vector3();
-            coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camara.unproject(coordenadas,vista.getScreenX(),vista.getScreenY(),vista.getScreenWidth(),vista.getScreenHeight());  //traduce las coordenadas
-            float x = coordenadas.x;
-            float y = coordenadas.y;
-            if (verificarBoton(x, y, introAD)) {
-                if (pref.getBoolean("boton") == true ) {
-                    Sonidos.reproducirBoton();
+                    principal.setScreen(new /*PantallaCargando(principal, 0, huesos, 0)*/ NivelTutorial(this.principal,huesos));
+                    this.dispose();
                 }
-                Sonidos.pausarMusicaFondo();
-                
-                principal.setScreen(new /*PantallaCargando(principal, 0, huesos, 0)*/ NivelTutorial(this.principal,huesos));
-                this.dispose();
             }
-        }
-
-
-            if (Gdx.input.justTouched()) {
-                Vector3 coordenadas = new Vector3();
-                coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-                camara.unproject(coordenadas,vista.getScreenX(),vista.getScreenY(),vista.getScreenWidth(),vista.getScreenHeight());  //traduce las coordenadas
-                float x = coordenadas.x;
-                float y = coordenadas.y;
+            if(pref.getInteger("nivel") == 2 || pref.getInteger("nivel") == 3 || pref.getInteger("nivel") == 4) {
                 if (verificarBoton(x, y, nivel1)) {
                     if (pref.getBoolean("boton") == true ) {
                         Sonidos.reproducirBoton();
                     }
 
                     Sonidos.pausarMusicaFondo();
-                    
+
                     principal.setScreen(new PantallaCargando(principal, 0, huesos, 0));
                     this.dispose();
                 }
+            }
 
-        }
-
-        if (pref.getInteger("nivel") == 3) {
-            if (Gdx.input.justTouched()) {
-                Vector3 coordenadas = new Vector3();
-                coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-                camara.unproject(coordenadas);  //traduce las coordenadas
-                float x = coordenadas.x;
-                float y = coordenadas.y;
+            if(pref.getInteger("nivel") == 3 || pref.getInteger("nivel") == 4) {
                 if (verificarBoton(x, y, nivel2)) {
                     if (pref.getBoolean("boton") == true) {
                         Sonidos.reproducirBoton();
@@ -248,13 +227,22 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
 
                     Sonidos.pausarMusicaFondo();
 
-                    principal.setScreen(new PantallaCargando(this.principal, 2, huesos, 1));
+                    principal.setScreen(new PantallaCargando(this.principal, 2, pref.getInteger("huesos"), 1));
                     this.dispose();
                 }
-
             }
 
+            if(pref.getInteger("nivel") == 4) {
+
+            }
         }
+
+
+
+
+
+
+
 
 
         /*      if(Gdx.input.justTouched()){

@@ -104,8 +104,7 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
         next = new Boton(texturaNext);
         next.setPosicion(1110,12);
 
-        skip = new Boton(texturaSkip);
-        skip.setPosicion(1110,580);
+
 
         batch = new SpriteBatch();
     }
@@ -120,7 +119,7 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
         fondo.render(batch);
         next.render(batch);
         back.render(batch);
-        skip.render(batch);
+
         batch.end();
     }
 
@@ -141,19 +140,16 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
                     Sonidos.hojaSound();
                 }
                 contador++;
-                System.out.println("Contador+: " + contador);
+
                 if (pref.getInteger("comic") == 2) {
                     if (contador >= 7) {
                         principal.setScreen(new Sett(principal));
                     }
                 }
                 if (pref.getInteger("comic") == 1) {
-                    if (contador == 2){
-                        pref.putInteger("nivel", 1);
-                        pref.flush();
-                    }
+
                     if (contador >= 7) {
-                        principal.setScreen(new NivelTutorial(principal));
+                        principal.setScreen(new NivelTutorial(principal,huesos));
                         this.dispose();
                     }
                 }
@@ -184,22 +180,7 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
                 }
             }
 
-            if(verificarBoton(x,y,skip)){
-                Preferences pref = Gdx.app.getPreferences("Preferencias");
 
-                if (pref.getBoolean("boton",true) == true) {
-                    Sonidos.reproducirBoton();
-                }
-                if (pref.getInteger("comic") == 2){
-                    principal.setScreen(new Sett(principal));
-                }
-                if (pref.getInteger("comic") == 1) {
-                    pref.putInteger("nivel", 1);
-                    pref.flush();
-                    this.principal.setScreen(new NivelTutorial(principal));
-                    this.dispose();
-                }
-            }
 
         }
     }

@@ -219,10 +219,7 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
                 this.dispose();
             } else if (verificarBoton(x, y, btnSettings)) {
                 principal.setScreen(new Sett(principal));
-                if (pref.getInteger("nivel") != 3) {
-                    pref.putInteger("nivel", 2);
-                    pref.flush();
-                }
+
                 if (pref.getBoolean("boton") == true ) {
                     Sonidos.reproducirBoton();
                 }

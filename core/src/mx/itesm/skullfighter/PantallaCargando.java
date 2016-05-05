@@ -120,7 +120,7 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
 
                         Manager.load("Tip.png", Texture.class);
                         Manager.load("Espantapajaros3.png", Texture.class);
-                        Manager.load("CivilMalo3.png", Texture.class);
+                        Manager.load("CivilFrente1.png", Texture.class);
                         Manager.load("FightText.png", Texture.class);
                         Manager.load("Boton_Derecha.png", Texture.class);
                         Manager.load("Boton_Izquierda.png", Texture.class);

@@ -452,7 +452,7 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
         btnWeapon.setPosicion(800, 12);
 
         textoParton = new Boton(texTextoParton[variableTexto]);
-        textoParton.setPosicion(900,450);
+        textoParton.setPosicion(850,400);
 
         BtnResumePausa = new Boton(texturaResumePausa);
         BtnResumePausa.setPosicion(555,430);
@@ -489,7 +489,7 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
         jugador.render(batch);
 
         textoParton.setTextura(texTextoParton[variableTexto]);
-        textoParton.setPosicion(900, 450);
+        textoParton.setPosicion(850, 400);
         textoParton.render(batch);
 
        // System.out.println(jugador.getEstadoMov());

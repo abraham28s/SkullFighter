@@ -97,7 +97,10 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     }
     @Override
     public void show() {
-        pref.flush();
+        if(pref.getInteger("nivel")<2){
+            pref.putInteger("nivel",2);
+            pref.flush();
+        }
 
         Gdx.input.setCatchBackKey(true);
         Gdx.input.setCatchMenuKey(true);
@@ -112,13 +115,13 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
         jugador = new Componente(texturaMovDer[0]);
         jugador.setPosicion(-15, -30);
-        Civil2 = new Componente(texturaCivil3);
+        Civil2 = new Componente(texturaCivil1);
         Civil2.setPosicion(1900, 30);
 
         Civil1 = new Componente(texturaEspantapajaro);
         Civil1.setPosicion(3750,30);
 
-        Civil3 = new Componente(texturaCivil3);
+        Civil3 = new Componente(texturaCivil1);
         Civil3.setPosicion(800,30);
 
         Espantapajaros = new Componente(texturaCivil1);
@@ -241,28 +244,29 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         float y = coordenadas.y;
 
         if(Gdx.input.justTouched()) {
-            pref.getInteger("a", 1);
+
             if (pref.getInteger("a") == 2){
-                if (verificarBoton(x, y, TextoCivil1) && verificarBordes() && huesos > 0) {
+                if (verificarBoton(x, y, TextoCivil1) && verificarBordes()) {
                     this.principal.setScreen(new PantallaCargando(this.principal, 2, huesos, 1));
                     this.dispose();
                 }
             }
             if (pref.getInteger("a") == 1) {
                 if (verificarBoton(x, y, TextoCivil1) && verificarBordes() && huesos >= 15) {
-                    Preferences prefe = Gdx.app.getPreferences("Preferencias");
-                    prefe.putInteger("nivel", 3);
-                    pref.putInteger("a",2);
-                    prefe.flush();
-                    this.principal.setScreen(new PantallaCargando(this.principal, 2, huesos, 1));
-                    this.dispose();
+
+
+
                 }
                 if (huesos >= 15) {
                     if (verificarBoton(x, y, TextoCivil1)) {
-                        pref.putInteger("huesos", huesos);
+
                         huesos -= 15;
                         pref.putInteger("huesos", huesos);
                         principal.setScreen(new PantallaCargando(this.principal, 2, huesos, 1));
+                        pref.putInteger("a",2);
+                        pref.flush();
+
+                        this.dispose();
                     }
                 }
             }
@@ -417,7 +421,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
         texturaFondo = AssManager.get("Fondo-Capa2.png",Texture.class);
         texturaEspantapajaro = AssManager.get("Espantapajaros3.png", Texture.class);
-        texturaCivil3 = AssManager.get("CivilMalo3.png", Texture.class);
+
         texturaBtnEspanta = AssManager.get("DialogosEspantaPajaros/TextScarecrow1.png",Texture.class);
         texturaBtnEspanta1 = AssManager.get("DialogosEspantaPajaros/TextScarecrow2.png",Texture.class);
 
@@ -425,12 +429,12 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
         texturaMovIzq = new Texture[3];
 
-        texturasCivil2 = new Texture[3];
+
 
         for (int i = 1; i <= 3; i++) {
             texturaMovDer[i-1] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/SkullCam"+i+"der.png",Texture.class);
             texturaMovIzq[i-1] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/SkullCam"+i+"izq.png",Texture.class);
-            texturasCivil2[i-1] = AssManager.get("Civil2/Civil2-" + i + ".png", Texture.class);
+
         }
         texturaHuesos = AssManager.get("GoldBone.png",Texture.class);
         texturaTexto1 = AssManager.get("Dialogos/TextCivil3.png", Texture.class);
@@ -438,7 +442,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         texturaTexto3 = AssManager.get("Dialogos/TextCivil1.png", Texture.class);
 
         texturaFondo2 = AssManager.get("Fondo-Capa1.png",Texture.class);
-        texturaTip = AssManager.get("Civil2/Tip.png", Texture.class);
+        texturaTip = AssManager.get("Tip.png", Texture.class);
 
         texturaCivil1 = AssManager.get("CivilFrente1.png", Texture.class);
         texturaTextoCivil1 = AssManager.get("FightText.png", Texture.class);
@@ -477,7 +481,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         AssManager.dispose();
         texturaFondo.dispose();
         texturaEspantapajaro.dispose();
-        texturaCivil3.dispose();
+
         texturaBtnEspanta.dispose();
         texturaBtnEspanta1.dispose();
 
