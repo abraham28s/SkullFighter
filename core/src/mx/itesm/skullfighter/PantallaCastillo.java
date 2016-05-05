@@ -90,7 +90,7 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
     public PantallaCastillo(Principal principal, AssetManager assetManager,int huesos) {
         this.principal = principal;
         this.AssManager = assetManager;
-        this.huesos = huesos;
+        this.huesos = pref.getInteger("huesos");
     }
     @Override
     public void show() {
