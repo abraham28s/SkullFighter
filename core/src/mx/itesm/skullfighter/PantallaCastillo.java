@@ -250,7 +250,7 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
                 principal.setScreen(new PantallaCargando(this.principal,1,huesos,1,5,2,2,7));
             }
             if(verificarBoton(x,y,botonTexto3)){
-                principal.setScreen(new PantallaCargando(this.principal, 1, huesos, 1, 10, 3,2,10));
+                principal.setScreen(new PantallaCargando(this.principal, 1, huesos, 1, 10,3,2,10));
             }
         }
 

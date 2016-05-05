@@ -163,7 +163,7 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
                     Manager.load("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchDer"+i+".png", Texture.class);
                     Manager.load("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchIzq"+i+".png", Texture.class);
                     Manager.load(nivel + "/Enemigo"+i+"Der.png",Texture.class);
-                    Manager.load(nivel + "/Enemigo"+i+"Izq.png",Texture.class);
+                    Manager.load(nivel + "/Enemigo"+i+"Izq1.png",Texture.class);
                 }
 
 

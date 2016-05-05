@@ -465,21 +465,21 @@ public class NivelUno extends PantallaAbstracta implements Screen {
         texturaEneMovDer[2]=AssManager.get(nivel +"/Enemigo3Der.png",Texture.class);
 
         texturaEneMovIzq = new Texture[3];
-        texturaEneMovIzq[0] =AssManager.get(nivel +"/Enemigo1Izq.png",Texture.class);
-        texturaEneMovIzq[1]=AssManager.get(nivel +"/Enemigo2Izq.png",Texture.class);
-        texturaEneMovIzq[2]=AssManager.get(nivel +"/Enemigo3Izq.png",Texture.class);
+        texturaEneMovIzq[0] =AssManager.get(nivel +"/Enemigo1Izq1.png",Texture.class);
+        texturaEneMovIzq[1]=AssManager.get(nivel +"/Enemigo2Izq1.png",Texture.class);
+        texturaEneMovIzq[2]=AssManager.get(nivel +"/Enemigo3Izq1.png",Texture.class);
 
         texturaEnePunchDer = new Texture[4];
         texturaEnePunchDer[0] = AssManager.get(nivel +"/EnemigoPun1Der.png",Texture.class);
         texturaEnePunchDer[1] = AssManager.get(nivel +"/EnemigoPun2Der.png",Texture.class);
-        texturaEnePunchDer[2] = AssManager.get(nivel +"/Enemigo1Der.png",Texture.class);
-        texturaEnePunchDer[3] =AssManager.get(nivel +"/Enemigo1Der.png",Texture.class);
+        texturaEnePunchDer[2] =texturaEneMovDer[0];
+        texturaEnePunchDer[3] =texturaEneMovDer[0];
 
         texturaEnePunchIzq= new Texture[4];
         texturaEnePunchIzq[0] = AssManager.get(nivel +"/EnemigoPun1Izq.png",Texture.class);
         texturaEnePunchIzq[1] = AssManager.get(nivel +"/EnemigoPun2Izq.png",Texture.class);
-        texturaEnePunchIzq[2] = AssManager.get(nivel +"/Enemigo1Izq.png",Texture.class);
-        texturaEnePunchIzq[3]=AssManager.get(nivel +"/Enemigo3Izq.png",Texture.class);
+        texturaEnePunchIzq[2] = texturaEneMovIzq[0];
+        texturaEnePunchIzq[3]=texturaEneMovIzq[0];
         texturaBackEnd = AssManager.get("BackGame.png",Texture.class);
 
 
@@ -547,6 +547,8 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
        // System.out.println(jugador.getEstadoMov());
         enemigo.render(batch);
+        jugador.render(batch);
+
         vidaJ.render(batch);
         vidaE.render(batch);
 

@@ -42,6 +42,8 @@ public class P2 implements Screen {
         Gdx.input.setCatchMenuKey(true);
         pref.putInteger("ropa", pref.getInteger("ropa", 1));
         pref.putInteger("arma", pref.getInteger("arma", 1));
+        pref.putInteger("a", pref.getInteger("a",1));
+        pref.putInteger("huesos", pref.getInteger("huesos",0));
         pref.flush();
     }
 
