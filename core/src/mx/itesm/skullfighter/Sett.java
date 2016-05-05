@@ -154,7 +154,7 @@ public class Sett extends PantallaAbstracta implements Screen{
                     Sonidos.reproducirBoton();
                 }
                 if (Sonidos.musicaFondo.isPlaying()){
-                    Sonidos.pausarMusicaFondo();
+                    Sonidos.musicaFondo.dispose();
                 }
                 principal.setScreen(new P2(this.principal));
                 this.dispose();
