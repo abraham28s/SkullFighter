@@ -21,7 +21,7 @@ public class Personaje {
     private EstadoAtacando estadoAca;
     private float alturaMax,alturaInicial;
 
-    private String vista = "der";
+    private String vista;
 
     private Texture[] texturaMovDer;
     private Texture[] texturaMovIzq;
@@ -59,6 +59,11 @@ public class Personaje {
         estado = EstadoBrinco.NORMAL;
         estadoMov = EstadoMov.QUIETO;
         estadoAca = EstadoAtacando.NORMAL;
+        if(this.equals(pantalla.jugador)){
+            vista = "der";
+        }else{
+            vista = "izq";
+        }
 
     }
 
@@ -145,7 +150,7 @@ public class Personaje {
                 break;
             case TERMINOPUNO:
 
-                if((xp-(wp/4)-5<= xe + (we/4)+5 && xp>xe) || (xp+(wp/4)+5 >= xe-(xe/4) - 5) && xe>xp) {
+                if((xp-(wp/6)-5<= xe + (we/6)+5 && xp>xe) || (xp+(wp/6)+5 >= xe-(xe/6) - 5) && xe>xp) {
                     if (this.equals(pantalla.jugador)) {
 
 

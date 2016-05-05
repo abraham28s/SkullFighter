@@ -209,7 +209,7 @@ public class Costumize implements Screen {
         if(Gdx.input.justTouched()) {//saber si el usuario toca
             Vector3 coordenadas = new Vector3();
             coordenadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camara.unproject(coordenadas);//TRaduce coordenadas
+            camara.unproject(coordenadas,vista.getScreenX(),vista.getScreenY(),vista.getScreenWidth(),vista.getScreenHeight());//TRaduce coordenadas
             float x = coordenadas.x;
             float y = coordenadas.y;
             if (verificarBoton(x, y, btnBack)) {
