@@ -23,7 +23,7 @@ public class P2 implements Screen {
     private FitViewport vista;
 
     //Preferencas
-    private Preferences pref;
+    private Preferences pref = Gdx.app.getPreferences("Preferencias");
 
 
     private int cont = 0;
@@ -40,8 +40,8 @@ public class P2 implements Screen {
         setYUpgradeCamara();
         Gdx.input.setCatchBackKey(true);
         Gdx.input.setCatchMenuKey(true);
-        pref.putInteger("ropa" , pref.getInteger("ropa",1));
-        pref.putInteger("arma" , pref.getInteger("arma",1));
+        pref.putInteger("ropa", pref.getInteger("ropa", 1));
+        pref.putInteger("arma", pref.getInteger("arma", 1));
         pref.flush();
     }
 
@@ -53,7 +53,7 @@ public class P2 implements Screen {
 
         Sonidos.cargaAudio();
 
-        Preferences pref = Gdx.app.getPreferences("Preferencias");
+
         pref.flush();
         pref.getBoolean("musica",true);
         pref.getBoolean("boton", true);
