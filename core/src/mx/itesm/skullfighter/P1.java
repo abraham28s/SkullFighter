@@ -2,10 +2,11 @@ package mx.itesm.skullfighter;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 /**
  * Created by abrahamsoto on 11/03/16.
@@ -18,7 +19,7 @@ public class P1 implements Screen {
     private Texture texturaFondo;
     private SpriteBatch batch;
     private OrthographicCamera camara;
-    private StretchViewport vista;
+    private FitViewport vista;
 
     private int cont = 0;
 
@@ -38,11 +39,13 @@ public class P1 implements Screen {
         camara = new OrthographicCamera(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO);
         camara.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
         camara.update();
-        vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
+        vista = new FitViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
     }
 
     @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(0, 0, 0, 0);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         cont++;
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
@@ -58,6 +61,7 @@ public class P1 implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        vista.update(width,height);
 
     }
 
