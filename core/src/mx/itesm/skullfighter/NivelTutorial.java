@@ -13,6 +13,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import org.lwjgl.Sys;
+
 import java.util.Random;
 
 /**
@@ -89,15 +91,30 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
     private String banderaMoviendo;
     private boolean banderaIzquierdaApre;
     private boolean banderaDerechaApre;
+
+    private Boton textoParton;
+    private Texture texTextoParton[];
+
+    private Texture texturaParton;
+    private Componente cmpParton;
+    private int variableTexto = 5;
     Preferences pref = Gdx.app.getPreferences("Preferencias");
+    private int contador=0;
+    private int huesos;
 
 
-    public NivelTutorial(Principal principal) {
+    public NivelTutorial(Principal principal,int huesos) {
         this.principal = principal;
+        this.huesos = huesos;
     }
 
     @Override
     public void show() {
+        if(pref.getInteger("nivel")<1){
+            pref.putInteger("nivel",1);
+            pref.flush();
+        }
+
         pref.flush();
         setYUpgradeCamara();
 
@@ -125,6 +142,11 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
 
         BtnRestartGame = new Boton(TexturaBtnRestartGame);
         BtnRestartGame.setPosicion(565,310);
+
+        cmpParton = new Componente(texturaParton);
+        cmpParton.setPosicion(1000,20);
+
+
 
         crearYPosBotones();
     }
@@ -155,7 +177,18 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
                     if (verificarBoton(x, y, btnWeapon)) {
                         //Sonidos.cuchilloSound();
                         jugador.setEstadoAca(PersonajeTutorial.EstadoAtacando.NORMAL);
-                    }}else if(estado == 3 || estado == 4 ){
+
+                    }
+                        if(verificarBoton(x1,y1, textoParton) && variableTexto == 5){
+                            //cambiar a pantalla de jugar
+                            if (pref.getBoolean("boton") == true ) {
+                                Sonidos.reproducirBoton();
+                            }
+
+                            principal.setScreen(new PantallaCargando(principal, 0, huesos, 0));
+                            estado = 1000;
+                        }
+                    }else if(estado == 3 || estado == 4 ){
                         if(verificarBoton(x1,y1,BtnQuitPausa)){
                             if (pref.getBoolean("boton") == true ) {
                                 Sonidos.reproducirBoton();
@@ -191,7 +224,7 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
                     // if(leftPointer == pointer){
                     Vector3 coordenadas = new Vector3();
                     coordenadas.set(x, y, 0);
-                    camara.unproject(coordenadas);  //traduce las coordenadas
+                    camara.unproject(coordenadas,vista.getScreenX(),vista.getScreenY(),vista.getScreenWidth(),vista.getScreenHeight());  //traduce las coordenadas
                     float x1 = coordenadas.x;
                     float y1 = coordenadas.y;
                     if(estado==1) {
@@ -217,7 +250,7 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
 
                     Vector3 coordenadas = new Vector3();
                     coordenadas.set(x,y, 0);
-                    camara.unproject(coordenadas);  //traduce las coordenadas
+                    camara.unproject(coordenadas,vista.getScreenX(),vista.getScreenY(),vista.getScreenWidth(),vista.getScreenHeight());  //traduce las coordenadas
                     float x1 = coordenadas.x;
                     float y1 = coordenadas.y;
 
@@ -263,11 +296,19 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
                         }
                         if (verificarBoton(x1, y1, btnPunch)) {
                             //Sonidos.golpearSound();
+                            if(variableTexto==2){
+                                variableTexto=3;
+                            }
                             jugador.ataquePuno();
+
                         }
                         if (verificarBoton(x1, y1, btnWeapon)) {
                             //Sonidos.cuchilloSound();
+                            if(variableTexto==3){
+                                variableTexto=4;
+                            }
                             jugador.ataqueArma();
+
                         }
 
                         if(verificarBoton(x1,y1, btnPausa)){
@@ -277,6 +318,8 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
                             }
                             pausarJuego();
                         }
+
+
                     }else if(estado == 0){
                         if(verificarBoton(x1, y1, BtnResumePausa)){
                             if (pref.getBoolean("boton") == true ) {
@@ -292,7 +335,7 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
                                 Sonidos.reproducirBoton();
                             }
                             estado = 100;
-                            principal.setScreen(new NivelTutorial(principal));
+                            principal.setScreen(new NivelTutorial(principal,huesos));
 
                         }
 
@@ -330,6 +373,7 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
     void cargarTexturas() {
 
         texturaFondo = new Texture(Gdx.files.internal("Tutorial/Entrenamiento.png"));
+        texturaParton = new Texture(Gdx.files.internal("Tutorial/Parton_dialogo.png"));
         texturaMovDer= new Texture[3];
         texturaMovDer[0] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/SkullCam1der.png"));
         texturaMovDer[1] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/SkullCam2der.png"));
@@ -360,6 +404,10 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
         texturaPunchDer[2] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchDer3.png"));
         texturaPunchDer[3] = texturaMovDer[2];
 
+        texTextoParton = new Texture[6];
+        for (int i = 0; i < 6; i++) {
+            texTextoParton[i] = new Texture(Gdx.files.internal("Tutorial/Training"+i+".png"));
+        }
 
         texturaPunchIzq = new Texture[4];
         texturaPunchIzq[0] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchIzq1.png"));
@@ -403,6 +451,9 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
         btnWeapon = new Boton(texturaBtnWeapon);
         btnWeapon.setPosicion(800, 12);
 
+        textoParton = new Boton(texTextoParton[variableTexto]);
+        textoParton.setPosicion(900,450);
+
         BtnResumePausa = new Boton(texturaResumePausa);
         BtnResumePausa.setPosicion(555,430);
 
@@ -429,10 +480,17 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
 
         batch.setProjectionMatrix(camara.combined);
 
+        actualizarTexto();
+
         // DIBUJA
         batch.begin();
         fondo.render(batch);
+        cmpParton.render(batch);
         jugador.render(batch);
+
+        textoParton.setTextura(texTextoParton[variableTexto]);
+        textoParton.setPosicion(900, 450);
+        textoParton.render(batch);
 
        // System.out.println(jugador.getEstadoMov());
 
@@ -443,6 +501,7 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
         btnPausa.render(batch);
         btnWeapon.render(batch);
         btnPunch.render(batch);
+
         leerEntrada();
         if(this.estado == 1) {
              // Revisar eventos
@@ -477,6 +536,28 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
             BtnQuitPausa.render(batch);
         }
         batch.end();
+    }
+
+    private void actualizarTexto() {
+        if(contador<=200){
+            variableTexto = 0;
+            contador++;
+
+        }else if(contador>200 && contador<400){
+            variableTexto = 1;
+            contador++;
+        }else if(contador==400){
+            variableTexto = 2;
+            contador = 1000;
+        }
+        if(variableTexto==4){
+            if(contador>=1000 && contador <1200){
+                contador++;
+            }else{
+                contador = 1300;
+                variableTexto = 5;
+            }
+        }
     }
 
     private void revisarVida() {

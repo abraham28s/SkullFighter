@@ -94,7 +94,10 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
     }
     @Override
     public void show() {
-        pref.flush();
+        if(pref.getInteger("nivel")<3){
+            pref.putInteger("nivel",3);
+            pref.flush();
+        }
 
         Gdx.input.setCatchBackKey(true);
         Gdx.input.setCatchMenuKey(true);
@@ -228,12 +231,8 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
         float y = coordenadas.y;
 
         if(Gdx.input.justTouched()) {
-            Preferences pref = Gdx.app.getPreferences("Preferencias");
-            if (verificarBoton(x, y, TextoCivil1) && verificarBordes()) {
-                pref.putInteger("nivel", 2);
-                pref.flush();
 
-            }
+
 
             if(huesos>=30) {
                 if (verificarBoton(x, y, TextoCivil1)) {
@@ -417,7 +416,7 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
         texturaTexto3 = AssManager.get("Dialogos/TextCivil3.png", Texture.class);
 
         texturaFondo2 = AssManager.get("Castillo1.png",Texture.class);
-        texturaTip = AssManager.get("Civil2/Tip.png", Texture.class);
+        texturaTip = AssManager.get("Tip.png", Texture.class);
 
         texturaCivil1 = AssManager.get("Guardia1.png", Texture.class);
         texturaTextoCivil1 = AssManager.get("FightText.png", Texture.class);

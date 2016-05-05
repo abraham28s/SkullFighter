@@ -110,7 +110,7 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
                         for (int i = 1; i <= 3; i++) {
                             Manager.load("Personaje/"+pref.getInteger("ropa")+"/SkullCam"+i+"der.png",Texture.class);
                             Manager.load("Personaje/"+pref.getInteger("ropa")+"/SkullCam"+i+"izq.png",Texture.class);
-                            Manager.load("Civil2/Civil2-" + i + ".png", Texture.class);
+
                             Manager.load("Dialogos/TextCivil" + i + ".png", Texture.class);
                         }
                         Manager.load("DialogosEspantaPajaros/TextScarecrow1.png",Texture.class);
@@ -118,11 +118,9 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
 
                         Manager.load("Fondo-Capa1.png",Texture.class);
 
-                        Manager.load("Civil2/Tip.png", Texture.class);
-                        Manager.load("CivilFrente1.png", Texture.class);
+                        Manager.load("Tip.png", Texture.class);
                         Manager.load("Espantapajaros3.png", Texture.class);
                         Manager.load("CivilMalo3.png", Texture.class);
-                        Manager.load("CivilFrente1.png", Texture.class);
                         Manager.load("FightText.png", Texture.class);
                         Manager.load("Boton_Derecha.png", Texture.class);
                         Manager.load("Boton_Izquierda.png", Texture.class);
@@ -154,7 +152,7 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
                 Manager.load("BotonPunch.png",Texture.class);
                 Manager.load("BotonWeapon.png",Texture.class);
 
-                Manager.load(nivel + "/Entrenamiento"+ese+".png",Texture.class);
+                Manager.load(nivel + "/Entrenamiento2.png",Texture.class);
 
                 Manager.load("BackGame.png", Texture.class);
                 for (int i = 1; i <=3 ; i++) {
@@ -194,7 +192,6 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
                 for (int i = 1; i <= 3; i++) {
                     Manager.load("Personaje/"+pref.getInteger("ropa")+"/SkullCam"+i+"der.png",Texture.class);
                     Manager.load("Personaje/"+pref.getInteger("ropa")+"/SkullCam"+i+"izq.png",Texture.class);
-                    Manager.load("Civil2/Civil2-" + i + ".png", Texture.class);
                     Manager.load("Dialogos/TextCivil" + i + ".png", Texture.class);
                 }
                 Manager.load("DialogosEspantaPajaros/TextScarecrow4.png",Texture.class);
@@ -202,7 +199,7 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
 
                 Manager.load("Castillo1.png",Texture.class);
 
-                Manager.load("Civil2/Tip.png", Texture.class);
+                Manager.load("Tip.png", Texture.class);
                 Manager.load("Guardia1.png", Texture.class);
                 Manager.load("Espantapajaros3.png", Texture.class);
                 Manager.load("Guardia2.png", Texture.class);
