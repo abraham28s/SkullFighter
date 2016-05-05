@@ -203,26 +203,34 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                         jugador.setEstadoAca(Personaje.EstadoAtacando.NORMAL);
                     }}else if(estado == 3 || estado == 4 ){
                         if(verificarBoton(x1,y1,BtnQuitPausa)){
-                            Sonidos.reproducirBoton();
+                            if (pref.getBoolean("boton") == true ) {
+                                Sonidos.reproducirBoton();
+                            }
                             estado = 100;
                             dispose();
                             principal.setScreen(new PantallaMenu(principal,huesos));
                         }
                         if(verificarBoton(x1,y1,BtnBackEnd)){
-                            Sonidos.reproducirBoton();
+                            if (pref.getBoolean("boton") == true ) {
+                                Sonidos.reproducirBoton();
+                            }
                             estado = 100;
                             dispose();
                             principal.setScreen(new PantallaCargando(principal,pantallaOri,huesos,pantallaOri));
                         }
                     }else if( estado == 0){
                         if(verificarBoton(x1,y1,BtnBackEnd)){
-                            Sonidos.reproducirBoton();
+                            if (pref.getBoolean("boton") == true ) {
+                                Sonidos.reproducirBoton();
+                            }
                             estado = 100;
                             dispose();
                             principal.setScreen(new PantallaCargando(principal,pantallaOri,huesos,pantallaOri));
                         }
                         if(verificarBoton(x1,y1,BtnQuitPausa)){
-                            Sonidos.reproducirBoton();
+                            if (pref.getBoolean("boton") == true ) {
+                                Sonidos.reproducirBoton();
+                            }
                             estado = 100;
                             principal.setScreen(new PantallaMenu(principal,huesos));
 
@@ -333,13 +341,17 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                         }
                     }else if(estado == 0){
                         if(verificarBoton(x1, y1, BtnResumePausa)){
-                            Sonidos.reproducirBoton();
+                            if (pref.getBoolean("boton") == true ) {
+                                Sonidos.reproducirBoton();
+                            }
                             resumirJuego();
                         }
 
                     }else if(estado == 3 || estado == 4 ){
                         if(verificarBoton(x1, y1, BtnRestartGame)){
-                            Sonidos.reproducirBoton();
+                            if (pref.getBoolean("boton") == true ) {
+                                Sonidos.reproducirBoton();
+                            }
                             estado = 100;
                             principal.setScreen(new NivelUno(principal,AssManager,nivel,huesos,huesosGanar,ese,pantallaOri,dificultad));
                         }

@@ -134,9 +134,11 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
             if (verificarBoton(x, y, next)) {
 
                 //cambiar a pantalla
-                Sonidos.reproducirBoton();
+                Preferences pref = Gdx.app.getPreferences("Preferencias");
                 fondo.setTextura(comic[contador + 1]);
-                Sonidos.hojaSound();
+                if (pref.getBoolean("boton") == true ) {
+                    Sonidos.hojaSound();
+                }
                 contador++;
                 System.out.println("Contador+: " + contador);
                 if (contador>=7){
@@ -147,9 +149,11 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
             if (verificarBoton(x, y, back)) {
 
                 //cambiar a pantalla
-                Sonidos.reproducirBoton();
+                Preferences pref = Gdx.app.getPreferences("Preferencias");
                 fondo.setTextura(comic[contador - 1]);
-                Sonidos.hojaSound();
+                if (pref.getBoolean("boton") == true ) {
+                    Sonidos.hojaSound();
+                }
                 contador--;
                 //System.out.println("Contador-: " + contador);
                 if(contador<=0){
