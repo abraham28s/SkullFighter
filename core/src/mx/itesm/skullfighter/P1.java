@@ -33,6 +33,8 @@ public class P1 implements Screen {
         fondo = new Fondo(texturaFondo);
         batch = new SpriteBatch();
         setYUpgradeCamara();
+        Gdx.input.setCatchBackKey(true);
+        Gdx.input.setCatchMenuKey(true);
     }
 
     public void setYUpgradeCamara() {

@@ -150,12 +150,13 @@ public class Sett extends PantallaAbstracta implements Screen{
             if (verificarBoton(x, y, restartAD)) {
                 Preferences pref = Gdx.app.getPreferences("Preferencias");
                 pref.putBoolean("guardar", false);
-                pref.flush();
 
-                pref.putInteger("huesos",0);
+
+                pref.putInteger("huesos", 0);
                 pref.putInteger("ropa",1);
                 pref.putInteger("arma",2);
-                pref.putInteger("a",1);
+                pref.putInteger("a", 1);
+                pref.flush();
 
                 if (pref.getBoolean("boton") == true) {
                     Sonidos.reproducirBoton();
@@ -229,6 +230,8 @@ public class Sett extends PantallaAbstracta implements Screen{
 
         comic = new Boton (texturaComic);
         comic.setPosicion(900,30);
+        Gdx.input.setCatchBackKey(true);
+        Gdx.input.setCatchMenuKey(true);
 
     }
 

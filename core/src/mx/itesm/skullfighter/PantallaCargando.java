@@ -100,6 +100,8 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
         load.setPosicion(390,100);
 
         cargarAssets();
+        Gdx.input.setCatchBackKey(true);
+        Gdx.input.setCatchMenuKey(true);
     }
 
     private void cargarAssets() {
@@ -200,10 +202,10 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
                 Manager.load("Castillo1.png",Texture.class);
 
                 Manager.load("Tip.png", Texture.class);
-                Manager.load("Guardia1.png", Texture.class);
+
                 Manager.load("Espantapajaros3.png", Texture.class);
-                Manager.load("Guardia2.png", Texture.class);
-                Manager.load("Guardia3.png", Texture.class);
+
+                Manager.load("Guardia1.png", Texture.class);
                 Manager.load("FightText.png", Texture.class);
                 Manager.load("Boton_Derecha.png", Texture.class);
                 Manager.load("Boton_Izquierda.png", Texture.class);
@@ -211,6 +213,66 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
                 Manager.load("BackGame.png", Texture.class);
                 Manager.load("skip.png", Texture.class);
                 break;
+
+            case 3: //Tutorial
+
+            case 4: //Final
+                Manager.load("Final.png",Texture.class);
+                Manager.load("YouLose.png", Texture.class);
+                Manager.load("Restart.png",Texture.class);
+
+                Manager.load("Pausemenu.png",Texture.class);
+                Manager.load("Quit.png",Texture.class);
+                Manager.load("Resume.png",Texture.class);
+                Manager.load("negro.png",Texture.class);
+
+                Manager.load("Boton_Derecha.png",Texture.class);
+                Manager.load("Boton_Izquierda.png",Texture.class);
+                Manager.load("BotonJump.png",Texture.class);
+                Manager.load("PauseBotton.png",Texture.class);
+                Manager.load("BotonPunch.png",Texture.class);
+                Manager.load("BotonWeapon.png",Texture.class);
+
+                Manager.load("Final/DeathParton0.png", Texture.class);
+                Manager.load("Final/DeathParton1.png", Texture.class);
+                Manager.load("Final/DeathParton2.png", Texture.class);
+                Manager.load("Final/DeathParton3.png", Texture.class);
+
+                Manager.load("Final/Escenario_Final.png",Texture.class);
+
+                Manager.load("BackGame.png", Texture.class);
+                for (int i = 1; i <=3 ; i++) {
+                    Manager.load("Personaje/"+pref.getInteger("ropa")+"/SkullCam"+i+"der.png", Texture.class);
+                    Manager.load("Personaje/"+pref.getInteger("ropa")+"/SkullCam"+i+"izq.png", Texture.class);
+                    Manager.load("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchDer"+i+".png", Texture.class);
+                    Manager.load("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchIzq"+i+".png", Texture.class);
+                    Manager.load("Final/Camina/Enemigo"+i+"Der.png",Texture.class);
+                    Manager.load("Final/Camina/Enemigo"+i+"Izq.png",Texture.class);
+                }
+
+
+                for (int i = 1; i <=3 ; i++) {
+                    Manager.load("Final/Golpe/EnemigoPun"+i+"Der.png",Texture.class);
+
+                    Manager.load("Final/Golpe/EnemigoPun"+i+"Izq.png",Texture.class);
+                }
+
+                for (int i = 1; i <=4 ; i++) {
+                    Manager.load("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz"+i+"Der.png",Texture.class);
+
+                    Manager.load("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz"+i+"Izq.png",Texture.class);
+
+                    Manager.load("Final/Arma/EnemigoArm"+i+"Der.png",Texture.class);
+                    Manager.load("Final/Arma/EnemigoArm"+i+"Izq.png",Texture.class);
+                }
+
+                for (int i = 0; i<7;i++) {
+                    Manager.load("Personaje/VidaSkull" + i + ".png",Texture.class);
+                    Manager.load(nivel + "/VidaSkullE" + i + ".png",Texture.class);
+                }
+                Manager.load("+"+huesosGanar+".png",Texture.class);
+                break;
+
 
         }
     }
@@ -252,6 +314,9 @@ public class PantallaCargando extends PantallaAbstracta implements Screen {
                     this.principal.setScreen(new PantallaCastillo(this.principal,this.Manager,huesos));
                     this.dispose();
                     break;
+
+                case 4:
+                    this.principal.setScreen(new NivelFinal(this.principal,Manager,nivel,huesos,huesosGanar,ese,pantallaOri,dificultad));
 
             }
         }else{

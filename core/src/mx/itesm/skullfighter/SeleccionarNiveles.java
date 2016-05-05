@@ -88,6 +88,8 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
         crearYPosBotones();
 
         batch = new SpriteBatch();
+        Gdx.input.setCatchBackKey(true);
+        Gdx.input.setCatchMenuKey(true);
 
     }
 
@@ -204,7 +206,7 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
                     }
                     Sonidos.pausarMusicaFondo();
 
-                    principal.setScreen(new /*PantallaCargando(principal, 0, huesos, 0)*/ NivelTutorial(this.principal,huesos));
+                    principal.setScreen(new /*PantallaCargando(principal, 0, huesos, 0)*/ NivelTutorial(principal,huesos));
                     this.dispose();
                 }
             }
@@ -235,8 +237,19 @@ public class SeleccionarNiveles extends PantallaAbstracta implements Screen {
             }
 
             if(pref.getInteger("nivel") == 4) {
+                if (verificarBoton(x, y, nivel3)) {
+                    if (pref.getBoolean("boton") == true) {
+                        Sonidos.reproducirBoton();
+                    }
 
+                    Sonidos.pausarMusicaFondo();
+
+                    principal.setScreen(new PantallaCargando(principal, 4, huesos, 1, 15, 0, 1, 50));
+                    this.dispose();
+                }
             }
+
+
         }
 
 

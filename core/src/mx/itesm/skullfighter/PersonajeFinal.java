@@ -4,14 +4,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import org.lwjgl.Sys;
-
-import java.util.Objects;
-
 /**
  * Created by abrahamsoto on 18/02/16.
  */
-public class Personaje {
+public class PersonajeFinal {
 
     private Sprite sprite;
 
@@ -31,7 +27,7 @@ public class Personaje {
     private Texture[] texturaGolpeIzq;
 
     private int variableMovimiento = 0;
-    private NivelUno pantalla;
+    private NivelFinal pantalla;
 
     private int variableWeapon1 = 0;
     private int variableWeapon2 = 0;
@@ -39,8 +35,8 @@ public class Personaje {
     private int variablePuno2 = 0;
 
 
-    public Personaje(Texture[] texturaMovDer,Texture[] texturaMovIzq,Texture[] texturaArmaDer,Texture[] texturaArmaIzq,
-                     Texture[] texturaGolpeDer,Texture[] texturaGolpeIzq,String tipo,NivelUno pantalla){
+    public PersonajeFinal(Texture[] texturaMovDer, Texture[] texturaMovIzq, Texture[] texturaArmaDer, Texture[] texturaArmaIzq,
+                          Texture[] texturaGolpeDer, Texture[] texturaGolpeIzq, String tipo, NivelFinal pantalla){
         this.texturaMovDer = texturaMovDer;
         this.texturaMovIzq = texturaMovIzq;
         this.texturaArmaDer = texturaArmaDer;
@@ -118,14 +114,14 @@ public class Personaje {
         switch (estadoMov){
             case DERECHA:
                 if(this.pantalla.verificarBordes(this)){
-                    movimiento("der");
-                    vista = "der";}
+                movimiento("der");
+                vista = "der";}
                 //System.out.println("movder");
                 break;
             case IZQUIERDA:
                 if(this.pantalla.verificarBordes(this)){
-                    movimiento("izq");
-                    vista = "izq";}
+                movimiento("izq");
+                vista = "izq";}
                 //System.out.println("movizq");
                 break;
             case QUIETO:
@@ -167,6 +163,9 @@ public class Personaje {
                 break;
             case TERMINOWEAPON:
 
+
+
+
                 if((xp-(wp/4)<= xe + (we/4) && xp>xe) || (xp+(wp/4) >= xe-(xe/4)) && xe>xp) {
                     if(this.equals(pantalla.jugador)){
                         pantalla.actualizarVida(2,'j');
@@ -185,11 +184,13 @@ public class Personaje {
         float x = this.getSprite().getX();
         float y = this.getSprite().getY();
 
+
         if(vista.equals("der")){
             this.estadoAca = EstadoAtacando.PUNO;
             if(variablePuno1 %5==0){
 
                 this.setSprite(texturaGolpeDer[variablePuno2]);
+                if(this.equals(pantalla.enemigo)) x = x+20;
                 variablePuno2++;
                 if(variablePuno2 > 3){
                     variablePuno2 = 0;
@@ -199,7 +200,9 @@ public class Personaje {
         }else if(vista.equals("izq")){
             this.estadoAca = EstadoAtacando.PUNO;
             if(variablePuno1 %5==0){
+
                 this.setSprite(texturaGolpeIzq[variablePuno2]);
+                if(this.equals(pantalla.enemigo)) x = x-20;
                 variablePuno2++;
                 if(variablePuno2 > 3){
                     variablePuno2 = 0;
@@ -249,17 +252,17 @@ public class Personaje {
         float x = this.getSprite().getX();
         float y = this.getSprite().getY();
 
-        if (direccion.equals("der")) {
-            this.estadoMov = EstadoMov.DERECHA;
-            //System.out.println("derechaaaa");
-            if (variableMovimiento % 4 == 0)this.setSprite(texturaMovDer[variableMovimiento % 3]);
-            this.getSprite().setPosition(x+5,y);
+            if (direccion.equals("der")) {
+                this.estadoMov = EstadoMov.DERECHA;
+                //System.out.println("derechaaaa");
+                if (variableMovimiento % 4 == 0)this.setSprite(texturaMovDer[variableMovimiento % 3]);
+                this.getSprite().setPosition(x+5,y);
 
-        } else if (direccion.equals("izq")) {
-            this.estadoMov = EstadoMov.IZQUIERDA;
-            if (variableMovimiento % 4 == 0)this.setSprite(texturaMovIzq[variableMovimiento % 3]);
-            this.getSprite().setPosition(x-5,y);
-        }
+            } else if (direccion.equals("izq")) {
+                this.estadoMov = EstadoMov.IZQUIERDA;
+                if (variableMovimiento % 4 == 0)this.setSprite(texturaMovIzq[variableMovimiento % 3]);
+                this.getSprite().setPosition(x-5,y);
+            }
 
 
         variableMovimiento++;
@@ -326,6 +329,5 @@ public class Personaje {
         WEAPON,TERMINOWEAPON,TERMINOPUNO,
         PUNO,
         NORMAL
-
     }
 }

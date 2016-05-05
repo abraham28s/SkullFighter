@@ -80,6 +80,8 @@ public class PantallaMenu extends PantallaAbstracta implements Screen {
         crearYPosBotones();
 
         batch = new SpriteBatch();
+        Gdx.input.setCatchBackKey(false);
+        Gdx.input.setCatchMenuKey(true);
 
 
     }

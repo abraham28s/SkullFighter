@@ -9,13 +9,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.AtlasTmxMapLoader;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
-import org.lwjgl.Sys;
 
 import java.util.Random;
 
@@ -169,6 +165,8 @@ public class NivelUno extends PantallaAbstracta implements Screen {
 
 
         crearYPosBotones();
+        Gdx.input.setCatchBackKey(true);
+        Gdx.input.setCatchMenuKey(true);
     }
 
     void leerEntrada() {
@@ -218,6 +216,22 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                             estado = 100;
                             dispose();
                             principal.setScreen(new PantallaCargando(principal,pantallaOri,huesos,pantallaOri));
+                        }
+                        if(verificarBoton(x1,y1,BtnQuitPausa)){
+                            if (pref.getBoolean("boton") == true ) {
+                                Sonidos.reproducirBoton();
+                            }
+                            estado = 100;
+                            principal.setScreen(new PantallaMenu(principal,huesos));
+
+                            //Preferencias música
+                            Preferences pref = Gdx.app.getPreferences("Preferencias");
+                            pref.flush();
+                            pref.getBoolean("musica", true);
+                            pref.flush();
+                            if (pref.getBoolean("musica")) {
+                                Sonidos.reproducirMusicaFondo();
+                            }
                         }
                     }else if( estado == 0){
                         if(verificarBoton(x1,y1,BtnBackEnd)){
@@ -608,6 +622,7 @@ public class NivelUno extends PantallaAbstracta implements Screen {
                 pref.putInteger("huesos",huesos);
                 huesos += huesosGanar;
                 pref.putInteger("huesos",huesos);
+                pref.flush();
 
     }
 

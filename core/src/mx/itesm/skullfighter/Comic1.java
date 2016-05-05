@@ -107,6 +107,8 @@ public class Comic1 extends PantallaAbstracta  implements  Screen{
 
 
         batch = new SpriteBatch();
+        Gdx.input.setCatchBackKey(true);
+        Gdx.input.setCatchMenuKey(true);
     }
 
     @Override

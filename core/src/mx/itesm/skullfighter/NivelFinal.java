@@ -4,33 +4,39 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import org.lwjgl.Sys;
-
 import java.util.Random;
+
+import javax.xml.soap.Text;
 
 /**
  * Created by abrahamsoto on 30/03/16.
  */
-public class NivelTutorial extends PantallaAbstracta implements Screen {
+public class NivelFinal extends PantallaAbstracta implements Screen {
 
     private final Principal principal;
+
+    private AssetManager AssManager;
     private OrthographicCamera camara;
     private Viewport vista;
 
     private SpriteBatch batch;
 
     Fondo fondo;
-    PersonajeTutorial jugador;
-    PersonajeTutorial enemigo;
+    PersonajeFinal jugador;
+
+    public int nivelLargo;
+
+
+    PersonajeFinal enemigo;
 
     private Boton btnDer;
     private Texture texturaBtnDer;
@@ -70,19 +76,20 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
     private int estado = 1;
 
     //Pausa
-    private Componente fondoPausa;
-    private Texture texturaFonPausa;
+    private Componente fondoPausa,cmpHuesosGanar;
+    private Texture texturaFonPausa,texturaHuesosGanar;
     private Componente MenuPausa;
     private Texture texturaMenuPausa;
-    private Boton BtnQuitPausa;
-    private Texture texturaQuitPausa;
+    private Boton BtnQuitPausa,BtnBackEnd;
+    private Texture texturaQuitPausa,texturaBackEnd;
     private Boton BtnResumePausa;
     private Texture texturaResumePausa;
 
     private int indexVidaE = 6;
 
-    private Boton BtnRestartGame;
-    private Texture TexturaBtnRestartGame;
+    private Boton BtnRestartGame,BtnBackLevel;
+    private Texture TexturaBtnRestartGame,TexturaBackLevel;
+
     private Componente win;
     private Texture texturaWin;
     private Componente lose;
@@ -91,43 +98,62 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
     private String banderaMoviendo;
     private boolean banderaIzquierdaApre;
     private boolean banderaDerechaApre;
-
-    private Boton textoParton;
-    private Texture texTextoParton[];
-
-    private Texture texturaParton;
-    private Componente cmpParton;
-    private int variableTexto = 5;
-    Preferences pref = Gdx.app.getPreferences("Preferencias");
-    private int contador=0;
+    private int nivel;
     private int huesos;
+    Preferences pref = Gdx.app.getPreferences("Preferencias");
+    private int huesosGanar;
+    private int ese;
+    private int pantallaOri;
+    private int dificultad;
+    private Texture[] texturaEneWeaponDer;
+    private Texture[] texturaEneWeaponIzq;
+    private Componente cmpGloboParton;
+    private Texture[] texGloboParton;
+    private int variableTexto = 0;
+    private int contador = 0;
 
 
-    public NivelTutorial(Principal principal,int huesos) {
+    public NivelFinal(Principal principal, AssetManager ass, int nivel, int huesos, int huesosGanar, int ese, int pantallaOri, int dificultad) {
         this.principal = principal;
-        this.huesos = huesos;
+        this.nivel = nivel;
+        this.AssManager = ass;
+        this.huesos = pref.getInteger("huesos");
+        this.huesosGanar = huesosGanar;
+        this.ese = ese;
+        this.pantallaOri = pantallaOri;
+        this.dificultad = dificultad;
     }
+
+
 
     @Override
     public void show() {
-        if(pref.getInteger("nivel")<1){
-            pref.putInteger("nivel",1);
+        if(pref.getInteger("nivel")<4){
+            pref.putInteger("nivel", 4);
             pref.flush();
         }
-
-        pref.flush();
         setYUpgradeCamara();
+
+
 
         cargarTexturas();
 
         fondo = new Fondo(texturaFondo);
 
-        jugador = new PersonajeTutorial(texturaMovDer,texturaMovIzq,texturaOzDer,texturaOzIzq,texturaPunchDer,texturaPunchIzq,"jugador",this);
+        jugador = new PersonajeFinal(texturaMovDer, texturaMovIzq, texturaOzDer, texturaOzIzq, texturaPunchDer, texturaPunchIzq, "jugador", this);
         jugador.setPosicion(-15, -30);
 
+        enemigo = new PersonajeFinal(texturaEneMovDer,texturaEneMovIzq,texturaEneWeaponDer,texturaEneWeaponIzq,texturaEnePunchDer,texturaEnePunchIzq,"enemigo",this);
+        enemigo.setPosicion(1050, 30);
 
+        vidaJ = new Componente(texturaVidaJ[6]);
+        vidaJ.setPosicion(20,550);
 
-        enemigo = new PersonajeTutorial(texturaMovDer,texturaMovIzq,texturaOzDer,texturaOzIzq,texturaPunchDer,texturaPunchIzq,"enemigo",this);
+        vidaE = new Componente(texturaVidaE[6]);
+        vidaE.setPosicion(700, 550);
+
+        cmpGloboParton = new Componente(texGloboParton[0]);
+        cmpGloboParton.setPosicion(900,400);
 
         fondoPausa = new Componente(texturaFonPausa);
 
@@ -135,16 +161,20 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
         MenuPausa.setPosicion(417,120);
 
         win = new Componente(texturaWin);
-        win.setPosicion(210,450);
+        win.setPosicion(100,180);
+
+        cmpHuesosGanar = new Componente(texturaHuesosGanar);
+        cmpHuesosGanar.setPosicion(810,300);
+
 
         lose = new Componente(texturaLose);
         lose.setPosicion(250,450);
 
         BtnRestartGame = new Boton(TexturaBtnRestartGame);
-        BtnRestartGame.setPosicion(565,310);
+        BtnRestartGame.setPosicion(480,290);
 
-        cmpParton = new Componente(texturaParton);
-        cmpParton.setPosicion(1000,20);
+        BtnBackEnd = new Boton(texturaBackEnd);
+        BtnBackEnd.setPosicion(650,290);
 
 
 
@@ -154,7 +184,12 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
     }
 
     void leerEntrada() {
+
+
+
             Gdx.input.setInputProcessor(new InputAdapter() {
+
+
                 public boolean touchUp(int x, int y, int pointer, int button) {
                     Vector3 coordenadas = new Vector3();
                     coordenadas.set(x, y, 0);
@@ -164,55 +199,60 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
                     if(estado == 1 ){
 
                     if (verificarBoton(x1, y1, btnIzq) && movPointerIzq == pointer) {
-                        jugador.setEstadoMov(PersonajeTutorial.EstadoMov.QUIETO);
+                        jugador.setEstadoMov(PersonajeFinal.EstadoMov.QUIETO);
                         banderaIzquierdaApre = false;
 
                     } else if (verificarBoton(x1, y1, btnDer) && movPointerDer == pointer) {
-                        jugador.setEstadoMov(PersonajeTutorial.EstadoMov.QUIETO);
+                        jugador.setEstadoMov(PersonajeFinal.EstadoMov.QUIETO);
                         banderaDerechaApre = false;
                     }
                     if (verificarBoton(x, y, btnPunch)) {
                         //Sonidos.golpearSound();
-                        jugador.setEstadoAca(PersonajeTutorial.EstadoAtacando.NORMAL);
+                        jugador.setEstadoAca(PersonajeFinal.EstadoAtacando.NORMAL);
 
                     }
                     if (verificarBoton(x, y, btnWeapon)) {
                         //Sonidos.cuchilloSound();
-                        jugador.setEstadoAca(PersonajeTutorial.EstadoAtacando.NORMAL);
-
-                    }
-                        if(verificarBoton(x1,y1, textoParton) && variableTexto == 5){
-                            //cambiar a pantalla de jugar
-                            if (pref.getBoolean("boton") == true ) {
-                                Sonidos.reproducirBoton();
-                            }
-
-                            principal.setScreen(new PantallaCargando(principal, 0, huesos, 0));
-                            estado = 1000;
-                        }
-                    }else if(estado == 3 || estado == 4 ){
+                        jugador.setEstadoAca(PersonajeFinal.EstadoAtacando.NORMAL);
+                    }}else if(estado == 3 || estado == 4 ){
                         if(verificarBoton(x1,y1,BtnQuitPausa)){
                             if (pref.getBoolean("boton") == true ) {
                                 Sonidos.reproducirBoton();
                             }
                             estado = 100;
                             dispose();
-                            principal.setScreen(new PantallaMenu(principal));
+                            principal.setScreen(new PantallaMenu(principal,huesos));
                         }
-                    }else if( estado == 0){
-                        if(verificarBoton(x1,y1,BtnQuitPausa)){
-
+                        if(verificarBoton(x1,y1,BtnBackEnd)){
                             if (pref.getBoolean("boton") == true ) {
                                 Sonidos.reproducirBoton();
                             }
                             estado = 100;
-                            principal.setScreen(new PantallaMenu(principal));
+                            dispose();
+                            principal.setScreen(new PantallaCargando(principal,pantallaOri,huesos,pantallaOri));
+                        }
+                    }else if( estado == 0){
+                        if(verificarBoton(x1,y1,BtnBackEnd)){
+                            if (pref.getBoolean("boton") == true ) {
+                                Sonidos.reproducirBoton();
+                            }
+                            estado = 100;
+                            dispose();
+                            principal.setScreen(new PantallaCargando(principal,2,huesos,1));
+                        }
+                        if(verificarBoton(x1,y1,BtnQuitPausa)){
+                            if (pref.getBoolean("boton") == true ) {
+                                Sonidos.reproducirBoton();
+                            }
+                            estado = 100;
+                            principal.setScreen(new PantallaMenu(principal,huesos));
 
                             //Preferencias música
                             Preferences pref = Gdx.app.getPreferences("Preferencias");
+                            pref.flush();
                             pref.getBoolean("musica", true);
                             pref.flush();
-                            if (pref.getBoolean("musica",true)) {
+                            if (pref.getBoolean("musica")) {
                                 Sonidos.reproducirMusicaFondo();
                             }
                         }
@@ -231,7 +271,7 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
                     float y1 = coordenadas.y;
                     if(estado==1) {
                         if (!verificarBoton(x1, y1, btnIzq) && !verificarBoton(x1, y1, btnDer)) {
-                            jugador.setEstadoMov(PersonajeTutorial.EstadoMov.QUIETO);
+                            jugador.setEstadoMov(PersonajeFinal.EstadoMov.QUIETO);
                         }
                         if (verificarBoton(x1, y1, btnIzq) && !verificarBoton(x1, y1, btnDer)) {
                             jugador.movimiento("izq");
@@ -257,6 +297,8 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
                     float y1 = coordenadas.y;
 
                     if(estado == 1){
+
+
                         if (verificarBoton(x1, y1, btnIzq) && pointer == 0) {
                             jugador.movimiento("izq");
 
@@ -274,7 +316,7 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
                         }
                         if (verificarBoton(x1, y1, btnBrin) && pointer != 0 && movPointerDer == 0 && banderaMoviendo.equals("der") ) {
                             //Sonidos.saltarSound();
-                            if (jugador.getEstado() == PersonajeTutorial.EstadoBrinco.NORMAL) {
+                            if (jugador.getEstado() == PersonajeFinal.EstadoBrinco.NORMAL) {
                                 jugador.movimientoBrin();
                                 jugador.movimiento("der");
 
@@ -283,14 +325,14 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
                         }
                         if (verificarBoton(x1, y1, btnBrin) && pointer != 0 && movPointerIzq == 0 && banderaMoviendo.equals("izq") ) {
                             //Sonidos.saltarSound();
-                            if (jugador.getEstado() == PersonajeTutorial.EstadoBrinco.NORMAL) {
+                            if (jugador.getEstado() == PersonajeFinal.EstadoBrinco.NORMAL) {
                                 jugador.movimientoBrin();
                                 jugador.movimiento("izq");
 
                             }
                             brincoPointer = pointer;
                         } else if (verificarBoton(x1, y1, btnBrin) && pointer == 0) {
-                            if (jugador.getEstado() == PersonajeTutorial.EstadoBrinco.NORMAL) {
+                            if (jugador.getEstado() == PersonajeFinal.EstadoBrinco.NORMAL) {
                                 jugador.movimientoBrin();
 
                             }
@@ -298,30 +340,18 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
                         }
                         if (verificarBoton(x1, y1, btnPunch)) {
                             //Sonidos.golpearSound();
-                            if(variableTexto==2){
-                                variableTexto=3;
-                            }
                             jugador.ataquePuno();
-
                         }
                         if (verificarBoton(x1, y1, btnWeapon)) {
                             //Sonidos.cuchilloSound();
-                            if(variableTexto==3){
-                                variableTexto=4;
-                            }
                             jugador.ataqueArma();
-
                         }
 
                         if(verificarBoton(x1,y1, btnPausa)){
                             //cambiar a pantalla de jugar
-                            if (pref.getBoolean("boton") == true ) {
-                                Sonidos.reproducirBoton();
-                            }
+                            //Sonidos.reproducirBoton();
                             pausarJuego();
                         }
-
-
                     }else if(estado == 0){
                         if(verificarBoton(x1, y1, BtnResumePausa)){
                             if (pref.getBoolean("boton") == true ) {
@@ -332,13 +362,11 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
 
                     }else if(estado == 3 || estado == 4 ){
                         if(verificarBoton(x1, y1, BtnRestartGame)){
-
                             if (pref.getBoolean("boton") == true ) {
                                 Sonidos.reproducirBoton();
                             }
                             estado = 100;
-                            principal.setScreen(new NivelTutorial(principal,huesos));
-
+                            principal.setScreen(new NivelFinal(principal,AssManager,nivel,huesos,huesosGanar,ese,pantallaOri,dificultad));
                         }
 
                     }
@@ -366,7 +394,7 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
             float y = vidaJ.getSprite().getY();
             indexVidaJ-=cuan;
             if(indexVidaJ<0)indexVidaJ=0;
-            vidaJ.setSprite(texturaVidaE[indexVidaJ]);
+            vidaJ.setSprite(texturaVidaJ[indexVidaJ]);
             vidaJ.getSprite().setPosition(x,y);
         }
     }
@@ -374,65 +402,119 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
     @Override
     void cargarTexturas() {
 
-        texturaFondo = new Texture(Gdx.files.internal("Tutorial/Entrenamiento.png"));
-        texturaParton = new Texture(Gdx.files.internal("Tutorial/Parton_dialogo.png"));
+        texturaWin = AssManager.get("Final.png",Texture.class);
+        texturaLose = AssManager.get("YouLose.png",Texture.class);
+        TexturaBtnRestartGame = AssManager.get("Restart.png",Texture.class);
+
+        texturaMenuPausa = AssManager.get("Pausemenu.png",Texture.class);
+        texturaQuitPausa = AssManager.get("Quit.png",Texture.class);
+        texturaResumePausa = AssManager.get("Resume.png",Texture.class);
+        texturaFonPausa =AssManager.get("negro.png",Texture.class);
+
+        texturaBtnDer = AssManager.get("Boton_Derecha.png",Texture.class);
+        texturaBtnIzq = AssManager.get("Boton_Izquierda.png",Texture.class);
+        texturaBtnBrin = AssManager.get("BotonJump.png",Texture.class);
+        texturaPausa = AssManager.get("PauseBotton.png",Texture.class);
+        texturaBtnPunch = AssManager.get("BotonPunch.png",Texture.class);
+        texturaBtnWeapon = AssManager.get("BotonWeapon.png",Texture.class);
+
+        texturaFondo = AssManager.get("Final/Escenario_Final.png",Texture.class);
+
         texturaMovDer= new Texture[3];
-        texturaMovDer[0] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/SkullCam1der.png"));
-        texturaMovDer[1] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/SkullCam2der.png"));
-        texturaMovDer[2] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/SkullCam3der.png"));
+        texturaMovDer[0] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/SkullCam1der.png",Texture.class);
+        texturaMovDer[1] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/SkullCam2der.png",Texture.class);
+        texturaMovDer[2] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/SkullCam3der.png",Texture.class);
+
+        texGloboParton= new Texture[4];
+        texGloboParton[0] = AssManager.get("Final/DeathParton0.png",Texture.class);
+        texGloboParton[1] = AssManager.get("Final/DeathParton1.png",Texture.class);
+        texGloboParton[2] = AssManager.get("Final/DeathParton2.png",Texture.class);
+        texGloboParton[3] = AssManager.get("Final/DeathParton3.png",Texture.class);
 
         texturaMovIzq = new Texture[3];
-        texturaMovIzq[0] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/SkullCam1izq.png"));
-        texturaMovIzq[1] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/SkullCam2izq.png"));
-        texturaMovIzq[2] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/SkullCam3izq.png"));
+        texturaMovIzq[0] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/SkullCam1izq.png",Texture.class);
+        texturaMovIzq[1] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/SkullCam2izq.png",Texture.class);
+        texturaMovIzq[2] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/SkullCam3izq.png",Texture.class);
 
         texturaOzDer = new Texture[5];
-        texturaOzDer[0] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/"+pref.getInteger("arma",1)+"/Oz1Der.png"));
-        texturaOzDer[1] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/"+pref.getInteger("arma",1)+"/Oz2Der.png"));
-        texturaOzDer[2] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/"+pref.getInteger("arma",1)+"/Oz3Der.png"));
-        texturaOzDer[3] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa",1)+"/"+pref.getInteger("arma",1)+"/Oz4Der.png"));
-        texturaOzDer[4] =texturaMovDer[2];
+        texturaOzDer[0] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz1Der.png",Texture.class);
+        texturaOzDer[1] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz2Der.png",Texture.class);
+        texturaOzDer[2] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz3Der.png",Texture.class);
+        texturaOzDer[3] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz4Der.png",Texture.class);
+        texturaOzDer[4] = texturaMovDer[0];
 
         texturaOzIzq = new Texture[5];
-        texturaOzIzq[0] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz1Izq.png"));
-        texturaOzIzq[1] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz2Izq.png"));
-        texturaOzIzq[2] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz3Izq.png"));
-        texturaOzIzq[3] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz4Izq.png"));
+        texturaOzIzq[0] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz1Izq.png",Texture.class);
+        texturaOzIzq[1] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz2Izq.png",Texture.class);
+        texturaOzIzq[2] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz3Izq.png",Texture.class);
+        texturaOzIzq[3] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/Oz4Izq.png",Texture.class);
         texturaOzIzq[4] = texturaMovIzq[0];
 
         texturaPunchDer = new Texture[4];
-        texturaPunchDer[0] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchDer1.png"));
-        texturaPunchDer[1] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchDer2.png"));
-        texturaPunchDer[2] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchDer3.png"));
-        texturaPunchDer[3] = texturaMovDer[2];
+        texturaPunchDer[0] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchDer1.png",Texture.class);
+        texturaPunchDer[1] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchDer2.png",Texture.class);
+        texturaPunchDer[2] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchDer3.png",Texture.class);
+        texturaPunchDer[3] = texturaMovDer[0];
 
-        texTextoParton = new Texture[6];
-        for (int i = 0; i < 6; i++) {
-            texTextoParton[i] = new Texture(Gdx.files.internal("Tutorial/Training"+i+".png"));
-        }
 
         texturaPunchIzq = new Texture[4];
-        texturaPunchIzq[0] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchIzq1.png"));
-        texturaPunchIzq[1] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchIzq2.png"));
-        texturaPunchIzq[2] = new Texture(Gdx.files.internal("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchIzq3.png"));
+        texturaPunchIzq[0] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchIzq1.png",Texture.class);
+        texturaPunchIzq[1] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchIzq2.png",Texture.class);
+        texturaPunchIzq[2] = AssManager.get("Personaje/"+pref.getInteger("ropa")+"/"+pref.getInteger("arma")+"/SkullPunchIzq3.png",Texture.class);
         texturaPunchIzq[3] = texturaMovIzq[0];
 
+        texturaEneMovDer = new Texture[3];
+        texturaEneMovDer[0] =AssManager.get("Final/Camina/Enemigo1Der.png",Texture.class);
+        texturaEneMovDer[1]=AssManager.get("Final/Camina/Enemigo2Der.png",Texture.class);
+        texturaEneMovDer[2]=AssManager.get("Final/Camina/Enemigo3Der.png",Texture.class);
 
-        texturaWin = new Texture(Gdx.files.internal("YouWin.png"));
-        texturaLose = new Texture(Gdx.files.internal("YouLose.png"));
-        TexturaBtnRestartGame = new Texture(Gdx.files.internal("Restart.png"));
+        texturaEneMovIzq = new Texture[3];
+        texturaEneMovIzq[0] =AssManager.get("Final/Camina/Enemigo1Izq.png",Texture.class);
+        texturaEneMovIzq[1]=AssManager.get("Final/Camina/Enemigo2Izq.png",Texture.class);
+        texturaEneMovIzq[2]=AssManager.get("Final/Camina/Enemigo3Izq.png",Texture.class);
 
-        texturaMenuPausa = new Texture(Gdx.files.internal("Pausemenu.png"));
-        texturaQuitPausa = new Texture(Gdx.files.internal("Quit.png"));
-        texturaResumePausa = new Texture(Gdx.files.internal("Resume.png"));
-        texturaFonPausa =new Texture(Gdx.files.internal("negro.png"));
+        texturaEnePunchDer = new Texture[4];
+        texturaEnePunchDer[0] = AssManager.get("Final/Golpe/EnemigoPun1Der.png",Texture.class);
+        texturaEnePunchDer[1] = AssManager.get("Final/Golpe/EnemigoPun2Der.png",Texture.class);
+        texturaEnePunchDer[2] = AssManager.get("Final/Golpe/EnemigoPun3Der.png",Texture.class);
+        texturaEnePunchDer[3] =texturaEneMovDer[0];
 
-        texturaBtnDer = new Texture(Gdx.files.internal("Boton_Derecha.png"));
-        texturaBtnIzq = new Texture(Gdx.files.internal("Boton_Izquierda.png"));
-        texturaBtnBrin = new Texture(Gdx.files.internal("BotonJump.png"));
-        texturaPausa = new Texture(Gdx.files.internal("PauseBotton.png"));
-        texturaBtnPunch = new Texture(Gdx.files.internal("BotonPunch.png"));
-        texturaBtnWeapon = new Texture(Gdx.files.internal("BotonWeapon.png"));
+        texturaEnePunchIzq= new Texture[4];
+        texturaEnePunchIzq[0] = AssManager.get("Final/Golpe/EnemigoPun1Izq.png",Texture.class);
+        texturaEnePunchIzq[1] = AssManager.get("Final/Golpe/EnemigoPun2Izq.png",Texture.class);
+        texturaEnePunchIzq[2] = AssManager.get("Final/Golpe/EnemigoPun3Izq.png",Texture.class);
+        texturaEnePunchIzq[3]=texturaEneMovIzq[0];
+
+        texturaEneWeaponDer = new Texture[5];
+        texturaEneWeaponDer[0] = AssManager.get("Final/Arma/EnemigoArm1Der.png",Texture.class);
+        texturaEneWeaponDer[1] = AssManager.get("Final/Arma/EnemigoArm2Der.png",Texture.class);
+        texturaEneWeaponDer[2] = AssManager.get("Final/Arma/EnemigoArm3Der.png",Texture.class);
+        texturaEneWeaponDer[3] = AssManager.get("Final/Arma/EnemigoArm4Der.png",Texture.class);
+        texturaEneWeaponDer[4] = texturaEneMovDer[0];
+
+        texturaEneWeaponIzq = new Texture[5];
+        texturaEneWeaponIzq[0] = AssManager.get("Final/Arma/EnemigoArm1Izq.png",Texture.class);
+        texturaEneWeaponIzq[1] = AssManager.get("Final/Arma/EnemigoArm2Izq.png",Texture.class);
+        texturaEneWeaponIzq[2] = AssManager.get("Final/Arma/EnemigoArm3Izq.png",Texture.class);
+        texturaEneWeaponIzq[3] = AssManager.get("Final/Arma/EnemigoArm4Izq.png",Texture.class);
+        texturaEneWeaponIzq[4] = texturaEneMovIzq[0];
+
+
+
+        texturaBackEnd = AssManager.get("BackGame.png",Texture.class);
+
+
+        texturaVidaJ = new Texture[7];
+        texturaVidaE = new Texture[7];
+        for (int i = 0; i<7;i++){
+            texturaVidaJ[i] = AssManager.get("Personaje/VidaSkull"+ i+".png",Texture.class);
+            texturaVidaE[i] = AssManager.get(nivel +"/VidaSkullE"+ i+".png",Texture.class);
+        }
+
+        texturaHuesosGanar = AssManager.get("+" + huesosGanar + ".png",Texture.class);
+
+
+
     }
 
     @Override
@@ -453,14 +535,11 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
         btnWeapon = new Boton(texturaBtnWeapon);
         btnWeapon.setPosicion(800, 12);
 
-        textoParton = new Boton(texTextoParton[variableTexto]);
-        textoParton.setPosicion(850,400);
-
         BtnResumePausa = new Boton(texturaResumePausa);
         BtnResumePausa.setPosicion(555,430);
 
         BtnQuitPausa = new Boton(texturaQuitPausa);
-        BtnQuitPausa.setPosicion(585,270);
+        BtnQuitPausa.setPosicion(585,200);
 
         batch = new SpriteBatch();
     }
@@ -482,19 +561,16 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
 
         batch.setProjectionMatrix(camara.combined);
 
-        actualizarTexto();
-
         // DIBUJA
         batch.begin();
         fondo.render(batch);
-        cmpParton.render(batch);
         jugador.render(batch);
 
-        textoParton.setTextura(texTextoParton[variableTexto]);
-        textoParton.setPosicion(850, 400);
-        textoParton.render(batch);
-
        // System.out.println(jugador.getEstadoMov());
+        enemigo.render(batch);
+        vidaJ.render(batch);
+        vidaE.render(batch);
+
 
 
         btnIzq.render(batch);
@@ -503,15 +579,57 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
         btnPausa.render(batch);
         btnWeapon.render(batch);
         btnPunch.render(batch);
-
         leerEntrada();
         if(this.estado == 1) {
+            float x = cmpGloboParton.getSprite().getX();
+            float y = cmpGloboParton.getSprite().getY();
              // Revisar eventos
-            // Mover la cámara para que siga al personaje
-            jugador.actualizar();
+            // Mover la cámara para que siga al PersonajeFinal
 
-            movimientoEnemigo();
-            revisarVida();
+            jugador.actualizar();
+            enemigo.actualizar();
+
+            if(variableTexto == 0) {
+                cmpGloboParton.render(batch);
+                contador++;
+                if(contador>100){
+                    variableTexto = 1;
+                    contador = 0;
+                }
+            }else if(variableTexto == 1){
+                cmpGloboParton.setTextura(texGloboParton[variableTexto]);
+                cmpGloboParton.setPosicion(x,y);
+                cmpGloboParton.render(batch);
+                contador++;
+                if(contador>100){
+                    variableTexto = 2;
+                    contador = 0;
+                }
+
+            }else if(variableTexto == 2){
+                cmpGloboParton.setTextura(texGloboParton[variableTexto]);
+                cmpGloboParton.setPosicion(x,y);
+                cmpGloboParton.render(batch);
+                contador++;
+                if(contador>100){
+                    variableTexto = 3;
+                    contador = 0;
+                }
+
+            }else if(variableTexto == 3){
+                cmpGloboParton.setTextura(texGloboParton[variableTexto]);
+                cmpGloboParton.setPosicion(x,y);
+                cmpGloboParton.render(batch);
+                contador++;
+                if(contador>100){
+                    variableTexto = 4;
+                    contador = 0;
+                }
+
+            }else if(variableTexto == 4){
+                movimientoEnemigo();
+                revisarVida();
+            }
 
 
 
@@ -521,7 +639,9 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
             fondoPausa.render(batch);
             MenuPausa.render(batch);
             BtnQuitPausa.render(batch);
+            BtnBackEnd.setPosicion(565,280);
             BtnResumePausa.render(batch);
+            BtnBackEnd.render(batch);
 
         }else if(this.estado == 3){
 
@@ -529,37 +649,20 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
             lose.render(batch);
             BtnRestartGame.render(batch);
             BtnQuitPausa.render(batch);
+            BtnBackEnd.setPosicion(650, 290);
+            BtnBackEnd.render(batch);
 
         }else if(this.estado == 4){
 
             fondoPausa.render(batch);
             win.render(batch);
+            cmpHuesosGanar.render(batch);
             BtnRestartGame.render(batch);
             BtnQuitPausa.render(batch);
+            BtnBackEnd.setPosicion(650, 290);
+            BtnBackEnd.render(batch);
         }
         batch.end();
-    }
-
-    private void actualizarTexto() {
-        if(contador<=200){
-            variableTexto = 0;
-            contador++;
-
-        }else if(contador>200 && contador<400){
-            variableTexto = 1;
-            contador++;
-        }else if(contador==400){
-            variableTexto = 2;
-            contador = 1000;
-        }
-        if(variableTexto==4){
-            if(contador>=1000 && contador <1200){
-                contador++;
-            }else{
-                contador = 1300;
-                variableTexto = 5;
-            }
-        }
     }
 
     private void revisarVida() {
@@ -571,7 +674,7 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
     }
 
 
-    public boolean verificarBordes(PersonajeTutorial player){
+    public boolean verificarBordes(PersonajeFinal player){
 
         if(player.getSprite().getX()-(player.getSprite().getWidth()/2) >= -280 && player.getSprite().getX()+player.getSprite().getWidth()/2 +10 <= 1220){
             return true;
@@ -582,6 +685,10 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
 
     private void ganoJuego() {
                 this.estado = 4;
+                pref.putInteger("huesos",huesos);
+                huesos += huesosGanar;
+                pref.putInteger("huesos",huesos);
+                pref.flush();
 
     }
 
@@ -590,27 +697,41 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
     }
 
     private void movimientoEnemigo() {
+
         Random numero = new Random();
+        int dificultad1 = dificultad * 2;
         if(jugador.getSprite().getX()+70>enemigo.getSprite().getX()+100 ){
 
-            if(numero.nextInt(15)<3) {
+            if(numero.nextInt(100)<3*(dificultad1*13)) {
+                if(enemigo.getEstadoAca() == PersonajeFinal.EstadoAtacando.NORMAL)
                 enemigo.movimiento("der");
+
             }
         }else if(jugador.getSprite().getX()+100<enemigo.getSprite().getX()-100){
-            if(numero.nextInt(15)<3) {
+            if(numero.nextInt(100)<3*(dificultad1*13)) {
+                if(enemigo.getEstadoAca() == PersonajeFinal.EstadoAtacando.NORMAL)
                 enemigo.movimiento("izq");
+
+
 
             }
         }
-        int nazar = numero.nextInt(40);
+        int nazar = numero.nextInt(400);
 
-        if(enemigo.getEstadoAca() == PersonajeTutorial.EstadoAtacando.NORMAL){
-        if(nazar<1 && nazar>0){
+        if(enemigo.getEstadoAca() == PersonajeFinal.EstadoAtacando.NORMAL ){
+            enemigo.setEstadoMov(PersonajeFinal.EstadoMov.QUIETO);
+        if(nazar<(1*dificultad1)){
+
             enemigo.ataquePuno();
-        }else if(nazar>=3 && nazar<=4){
+        }else if( nazar<dificultad1*8){
             enemigo.ataqueArma();
         }}
     }
+
+
+
+
+
     @Override
     public void resize(int width, int height) {
         vista.update(width,height);
@@ -637,21 +758,20 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
     @Override
     public void dispose() {
 
-        texturaFondo.dispose();
+        AssManager.dispose();
         texturaWin.dispose();
         texturaLose.dispose();
         TexturaBtnRestartGame.dispose();
-
         texturaMenuPausa.dispose();
         texturaQuitPausa.dispose();
         texturaResumePausa.dispose();
         texturaFonPausa.dispose();
-
         texturaBtnDer.dispose();
         texturaBtnIzq.dispose();
         texturaBtnBrin.dispose();
         texturaPausa.dispose();
         texturaBtnPunch.dispose();
         texturaBtnWeapon.dispose();
+        texturaFondo.dispose();
     }
 }

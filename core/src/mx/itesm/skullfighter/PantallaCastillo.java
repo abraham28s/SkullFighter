@@ -99,8 +99,7 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
             pref.flush();
         }
 
-        Gdx.input.setCatchBackKey(true);
-        Gdx.input.setCatchMenuKey(true);
+
         setYUpgradeCamara();
 
         cargarTexturas();
@@ -113,17 +112,17 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
 
         jugador = new Componente(texturaMovDer[0]);
         jugador.setPosicion(-15, -30);
-        Civil2 = new Componente(texturasCivil2);
-        Civil2.setPosicion(1900, 30);
+        Civil2 = new Componente(texturaCivil1);
+        Civil2.setPosicion(1980, 30);
 
         Civil1 = new Componente(texturaEspantapajaro);
         Civil1.setPosicion(3750,30);
 
-        Civil3 = new Componente(texturaCivil3);
-        Civil3.setPosicion(590,30);
+        Civil3 = new Componente(texturaCivil1);
+        Civil3.setPosicion(670,30);
 
         Espantapajaros = new Componente(texturaCivil1);
-        Espantapajaros.setPosicion(2620,30);
+        Espantapajaros.setPosicion(2690,30);
 
         TextoCivil1 = new Boton(texturaBtnEspanta);
         TextoCivil1.setPosicion(3500,350);
@@ -135,6 +134,8 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
         skip.setPosicion(1110,12);
 
         crearYPosBotones();
+        Gdx.input.setCatchBackKey(true);
+        Gdx.input.setCatchMenuKey(true);
     }
 
     public void crearYPosBotones() {
@@ -237,7 +238,7 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
             if(huesos>=30) {
                 if (verificarBoton(x, y, TextoCivil1)) {
                     huesos-=30;
-                    principal.setScreen(new PantallaCargando(this.principal,3,huesos,0));
+                    principal.setScreen(new PantallaCargando(principal,4,huesos,1,15,0,1,50));
                 }
             }
 
@@ -319,7 +320,7 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
                 if (pref.getBoolean("boton") == true ) {
                     Sonidos.reproducirBoton();
                 }
-                principal.setScreen(new PantallaMenu(principal));
+                principal.setScreen(new SeleccionarNiveles(principal,huesos));
                 this.dispose();
 
                 //Preferencias música
@@ -395,7 +396,6 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
 
         texturaFondo = AssManager.get("Castillo2.png",Texture.class);
         texturaEspantapajaro = AssManager.get("Espantapajaros3.png", Texture.class);
-        texturaCivil3 = AssManager.get("Guardia1.png", Texture.class);
         texturaBtnEspanta = AssManager.get("DialogosEspantaPajaros/TextScarecrow4.png",Texture.class);
         texturaBtnEspanta1 = AssManager.get("DialogosEspantaPajaros/TextScarecrow5.png",Texture.class);
 
@@ -456,7 +456,7 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
 
         texturaFondo.dispose();
         texturaEspantapajaro.dispose();
-        texturaCivil3.dispose();
+
         texturaBtnEspanta.dispose();
         texturaBtnEspanta1.dispose();
 

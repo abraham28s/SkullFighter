@@ -140,6 +140,8 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         skip.setPosicion(1110, 12);
 
         crearYPosBotones();
+        Gdx.input.setCatchBackKey(true);
+        Gdx.input.setCatchMenuKey(true);
     }
 
     public void crearYPosBotones() {
@@ -346,7 +348,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
                 if (pref.getBoolean("boton") == true) {
                     Sonidos.reproducirBoton();
                 }
-                principal.setScreen(new PantallaMenu(principal, huesos));
+                principal.setScreen(new SeleccionarNiveles(principal, huesos));
                 this.dispose();
 
                 //Preferencias música

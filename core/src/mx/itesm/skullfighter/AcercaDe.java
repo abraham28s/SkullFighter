@@ -50,6 +50,8 @@ public class AcercaDe extends PantallaAbstracta implements Screen {
         btnBack.setPosicion(30,30);
 
         batch = new SpriteBatch();
+        Gdx.input.setCatchBackKey(true);
+        Gdx.input.setCatchMenuKey(true);
     }
 
     public void cargarTexturas() {
