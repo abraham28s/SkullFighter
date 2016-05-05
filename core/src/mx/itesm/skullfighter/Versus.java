@@ -1,6 +1,7 @@
 package mx.itesm.skullfighter;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -83,6 +84,7 @@ public class Versus extends PantallaAbstracta implements Screen {
     }
 
     public void leerEntrada() {
+        Preferences pref = Gdx.app.getPreferences("Preferencias");
         if(Gdx.input.justTouched()){//saber si el usuario toca
             Vector3 coordenadas = new Vector3();
             coordenadas.set(Gdx.input.getX(),Gdx.input.getY(),0);
@@ -90,7 +92,9 @@ public class Versus extends PantallaAbstracta implements Screen {
             float x = coordenadas.x;
             float y = coordenadas.y;
             if(verificarBoton(x,y, btnBack)){
-                Sonidos.reproducirBoton();
+                if (pref.getBoolean("boton") == true ){
+                    Sonidos.reproducirBoton();
+                }
                 Gdx.app.log("leerEntrada","TAp sobre back");
                 //cambiar a pantalla de jugar
                 Principal.setScreen(new PantallaMenu(Principal));

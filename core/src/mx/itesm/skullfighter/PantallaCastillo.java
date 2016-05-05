@@ -317,7 +317,9 @@ public class PantallaCastillo extends PantallaAbstracta implements Screen {
 
                 //cambiar a pantalla de jugar
 
-                Sonidos.reproducirBoton();
+                if (pref.getBoolean("boton") == true ) {
+                    Sonidos.reproducirBoton();
+                }
                 principal.setScreen(new PantallaMenu(principal));
                 this.dispose();
 

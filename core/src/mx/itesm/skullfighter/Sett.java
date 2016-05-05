@@ -153,6 +153,9 @@ public class Sett extends PantallaAbstracta implements Screen{
                 if (pref.getBoolean("boton") == true) {
                     Sonidos.reproducirBoton();
                 }
+                if (Sonidos.musicaFondo.isPlaying()){
+                    Sonidos.musicaFondo.dispose();
+                }
                 principal.setScreen(new P2(this.principal));
                 this.dispose();
             }

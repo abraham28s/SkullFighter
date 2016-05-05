@@ -157,14 +157,18 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
                         jugador.setEstadoAca(PersonajeTutorial.EstadoAtacando.NORMAL);
                     }}else if(estado == 3 || estado == 4 ){
                         if(verificarBoton(x1,y1,BtnQuitPausa)){
-                            Sonidos.reproducirBoton();
+                            if (pref.getBoolean("boton") == true ) {
+                                Sonidos.reproducirBoton();
+                            }
                             estado = 100;
                             dispose();
                             principal.setScreen(new PantallaMenu(principal));
                         }
                     }else if( estado == 0){
                         if(verificarBoton(x1,y1,BtnQuitPausa)){
-                            Sonidos.reproducirBoton();
+                            if (pref.getBoolean("boton") == true ) {
+                                Sonidos.reproducirBoton();
+                            }
                             estado = 100;
                             principal.setScreen(new PantallaMenu(principal));
 
@@ -267,18 +271,25 @@ public class NivelTutorial extends PantallaAbstracta implements Screen {
 
                         if(verificarBoton(x1,y1, btnPausa)){
                             //cambiar a pantalla de jugar
-                            //Sonidos.reproducirBoton();
+                            if (pref.getBoolean("boton") == true ) {
+                                Sonidos.reproducirBoton();
+                            }
                             pausarJuego();
                         }
                     }else if(estado == 0){
                         if(verificarBoton(x1, y1, BtnResumePausa)){
-                            Sonidos.reproducirBoton();
+                            if (pref.getBoolean("boton") == true ) {
+                                Sonidos.reproducirBoton();
+                            }
                             resumirJuego();
                         }
 
                     }else if(estado == 3 || estado == 4 ){
                         if(verificarBoton(x1, y1, BtnRestartGame)){
-                            Sonidos.reproducirBoton();
+
+                            if (pref.getBoolean("boton") == true ) {
+                                Sonidos.reproducirBoton();
+                            }
                             estado = 100;
                             principal.setScreen(new NivelTutorial(principal));
 
