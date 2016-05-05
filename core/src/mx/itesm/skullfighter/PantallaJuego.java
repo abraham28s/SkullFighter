@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -162,7 +163,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
         camara = new OrthographicCamera(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO);
         camara.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
         camara.update();
-        vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
+        vista = new FitViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
 
         camaraFija = new OrthographicCamera(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO);
         camaraFija.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
@@ -172,7 +173,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
     @Override
     public void render(float delta) {
 
-        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if(huesos>=15){
@@ -432,7 +433,7 @@ public class PantallaJuego extends PantallaAbstracta implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        vista.update(width,height);
     }
 
     @Override
