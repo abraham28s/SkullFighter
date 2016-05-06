@@ -229,7 +229,7 @@ public class NivelFinal extends PantallaAbstracta implements Screen {
                             }
                             estado = 100;
                             dispose();
-                            principal.setScreen(new PantallaCargando(principal,pantallaOri,huesos,pantallaOri));
+                            principal.setScreen(new PantallaCargando(principal,2,huesos,2));
                         }
                     }else if( estado == 0){
                         if(verificarBoton(x1,y1,BtnBackEnd)){
@@ -238,7 +238,7 @@ public class NivelFinal extends PantallaAbstracta implements Screen {
                             }
                             estado = 100;
                             dispose();
-                            principal.setScreen(new PantallaCargando(principal,2,huesos,1));
+                            principal.setScreen(new PantallaCargando(principal,2,huesos,2));
                         }
                         if(verificarBoton(x1,y1,BtnQuitPausa)){
                             if (pref.getBoolean("boton") == true ) {
@@ -299,14 +299,14 @@ public class NivelFinal extends PantallaAbstracta implements Screen {
                     if(estado == 1){
 
 
-                        if (verificarBoton(x1, y1, btnIzq) && pointer == 0) {
+                        if (verificarBoton(x1, y1, btnIzq) && pointer == 0&&variableTexto ==4 ) {
                             jugador.movimiento("izq");
 
                             movPointerIzq = pointer;
                             banderaMoviendo = "izq";
                             banderaIzquierdaApre = true;
 
-                        } else if (verificarBoton(x1, y1, btnDer) && pointer == 0
+                        } else if (verificarBoton(x1, y1, btnDer) && pointer == 0&&variableTexto ==4
                                 )  {
                             jugador.movimiento("der");
                             movPointerDer = pointer;
@@ -314,7 +314,7 @@ public class NivelFinal extends PantallaAbstracta implements Screen {
                             banderaDerechaApre = true;
 
                         }
-                        if (verificarBoton(x1, y1, btnBrin) && pointer != 0 && movPointerDer == 0 && banderaMoviendo.equals("der") ) {
+                        if (verificarBoton(x1, y1, btnBrin) && pointer != 0 && movPointerDer == 0 && banderaMoviendo.equals("der")&& variableTexto ==4 ) {
                             //Sonidos.saltarSound();
                             if (jugador.getEstado() == PersonajeFinal.EstadoBrinco.NORMAL) {
                                 jugador.movimientoBrin();
@@ -323,7 +323,7 @@ public class NivelFinal extends PantallaAbstracta implements Screen {
                             }
                             brincoPointer = pointer;
                         }
-                        if (verificarBoton(x1, y1, btnBrin) && pointer != 0 && movPointerIzq == 0 && banderaMoviendo.equals("izq") ) {
+                        if (verificarBoton(x1, y1, btnBrin) && pointer != 0 && movPointerIzq == 0 && banderaMoviendo.equals("izq")&&variableTexto ==4 ) {
                             //Sonidos.saltarSound();
                             if (jugador.getEstado() == PersonajeFinal.EstadoBrinco.NORMAL) {
                                 jugador.movimientoBrin();
@@ -331,23 +331,23 @@ public class NivelFinal extends PantallaAbstracta implements Screen {
 
                             }
                             brincoPointer = pointer;
-                        } else if (verificarBoton(x1, y1, btnBrin) && pointer == 0) {
+                        } else if (verificarBoton(x1, y1, btnBrin) && pointer == 0 &&variableTexto ==4 ) {
                             if (jugador.getEstado() == PersonajeFinal.EstadoBrinco.NORMAL) {
                                 jugador.movimientoBrin();
 
                             }
                             brincoPointer = pointer;
                         }
-                        if (verificarBoton(x1, y1, btnPunch)) {
+                        if (verificarBoton(x1, y1, btnPunch) &&variableTexto ==4 ) {
                             //Sonidos.golpearSound();
                             jugador.ataquePuno();
                         }
-                        if (verificarBoton(x1, y1, btnWeapon)) {
+                        if (verificarBoton(x1, y1, btnWeapon) &&variableTexto ==4 ) {
                             //Sonidos.cuchilloSound();
                             jugador.ataqueArma();
                         }
 
-                        if(verificarBoton(x1,y1, btnPausa)){
+                        if(verificarBoton(x1,y1, btnPausa)&&variableTexto ==4 ){
                             //cambiar a pantalla de jugar
                             //Sonidos.reproducirBoton();
                             pausarJuego();
